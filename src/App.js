@@ -3,6 +3,7 @@ import FilePickerComponent from "./components/FilePicker/filePickerComponent";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FileUploadSimple from "./components/FileUploadSimple/fileUpload";
 import './App.css';
+import FilesView from "./components/FilesList/filesView";
 
 const { ipcRenderer } = window.require('electron');
 
@@ -37,6 +38,7 @@ function App() {
       <div>
         <FileUploadSimple onChange={setFiles}/>
       </div>
+      <FilesView files={files} onChange={setFiles}/>
       <div className="submit-box">
         <button onClick={handleSubmit}>Submit</button>
       </div>
