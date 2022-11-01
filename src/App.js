@@ -1,23 +1,44 @@
-import logo from './logo.svg';
 import './App.css';
+import {useEffect, useState} from "react";
+
+const { ipcRenderer } = window.require('electron');
 
 function App() {
+  const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    console.log('useEffect: Creating Listeners');
+
+    ipcRenderer.on('excel:processed', (event, files) => {
+      console.log('mainWindow: files processed:', files);
+    });
+
+    return () => {
+      console.log('Removing Listeners');
+      ipcRenderer.removeAllListeners();
+    }
+  },[]);
+
+  const handleSubmit = (e) => {
+    console.log(`Send the files`, files);
+    ipcRenderer.send('excel:submit', files);
+  }
+
+  const handleChange = (e) => {
+    console.log(`Selected Files: `, e.target.files);
+
+    const filesArray =[]
+    for (let i=0; i<e.target.files.length; i++) {
+      filesArray.push(e.target.files[i].path);
+    }
+    
+    setFiles(filesArray);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input type="file" onChange={handleChange} multiple/>
+      <button onClick={handleSubmit}>Submit</button>
     </div>
   );
 }
