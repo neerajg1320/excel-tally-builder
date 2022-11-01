@@ -1,0 +1,11 @@
+.upload-box {
+    /*border: 1px solid red;*/
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload-input {
+    margin: 20px;
+}

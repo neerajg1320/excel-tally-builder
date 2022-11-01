@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
 import FilePickerComponent from "./components/FilePicker/filePickerComponent";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import FileUploadSimple from "./components/FileUploadSimple/fileUpload";
+import './App.css';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -27,27 +28,18 @@ function App() {
     ipcRenderer.send('excel:submit', filePaths);
   }
 
-  const handleSelectionChange = (e) => {
-    console.log(`Selected Files: `, e.target.files);
-
-    const filesArray =[]
-    for (let i=0; i<e.target.files.length; i++) {
-      filesArray.push(e.target.files[i]);
-    }
-
-    setFiles(filesArray);
-  }
 
   return (
     <div className="App">
       <div>
-        <input type="file" onChange={handleSelectionChange} multiple/>
-        <button onClick={handleSubmit}>Submit</button>
-      </div>
-      <div>
         <FilePickerComponent onChange={setFiles} />
       </div>
-
+      <div>
+        <FileUploadSimple onChange={setFiles}/>
+      </div>
+      <div className="submit-box">
+        <button onClick={handleSubmit}>Submit</button>
+      </div>
     </div>
   );
 }
