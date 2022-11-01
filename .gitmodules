@@ -1,0 +1,3 @@
+[submodule "electron-excel-tally"]
+	path = electron-excel-tally
+	url = ssh://git@github.com/neeraj76/electron-excel-tally
