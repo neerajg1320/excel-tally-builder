@@ -1,5 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap");
 
+.App {
+    /*border: 1px dashed royalblue;*/
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    align-items: center;
+}
+
+.files-box {
+    /*border: 1px solid sienna;*/
+    width: 60%;
+}
+
 .submit-box {
     display: flex;
     flex-direction: column;

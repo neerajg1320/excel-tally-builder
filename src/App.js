@@ -32,15 +32,17 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        <FilePickerComponent onChange={setFiles} />
-      </div>
-      <div>
-        <FileUploadSimple onChange={setFiles}/>
-      </div>
-      <FilesView files={files} onChange={setFiles}/>
-      <div className="submit-box">
-        <button onClick={handleSubmit}>Submit</button>
+      <div className="files-box">
+        <div>
+          <FilePickerComponent onChange={setFiles} />
+        </div>
+        <div>
+          <FileUploadSimple onChange={setFiles}/>
+        </div>
+        <FilesView files={files} onChange={setFiles}/>
+        <div className="submit-box">
+          <button onClick={handleSubmit}>Submit</button>
+        </div>
       </div>
     </div>
   );
