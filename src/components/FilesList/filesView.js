@@ -19,7 +19,10 @@ function FilesView({files, onChange}) {
           {files &&
             files.map((item, index) => (
               <div key={index} className="drop-file-preview__item">
-                <img src={ImageConfig[item.type.split('/')[1]] || ImageConfig['default']} alt="" />
+                <img
+                  className="drop-file-preview__image"
+                  src={ImageConfig[item.type.split('/')[1]] || ImageConfig['default']} alt=""
+                />
                 <div className="drop-file-preview__item__info">
                   <p>{item.name}</p>
                   <p>{item.size}B</p>
