@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     console.log('useEffect: Creating Listeners');
-
+    
     ipcRenderer.on('excel:processed', (event, files) => {
       console.log('mainWindow: files processed:', files);
     });
