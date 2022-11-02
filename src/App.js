@@ -16,6 +16,9 @@ const { ipcRenderer } = window.require('electron');
 
 function App() {
   const [files, setFiles] = useState([]);
+  const [submitEnabled, setSubmitEnabled] = useState(false);
+  const [tooltipMessage, setTooltipMessage] = useState("Message to be set");
+
   const flagShowSimpleBox = false;
   const tallyStatus = useSelector((state) => state.tally.status);
   const dispatch = useDispatch();
@@ -39,6 +42,19 @@ function App() {
     }
   },[]);
 
+  useEffect(() => {
+    if (!tallyStatus) {
+      setSubmitEnabled(false);
+      setTooltipMessage("No connection to Tally!");
+    } else if (!files.length) {
+      setSubmitEnabled(false);
+      setTooltipMessage("Please select file(s)");
+    } else {
+      setSubmitEnabled(true);
+      setTooltipMessage("");
+    }
+  }, [files, tallyStatus]);
+
   const handleSubmit = (e) => {
     if (tallyStatus) {
       const filePaths = files.map(file => file.path);
@@ -57,16 +73,19 @@ function App() {
         <div>
           <FilePickerComponent onChange={setFiles} />
         </div>
+
         {flagShowSimpleBox &&
           <div className="files-simple-box">
             <FileUploadSimple onChange={setFiles}/>
           </div>
         }
+
         <div className="files-view-box">
           <FilesView files={files} onChange={setFiles}/>
         </div>
+
         <div className="submit-box">
-          <ConditionalTooltipButton condition={!tallyStatus}>
+          <ConditionalTooltipButton condition={!submitEnabled} message={tooltipMessage}>
             <Button variant="primary" onClick={handleSubmit}>Submit</Button>
           </ConditionalTooltipButton>
         </div>
