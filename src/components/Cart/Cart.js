@@ -1,9 +1,9 @@
 import './cart.css';
 import { useSelector, useDispatch } from "react-redux";
-import { addItem, deleteItem } from "../../redux/cartActions";
+import { addItem, deleteItem } from "../../redux/cart/cartActions";
 
 const Cart = () => {
-  const state = useSelector((state) => state);
+  const state = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   console.log("store", state);

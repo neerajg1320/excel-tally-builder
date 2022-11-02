@@ -1,4 +1,4 @@
-import { ADD_ITEM, DELETE_ITEM } from "./actionTypes";
+import { ADD_ITEM, DELETE_ITEM } from "./cartActionTypes";
 
 const addItem = () => {
   return {

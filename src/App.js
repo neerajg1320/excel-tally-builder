@@ -4,18 +4,28 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import FileUploadSimple from "./components/FileUploadSimple/fileUpload";
 import './App.css';
 import FilesView from "./components/FilesList/filesView";
+import Connection from "./components/ConnectionStatus/Connection";
+import {useSelector, useDispatch} from "react-redux";
+import {setStatus} from "./redux/tallyServer/tallyActions";
 
 const { ipcRenderer } = window.require('electron');
 
 function App() {
   const [files, setFiles] = useState([]);
   const flagShowSimpleBox = false;
+  const status = useSelector((state) => state.tally.status);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log('useEffect: Creating Listeners');
-    
+
     ipcRenderer.on('excel:processed', (event, files) => {
-      console.log('mainWindow: files processed:', files);
+      console.log('mainWindow: excel:processed=', files);
+    });
+
+    ipcRenderer.on('tally:server:status', (event, status) => {
+      console.log('mainWindow: tally:server:status=', status);
+      dispatch(setStatus(status));
     });
 
     return () => {
@@ -33,6 +43,8 @@ function App() {
 
   return (
     <div className="App">
+      <Connection title={"Tally Server"} status={status}/>
+
       <div className="app-box">
         <div>
           <FilePickerComponent onChange={setFiles} />

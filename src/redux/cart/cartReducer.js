@@ -1,7 +1,10 @@
-import { ADD_ITEM, DELETE_ITEM } from "./actionTypes";
+import { ADD_ITEM, DELETE_ITEM } from "./cartActionTypes";
 
 const initialState = {
   numOfItems: 0,
+  tallyServer: {
+    status: false
+  }
 };
 
 const cartReducer = (state = initialState, action) => {
