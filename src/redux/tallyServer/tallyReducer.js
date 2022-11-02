@@ -3,7 +3,8 @@ import { SET_STATUS } from "./tallyActionTypes";
 const flagDebugTallyReducer = false;
 
 const initialState = {
-  status: false
+  status: false,
+  debug: false
 };
 
 const tallyReducer = (state = initialState, action) => {
@@ -15,7 +16,13 @@ const tallyReducer = (state = initialState, action) => {
     case SET_STATUS:
       return {
         ...state,
-        status: action.payload.status
+        status: action.payload.value
+      };
+
+    case SET_STATUS:
+      return {
+        ...state,
+        debug: action.payload.value
       };
 
     default:

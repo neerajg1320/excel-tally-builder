@@ -1,4 +1,4 @@
-import { START_PING, STOP_PING, SET_STATUS } from "./tallyActionTypes";
+import { START_PING, STOP_PING, SET_STATUS, SET_DEBUG } from "./tallyActionTypes";
 
 const startPing = () => {
   return {
@@ -12,13 +12,22 @@ const stopPing = () => {
   };
 };
 
-const setStatus = (status) => {
+const setStatus = (value) => {
   return {
     type: SET_STATUS,
     payload: {
-      status
+      value
     }
   };
 };
 
-export { startPing, stopPing, setStatus };
+const setDebug = (value) => {
+  return {
+    type: SET_DEBUG,
+    payload: {
+      value
+    }
+  };
+};
+
+export { startPing, stopPing, setStatus, setDebug };

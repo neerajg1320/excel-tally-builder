@@ -16,8 +16,17 @@
     align-items: end;
 }
 
+.server-command-box {
+    /*margin-right: 20px;*/
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    width: 100%;
+    /*border: 1px solid sienna;*/
+}
+
 .server-command-button {
-    margin-right: 20px;
+    margin-left: 10px;
 }
 
 .app-box {

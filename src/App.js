@@ -11,6 +11,8 @@ import Button from 'react-bootstrap/Button';
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Tooltip from "react-bootstrap/Tooltip";
 import ConditionalTooltipButton from "./components/TooltipButton/ConditionalTooltipButton";
+import SingleSelect from "./components/SingleSelect/SingleSelect";
+import TallyServerStatus from "./components/TallyServer/TallyServerStatus";
 
 const { ipcRenderer } = window.require('electron');
 
@@ -18,6 +20,7 @@ function App() {
   const [files, setFiles] = useState([]);
   const [submitEnabled, setSubmitEnabled] = useState(false);
   const [tooltipMessage, setTooltipMessage] = useState("Message to be set");
+
 
   const flagShowSimpleBox = false;
   const tallyStatus = useSelector((state) => state.tally.status);
@@ -30,15 +33,6 @@ function App() {
       console.log('mainWindow: excel:processed=', files);
       setFiles([]);
     });
-
-    ipcRenderer.on('tally:server:status', (event, status) => {
-      console.log('mainWindow: tally:server:status=', status);
-      dispatch(setStatus(status));
-    });
-
-    ipcRenderer.on('command:list:response', (event, commands) => {
-      console.log(`commands: ${commands}`);
-    })
 
     return () => {
       console.log('Removing Listeners');
@@ -69,22 +63,10 @@ function App() {
     }
   }
 
-  const handleServerCommand = (e) => {
-    console.log('Sending server command');
-    ipcRenderer.send('command:list:request');
-  }
 
   return (
     <div className="App">
-
-      <div className="server-container">
-        <Connection title={"Tally Server"} status={tallyStatus}/>
-        <div className="server-command-button">
-          <Button variant="outline-dark" onClick={handleServerCommand}>
-            Command
-          </Button>
-        </div>
-      </div>
+      <TallyServerStatus />
 
       <div className="app-box">
         <div>
