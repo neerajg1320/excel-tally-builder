@@ -23,9 +23,9 @@ function FilesView({files, onChange}) {
                   className="drop-file-preview__image"
                   src={ImageConfig[item.type.split('/')[1]] || ImageConfig['default']} alt=""
                 />
-                <div className="drop-file-preview__item__info">
-                  <p>{item.name}</p>
-                  <p>{item.size}B</p>
+                <div className="drop-file-preview__item__info_contents">
+                  <p className="drop-file-preview__item__file_name">{item.name}</p>
+                  <p className="drop-file-preview__item__file_size">{item.size} B</p>
                 </div>
                 <span className="drop-file-preview__item__del"
                       onClick={() => handleFileRemove(item)}>

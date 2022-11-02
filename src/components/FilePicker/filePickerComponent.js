@@ -15,7 +15,7 @@ function FilePickerComponent({onChange}) {
   }
 
   return (
-    <div className="wrapper text-center mt-5">
+    <div className="dropzone-wrapper text-center mt-5">
       <Dropzone
           onDrop={onDrop}
           multiple

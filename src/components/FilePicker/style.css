@@ -1,8 +1,9 @@
-.wrapper {
+.dropzone-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /*justify-content: center;*/
     align-items: center;
+    /*height: 400px;*/
 }
 
 .dropzone-box {
@@ -12,7 +13,9 @@
     justify-content: center;
     height: 200px;
     width: 100%;
-    border: 4px dashed #e8e8e8;
+    border: 4px dashed #76becc;
+    background-color: #f8f8f8;
+    border-radius: 10px;
 }
 
 .dropzone-root {

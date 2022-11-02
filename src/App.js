@@ -9,6 +9,7 @@ const { ipcRenderer } = window.require('electron');
 
 function App() {
   const [files, setFiles] = useState([]);
+  const flagShowSimpleBox = false;
 
   useEffect(() => {
     console.log('useEffect: Creating Listeners');
@@ -32,14 +33,18 @@ function App() {
 
   return (
     <div className="App">
-      <div className="files-box">
+      <div className="app-box">
         <div>
           <FilePickerComponent onChange={setFiles} />
         </div>
-        <div>
-          <FileUploadSimple onChange={setFiles}/>
+        {flagShowSimpleBox &&
+          <div className="files-simple-box">
+            <FileUploadSimple onChange={setFiles}/>
+          </div>
+        }
+        <div className="files-view-box">
+          <FilesView files={files} onChange={setFiles}/>
         </div>
-        <FilesView files={files} onChange={setFiles}/>
         <div className="submit-box">
           <button onClick={handleSubmit}>Submit</button>
         </div>
