@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {readExcel} from "../../excel/file";
 import './style.css';
 import DynamicTable from "../DynamicTable/dynamicTable";
+import DynamicReactTable from "../DynamicReactTable/dynamicReactTable";
 
 function ExcelViewerSheetjs() {
   const [columns, setColumns] = useState([]);
@@ -45,7 +46,13 @@ function ExcelViewerSheetjs() {
         "hidden": false,
         "type": "text",
         "key": "__EMPTY_2"
-      }
+      },
+      {
+        "title": "New",
+        "hidden": false,
+        "type": "select",
+        "key": "New"
+      },
     ];
 
     setColumns(staticColumns);
@@ -64,7 +71,8 @@ function ExcelViewerSheetjs() {
   return (
     <div className="excel-preview-wrapper">
       <input type="file" onChange={handleChange}/>
-      <DynamicTable rows={items} columns={columns}/>
+      <DynamicTable data={items} columns={columns}/>
+      <DynamicReactTable data={items} columns={columns}/>
     </div>
   );
 }

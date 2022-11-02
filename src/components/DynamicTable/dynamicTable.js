@@ -1,6 +1,6 @@
 import './style.css';
 
-function DynamicTable({columns, rows}) {
+function DynamicTable({columns, data}) {
 
   return (
     <div className="table-wrapper">
@@ -11,7 +11,7 @@ function DynamicTable({columns, rows}) {
         </tr>
         </thead>
         <tbody>
-        {rows && rows.map((row, index) =>
+        {data && data.map((row, index) =>
             <tr key={index}>
               { columns && columns.map(col => <td>{row[col.key]}</td>)}
             </tr>
