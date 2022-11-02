@@ -8,13 +8,16 @@ import Connection from "./components/ConnectionStatus/Connection";
 import {useSelector, useDispatch} from "react-redux";
 import {setStatus} from "./redux/tallyServer/tallyActions";
 import Button from 'react-bootstrap/Button';
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
+import ConditionalTooltipButton from "./components/TooltipButton/ConditionalTooltipButton";
 
 const { ipcRenderer } = window.require('electron');
 
 function App() {
   const [files, setFiles] = useState([]);
   const flagShowSimpleBox = false;
-  const status = useSelector((state) => state.tally.status);
+  const tallyStatus = useSelector((state) => state.tally.status);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -37,14 +40,18 @@ function App() {
   },[]);
 
   const handleSubmit = (e) => {
-    const filePaths = files.map(file => file.path);
-    console.log(`Send the files`, filePaths);
-    ipcRenderer.send('excel:submit', filePaths);
+    if (tallyStatus) {
+      const filePaths = files.map(file => file.path);
+      console.log(`Send the files`, filePaths);
+      ipcRenderer.send('excel:submit', filePaths);
+    } else {
+      console.log(`Tally is not connected. Submit click ignored`)
+    }
   }
 
   return (
     <div className="App">
-      <Connection title={"Tally Server"} status={status}/>
+      <Connection title={"Tally Server"} status={tallyStatus}/>
 
       <div className="app-box">
         <div>
@@ -59,8 +66,9 @@ function App() {
           <FilesView files={files} onChange={setFiles}/>
         </div>
         <div className="submit-box">
-          {/*<button onClick={handleSubmit}>Submit</button>*/}
-          <Button onClick={handleSubmit} variant="primary">Submit</Button>
+          <ConditionalTooltipButton condition={!tallyStatus}>
+            <Button variant="primary" onClick={handleSubmit}>Submit</Button>
+          </ConditionalTooltipButton>
         </div>
       </div>
     </div>
