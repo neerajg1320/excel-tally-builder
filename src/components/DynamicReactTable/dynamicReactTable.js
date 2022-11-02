@@ -18,7 +18,10 @@ function DynamicReactTable({columns, data}) {
         if (col.type == 'select') {
           console.log('Create column for single select');
           reactCol.Cell = ({value, row}) => {
-            return <SingleSelect options={options}/>
+            return <SingleSelect
+                options={options}
+                onChange={(e) => {row.New = e; console.log('row.New=', row.New)}}
+            />
           }
         }
         return reactCol;
