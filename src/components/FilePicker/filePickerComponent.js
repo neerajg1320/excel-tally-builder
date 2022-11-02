@@ -1,9 +1,7 @@
 import Dropzone from 'react-dropzone'
 import './style.css';
-import {useRef} from "react";
 
 function FilePickerComponent({onChange}) {
-
   const onDrop = (acceptedFiles) => {
     acceptedFiles.forEach(file => {
       console.log(file);

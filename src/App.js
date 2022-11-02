@@ -4,15 +4,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import FileUploadSimple from "./components/FileUploadSimple/fileUpload";
 import './App.css';
 import FilesView from "./components/FilesList/filesView";
-import Connection from "./components/ConnectionStatus/Connection";
 import {useSelector, useDispatch} from "react-redux";
-import {setStatus} from "./redux/tallyServer/tallyActions";
+
 import Button from 'react-bootstrap/Button';
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
 import ConditionalTooltipButton from "./components/TooltipButton/ConditionalTooltipButton";
-import SingleSelect from "./components/SingleSelect/SingleSelect";
+
 import TallyServerStatus from "./components/TallyServer/TallyServerStatus";
+import ExcelViewerSheetjs from "./components/ExcelViewerSheetjs/excelSheetjs";
 
 const { ipcRenderer } = window.require('electron');
 
@@ -89,6 +87,8 @@ function App() {
           </ConditionalTooltipButton>
         </div>
       </div>
+
+      <ExcelViewerSheetjs />
     </div>
   );
 }

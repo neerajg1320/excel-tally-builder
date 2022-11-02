@@ -17,7 +17,9 @@ function TallyServerStatus() {
 
   useEffect(() => {
     ipcRenderer.on('tally:server:status', (event, status) => {
-      console.log('mainWindow: tally:server:status=', status);
+      if (tallyDebug) {
+        console.log('mainWindow: tally:server:status=', status);
+      }
       dispatch(setStatus(status));
     });
 
