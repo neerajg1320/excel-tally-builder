@@ -36,6 +36,10 @@ function App() {
       dispatch(setStatus(status));
     });
 
+    ipcRenderer.on('command:list:response', (event, commands) => {
+      console.log(`commands: ${commands}`);
+    })
+
     return () => {
       console.log('Removing Listeners');
       ipcRenderer.removeAllListeners();
@@ -65,9 +69,22 @@ function App() {
     }
   }
 
+  const handleServerCommand = (e) => {
+    console.log('Sending server command');
+    ipcRenderer.send('command:list:request');
+  }
+
   return (
     <div className="App">
-      <Connection title={"Tally Server"} status={tallyStatus}/>
+
+      <div className="server-container">
+        <Connection title={"Tally Server"} status={tallyStatus}/>
+        <div className="server-command-button">
+          <Button variant="outline-dark" onClick={handleServerCommand}>
+            Command
+          </Button>
+        </div>
+      </div>
 
       <div className="app-box">
         <div>

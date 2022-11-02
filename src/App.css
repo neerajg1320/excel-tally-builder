@@ -8,6 +8,18 @@
     align-items: center;
 }
 
+.server-container {
+    /*border: 1px dashed black;*/
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.server-command-button {
+    margin-right: 20px;
+}
+
 .app-box {
     /*border: 1px solid sienna;*/
     width: 80%;
