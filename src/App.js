@@ -7,6 +7,7 @@ import FilesView from "./components/FilesList/filesView";
 import Connection from "./components/ConnectionStatus/Connection";
 import {useSelector, useDispatch} from "react-redux";
 import {setStatus} from "./redux/tallyServer/tallyActions";
+import Button from 'react-bootstrap/Button';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -21,6 +22,7 @@ function App() {
 
     ipcRenderer.on('excel:processed', (event, files) => {
       console.log('mainWindow: excel:processed=', files);
+      setFiles([]);
     });
 
     ipcRenderer.on('tally:server:status', (event, status) => {
@@ -57,7 +59,8 @@ function App() {
           <FilesView files={files} onChange={setFiles}/>
         </div>
         <div className="submit-box">
-          <button onClick={handleSubmit}>Submit</button>
+          {/*<button onClick={handleSubmit}>Submit</button>*/}
+          <Button onClick={handleSubmit} variant="primary">Submit</Button>
         </div>
       </div>
     </div>
