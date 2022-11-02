@@ -40,7 +40,6 @@ function App() {
     ipcRenderer.send('excel:submit', filePaths);
   }
 
-
   return (
     <div className="App">
       <Connection title={"Tally Server"} status={status}/>
