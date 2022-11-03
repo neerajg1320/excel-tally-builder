@@ -2,6 +2,7 @@ import EditableReactTable from "./editableReactTable";
 import React, {useEffect, useState} from "react";
 import SingleSelect from "../SingleSelect/SingleSelect";
 import styled from 'styled-components';
+import {EditableTextCell} from './editableCells';
 
 const Styles = styled.div`
   padding: 1rem;
@@ -58,22 +59,30 @@ function DynamicEditableReactTable({columns, data, onCellDataChange}) {
           Header: col.title,
           accessor:col.key
         }
-        if (col.type == 'select') {
-          reactCol.Cell = ({value, row}) => {
-            const options = col.options.map(opt => {return {label: opt, value:opt}});
 
-            const onCellChange = (e) => {
-              row[col.key] = e; console.log(`row[${col.key}]=`, row[col.key]);
+        if (col.editable) {
+          if (col.type === 'select') {
+            reactCol.Cell = ({value, row}) => {
+              const options = col.options.map(opt => {
+                return {label: opt, value: opt}
+              });
 
-              if (onCellDataChange) {
-                onCellDataChange({row, key: col.key, value: e});
-              }
-            };
+              const onCellChange = (e) => {
+                row[col.key] = e;
+                console.log(`row[${col.key}]=`, row[col.key]);
 
-            return <SingleSelect
-                options={options}
-                onChange={onCellChange}
-            />
+                if (onCellDataChange) {
+                  onCellDataChange({row, key: col.key, value: e});
+                }
+              };
+
+              return <SingleSelect
+                  options={options}
+                  onChange={onCellChange}
+              />
+            }
+          } else if (col.type === 'text') {
+            reactCol.Cell = EditableTextCell;
           }
         }
         return reactCol;

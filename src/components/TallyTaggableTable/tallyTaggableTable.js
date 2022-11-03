@@ -19,6 +19,7 @@ function TallyTaggableTable({columns, data}) {
               title: 'Category',
               key: 'Category',
               type: 'select',
+              editable: true,
               options: tallyLedgers,
               default: tallyLedgers.length ? tallyLedgers[3] : "",
             },
@@ -26,6 +27,7 @@ function TallyTaggableTable({columns, data}) {
               title: 'Remarks',
               key: 'Remarks',
               type: 'text',
+              editable: true,
             }
           ]
       );
