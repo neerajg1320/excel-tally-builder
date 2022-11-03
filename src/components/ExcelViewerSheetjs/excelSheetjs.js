@@ -4,6 +4,7 @@ import {readExcel} from "../../excel/file";
 import './style.css';
 import DynamicTable from "../DynamicTable/dynamicTable";
 import DynamicReactTable from "../DynamicReactTable/dynamicReactTable";
+import TaggableReactTable from "../TaggableReactTable/taggableReactTable";
 
 function ExcelViewerSheetjs() {
   const [columns, setColumns] = useState([]);
@@ -47,12 +48,13 @@ function ExcelViewerSheetjs() {
         "type": "text",
         "key": "__EMPTY_2"
       },
-      {
-        "title": "New",
-        "hidden": false,
-        "type": "select",
-        "key": "New"
-      },
+      // {
+      //   "title": "New",
+      //   "hidden": false,
+      //   "type": "select",
+      //   "key": "new",
+      //   "options": ["One", "Two"]
+      // }
     ];
 
     setColumns(staticColumns);
@@ -73,6 +75,7 @@ function ExcelViewerSheetjs() {
       <input type="file" onChange={handleChange}/>
       <DynamicTable data={items} columns={columns}/>
       <DynamicReactTable data={items} columns={columns}/>
+      <TaggableReactTable data={items} columns={columns}/>
     </div>
   );
 }
