@@ -10,7 +10,8 @@ import Button from 'react-bootstrap/Button';
 import ConditionalTooltipButton from "./components/TooltipButton/ConditionalTooltipButton";
 
 import TallyServerStatus from "./components/TallyServer/TallyServerStatus";
-import ExcelViewerSheetjs from "./components/ExcelViewerSheetjs/excelSheetjs";
+import ExcelViewerSheetjs from "./components/ExcelViewerSheetjs/excelViewer";
+import ExcelTallyHandler from "./components/ExcelTallyHandler/excelTallyHandler";
 
 const { ipcRenderer } = window.require('electron');
 
@@ -66,6 +67,8 @@ function App() {
     <div className="App">
       <TallyServerStatus />
 
+      <ExcelTallyHandler />
+
       <div className="app-box">
         <div>
           <FilePickerComponent onChange={setFiles} />
@@ -88,7 +91,7 @@ function App() {
         </div>
       </div>
 
-      <ExcelViewerSheetjs />
+
     </div>
   );
 }

@@ -2,10 +2,12 @@ import ReactTable from "./reactTable";
 import {useEffect, useState} from "react";
 import SingleSelect from "../SingleSelect/SingleSelect";
 
-function DynamicReactTable({columns, data}) {
+function DynamicReactTable({columns, data, onCellDataChange}) {
   const [reactColumns, setReactColumns] = useState([]);
 
   useEffect(() => {
+    // console.log("DynamicReactTable: columns=", columns);
+
     if (columns.length) {
       const reactTableColumns  = columns.map(col => {
         const reactCol = {
@@ -13,14 +15,20 @@ function DynamicReactTable({columns, data}) {
           accessor:col.key
         }
         if (col.type == 'select') {
-          // console.log('Create column for single select');
           reactCol.Cell = ({value, row}) => {
-            // console.log('col=', col);
-            const options = col.options.map(opt => {return {label: opt, value:opt}})
-            // const options = [{label: 'First', value:'First'}, {label: 'Second', value:'Second'}]
+            const options = col.options.map(opt => {return {label: opt, value:opt}});
+
+            const onCellChange = (e) => {
+              row[col.key] = e; console.log(`row[${col.key}]=`, row[col.key]);
+
+              if (onCellDataChange) {
+                onCellDataChange({row, key: col.key, value: e});
+              }
+            };
+
             return <SingleSelect
                 options={options}
-                onChange={(e) => {row[col.key] = e; console.log(`row[${col.key}]=`, row[col.key])}}
+                onChange={onCellChange}
             />
           }
         }
@@ -31,7 +39,9 @@ function DynamicReactTable({columns, data}) {
   }, [columns]);
 
   return (
-    <ReactTable columns={reactColumns} data={data}/>
+    <div>
+      {data.length ? <ReactTable columns={reactColumns} data={data}/> : <span></span>}
+    </div>
   );
 }
 
