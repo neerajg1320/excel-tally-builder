@@ -39,4 +39,4 @@ const setLedgers = (value) => {
   };
 };
 
-export { startPing, stopPing, setStatus, setDebug };
+export { startPing, stopPing, setStatus, setDebug, setLedgers };

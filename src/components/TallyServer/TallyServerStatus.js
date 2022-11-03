@@ -4,7 +4,7 @@ import SingleSelect from "../SingleSelect/SingleSelect";
 import Button from "react-bootstrap/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {setStatus} from "../../redux/tallyServer/tallyActions";
+import {setStatus, setLedgers} from "../../redux/tallyServer/tallyActions";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 
 const { ipcRenderer } = window.require('electron');
@@ -30,12 +30,13 @@ function TallyServerStatus() {
         const options = commands.map((cmd) => {return {label: cmd, value:cmd}});
         setCommandOptions(options);
       }
-    })
+    });
 
-    ipcRenderer.on('command:response', (event, response) => {
-      console.log(`commands: ${response}`);
-
-    })
+    ipcRenderer.on('command:response', (event, {request, response}) => {
+      if (request == "SHOW_LEDGERS") {
+        dispatch(setLedgers(response));
+      }
+    });
 
     console.log('Sending server command');
     ipcRenderer.send('command:list:request');
