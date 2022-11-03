@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {setStatus} from "../../redux/tallyServer/tallyActions";
+import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 
 const { ipcRenderer } = window.require('electron');
 
@@ -31,6 +32,11 @@ function TallyServerStatus() {
       }
     })
 
+    ipcRenderer.on('command:response', (event, response) => {
+      console.log(`commands: ${response}`);
+
+    })
+
     console.log('Sending server command');
     ipcRenderer.send('command:list:request');
 
@@ -44,23 +50,26 @@ function TallyServerStatus() {
 
   const handleCommandClick = (e) => {
     console.log('selected command:', selectedCommand);
-    ipcRenderer.send('command:execute', selectedCommand);
+    if (tallyStatus) {
+      ipcRenderer.send('command:request', selectedCommand);
+    }
   }
-
-
 
   return (
     <div className="server-container">
       <Connection title={"Tally Server"} status={tallyStatus}/>
+
       <div className="server-command-box">
         <SingleSelect options={commandOptions} onChange={setSelectedCommand} />
         <div className="server-command-button">
-          <Button variant="outline-dark" onClick={handleCommandClick}>
-            Command
-          </Button>
+          <ConditionalTooltipButton condition={!tallyStatus} message="No connection to Tally!">
+            <Button variant="outline-dark" onClick={handleCommandClick}>
+              Command
+            </Button>
+          </ConditionalTooltipButton>
         </div>
-
       </div>
+
     </div>
 
   );
