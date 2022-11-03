@@ -33,7 +33,7 @@ function TallyServerStatus() {
     });
 
     ipcRenderer.on('command:response', (event, {request, response}) => {
-      if (request == "SHOW_LEDGERS") {
+      if (request == "LEDGERS") {
         dispatch(setLedgers(response));
       }
     });
@@ -49,7 +49,7 @@ function TallyServerStatus() {
     }
   }, [])
 
-  const handleCommandClick = (e) => {
+  const handleUpdateClick = (e) => {
     console.log('selected command:', selectedCommand);
     if (tallyStatus) {
       ipcRenderer.send('command:request', selectedCommand);
@@ -64,9 +64,7 @@ function TallyServerStatus() {
         <SingleSelect options={commandOptions} onChange={setSelectedCommand} />
         <div className="server-command-button">
           <ConditionalTooltipButton condition={!tallyStatus} message="No connection to Tally!">
-            <Button variant="outline-dark" onClick={handleCommandClick}>
-              Command
-            </Button>
+            <Button variant="outline-dark" onClick={handleUpdateClick}>Update</Button>
           </ConditionalTooltipButton>
         </div>
       </div>
