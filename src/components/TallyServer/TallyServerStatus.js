@@ -58,7 +58,9 @@ function TallyServerStatus() {
 
   return (
     <div className="server-container">
-      <Connection title={"Tally Server"} status={tallyStatus}/>
+      <div className="server-status-box">
+        <Connection title={"Tally Server"} status={tallyStatus}/>
+      </div>
 
       <div className="server-command-box">
         <SingleSelect options={commandOptions} onChange={setSelectedCommand} />
