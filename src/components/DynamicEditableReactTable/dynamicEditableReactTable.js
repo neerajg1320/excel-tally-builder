@@ -91,6 +91,10 @@ function DynamicEditableReactTable({columns, data, onCellDataChange}) {
     }
   }, [columns]);
 
+  useEffect(() => {
+    console.log('curentData:', currentData);
+  }, [currentData]);
+
   // We need to keep the table from resetting the pageIndex when we
   // Update data. So we can keep track of that flag with a ref.
 
