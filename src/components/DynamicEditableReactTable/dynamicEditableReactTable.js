@@ -2,7 +2,7 @@ import EditableReactTable from "./editableReactTable";
 import React, {useEffect, useState} from "react";
 import SingleSelect from "../SingleSelect/SingleSelect";
 import styled from 'styled-components';
-import {EditableTextCell} from './editableCells';
+import {EditableSelectCell, EditableTextCell} from './editableCells';
 
 const Styles = styled.div`
   padding: 1rem;
@@ -44,7 +44,7 @@ const Styles = styled.div`
   }
 `
 
-function DynamicEditableReactTable({columns, data, onCellDataChange}) {
+function DynamicEditableReactTable({columns, data}) {
   const [currentData, setCurrentData] = useState(data);
   const [originalData] = React.useState(data)
   const [reactColumns, setReactColumns] = useState([]);
@@ -57,30 +57,37 @@ function DynamicEditableReactTable({columns, data, onCellDataChange}) {
       const reactTableColumns  = columns.map(col => {
         const reactCol = {
           Header: col.title,
-          accessor:col.key
+          accessor:col.key,
+          choices: [1, 2]
         }
 
         if (col.editable) {
           if (col.type === 'select') {
-            reactCol.Cell = ({value, row}) => {
-              const options = col.options.map(opt => {
-                return {label: opt, value: opt}
-              });
+            reactCol.choices = col.options.map(opt => {
+              return {label: opt, value: opt}
+            });
 
-              const onCellChange = (e) => {
-                row[col.key] = e;
-                console.log(`row[${col.key}]=`, row[col.key]);
+            // reactCol.Cell = ({value, row, column, updateMyData}) => {
+            //   // console.log(`value=${JSON.stringify(value)}`);
+            //   // console.log('row=',row);
+            //   // console.log('column=', column);
+            //   // console.log('column.choices=', column.choices);
+            //
+            //
+            //   const onCellChange = (e) => {
+            //     updateMyData(row.index, column.id, e);
+            //   };
+            //
+            //   return <SingleSelect
+            //       options={column.choices}
+            //       onChange={onCellChange}
+            //   />
+            // }
 
-                if (onCellDataChange) {
-                  onCellDataChange({row, key: col.key, value: e});
-                }
-              };
+            reactCol.Cell = EditableSelectCell;
 
-              return <SingleSelect
-                  options={options}
-                  onChange={onCellChange}
-              />
-            }
+            // We need to find a way to pass the Select
+            // reactCol.Cell = EditableSelectCell;
           } else if (col.type === 'text') {
             reactCol.Cell = EditableTextCell;
           }
@@ -98,10 +105,11 @@ function DynamicEditableReactTable({columns, data, onCellDataChange}) {
   // We need to keep the table from resetting the pageIndex when we
   // Update data. So we can keep track of that flag with a ref.
 
-  // When our cell renderer calls updateMyData, we'll use
+  // When our cell renderer calls updateCurrentData, we'll use
   // the rowIndex, columnId and new value to update the
   // original data
-  const updateMyData = (rowIndex, columnId, value) => {
+  const updateCurrentData = (rowIndex, columnId, value) => {
+    console.log(`updateCurrentData: rowIndex=${rowIndex} columnsId=${columnId} value=${value}` )
     // We also turn on the flag to not reset the page
     setSkipPageReset(true)
     setCurrentData(old =>
@@ -134,7 +142,7 @@ function DynamicEditableReactTable({columns, data, onCellDataChange}) {
         <EditableReactTable
             columns={reactColumns}
             data={data}
-            updateMyData={updateMyData}
+            updateMyData={updateCurrentData}
             skipPageReset={skipPageReset}
         />
       </Styles>

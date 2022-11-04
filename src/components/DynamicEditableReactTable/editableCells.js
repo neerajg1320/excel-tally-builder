@@ -1,5 +1,6 @@
 // Create an editable cell renderer
 import React from "react";
+import SingleSelect from "../SingleSelect/SingleSelect";
 
 export const EditableTextCell = ({
                             value: initialValue,
@@ -68,4 +69,22 @@ export const EditableNumberCell = ({
   }, [initialValue])
 
   return <input value={value} onChange={onChange} onBlur={onBlur} type='number'/>
+}
+
+// We will come back to this later
+export const EditableSelectCell = ({value, row, column, updateMyData}) => {
+  // console.log(`value=${JSON.stringify(value)}`);
+  // console.log('row=',row);
+  // console.log('column=', column);
+  // console.log('column.choices=', column.choices);
+
+
+  const onCellChange = (e) => {
+    updateMyData(row.index, column.id, e);
+  };
+
+  return <SingleSelect
+      options={column.choices}
+      onChange={onCellChange}
+  />
 }
