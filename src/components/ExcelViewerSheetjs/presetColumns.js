@@ -43,7 +43,7 @@ export const kotakbankColumns = [
     "key": "Credit"
   },
   {
-    "title": "Credit",
+    "title": "Balance",
     "hidden": false,
     "type": "float",
     "key": "Balance"

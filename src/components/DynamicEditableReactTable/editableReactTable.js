@@ -89,7 +89,7 @@ function EditableReactTable({ columns, data, updateMyData, skipPageReset }) {
       usePagination
   )
 
-  console.log('EditableReactTable: data=', data);
+  // console.log('EditableReactTable: data=', data);
   // console.log(JSON.stringify(rows.map(row => row.values), null, 2))
 
   // Render the UI for your table

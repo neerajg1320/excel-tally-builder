@@ -11,7 +11,7 @@ function SingleSelect({options, onChange, defaultValue}) {
 
   return (
       <div className="select-wrapper">
-        <Form.Select aria-label="Default select example" onChange={handleChange}>
+        <Form.Select aria-label="Default select example" onChange={handleChange} defaultValue={defaultValue}>
           {/*<option>Open this select menu</option>*/}
           {
             options && (
@@ -19,7 +19,7 @@ function SingleSelect({options, onChange, defaultValue}) {
                     <option
                         key={index}
                         value={opt.value}
-                        selected={defaultValue ? (opt.value == defaultValue ? true : false) : false}
+                        // selected={defaultValue ? (opt.value == defaultValue ? true : false) : false}
                     >
                       {opt.label}
                     </option>
