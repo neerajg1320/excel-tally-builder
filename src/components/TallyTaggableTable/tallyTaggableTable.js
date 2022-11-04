@@ -6,7 +6,7 @@ import DynamicEditableReactTable from "../DynamicEditableReactTable/dynamicEdita
 // This fetches the tallyLedgers from redux state
 // This will add a category column
 // The value of cells in category column will be one of the tallyLedgers
-function TallyTaggableTable({columns, data}) {
+function TallyTaggableTable({columns, data, onDataChange}) {
   const [modifiedColumns, setModifiedColumns] = useState([]);
   const tallyLedgers = useSelector((state) => state.tally.ledgers);
 
@@ -57,7 +57,7 @@ function TallyTaggableTable({columns, data}) {
         {/* Keep the checks intact, onCellDataChange needs to have latest value of data*/}
         {(modifiedColumns.length && data.length) &&
             // <DynamicReactTable columns={modifiedColumns} data={data} onCellDataChange={onCellDataChange}/>
-            <DynamicEditableReactTable columns={modifiedColumns} data={data} />
+            <DynamicEditableReactTable columns={modifiedColumns} data={data} onDataChange={onDataChange}/>
         }
       </div>
   );

@@ -44,7 +44,7 @@ const Styles = styled.div`
   }
 `
 
-function DynamicEditableReactTable({columns, data}) {
+function DynamicEditableReactTable({columns, data, onDataChange}) {
   const [currentData, setCurrentData] = useState(data);
   const [originalData] = React.useState(data)
   const [reactColumns, setReactColumns] = useState([]);
@@ -83,6 +83,9 @@ function DynamicEditableReactTable({columns, data}) {
 
   useEffect(() => {
     console.log('curentData:', currentData);
+    if (onDataChange) {
+      onDataChange(currentData);
+    }
   }, [currentData]);
 
   // We need to keep the table from resetting the pageIndex when we

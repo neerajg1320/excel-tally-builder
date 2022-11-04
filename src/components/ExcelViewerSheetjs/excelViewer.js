@@ -8,7 +8,7 @@ import TallyTaggableTable from "../TallyTaggableTable/tallyTaggableTable";
 import {tallyColumns, kotakbankColumns} from "./presetColumns";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 
-function ExcelViewerSheetjs() {
+function ExcelViewerSheetjs({onDataChange}) {
   const [columns, setColumns] = useState([]);
   const [items, setItems] = useState([]);
 
@@ -32,7 +32,7 @@ function ExcelViewerSheetjs() {
       <input type="file" onChange={handleFileSelection}/>
       {/*<DynamicTable data={items} columns={columns}/>*/}
       {/*<DynamicReactTable data={items} columns={columns}/>*/}
-      <TallyTaggableTable data={items} columns={columns}/>
+      <TallyTaggableTable data={items} columns={columns} onDataChange={onDataChange}/>
     </div>
   );
 }

@@ -52,7 +52,7 @@ function TallyServerStatus() {
   const handleUpdateClick = (e) => {
     console.log('selected command:', selectedCommand);
     if (tallyStatus) {
-      ipcRenderer.send('command:request', selectedCommand);
+      ipcRenderer.send('command:tally:request', selectedCommand);
     }
   }
 
