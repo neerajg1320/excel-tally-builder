@@ -54,7 +54,12 @@ export const kotakbankColumns = [
     "type": "float",
     "key": "Dr / Cr"
   },
-
+  // {
+  //   "title": "Category",
+  //   "hidden": false,
+  //   "type": "float",
+  //   "key": "Category"
+  // },
 ]
 
 export const tallyColumns = [

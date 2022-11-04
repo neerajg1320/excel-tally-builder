@@ -20,7 +20,7 @@ function TallyTaggableTable({columns, data}) {
               key: 'Category',
               type: 'select',
               editable: true,
-              options: tallyLedgers,
+              options: ['Select Ledger'].concat(tallyLedgers),
               default: tallyLedgers.length ? tallyLedgers[3] : "",
             },
             {
@@ -32,6 +32,7 @@ function TallyTaggableTable({columns, data}) {
           ]
       );
 
+      console.log('newColumns after modification:', newColumns);
       setModifiedColumns(newColumns);
     }
 
