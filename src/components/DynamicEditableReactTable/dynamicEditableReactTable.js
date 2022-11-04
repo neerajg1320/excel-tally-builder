@@ -58,7 +58,6 @@ function DynamicEditableReactTable({columns, data}) {
         const reactCol = {
           Header: col.title,
           accessor:col.key,
-          choices: [1, 2]
         }
 
         if (col.editable) {
@@ -66,23 +65,6 @@ function DynamicEditableReactTable({columns, data}) {
             reactCol.choices = col.options.map(opt => {
               return {label: opt, value: opt}
             });
-
-            // reactCol.Cell = ({value, row, column, updateMyData}) => {
-            //   // console.log(`value=${JSON.stringify(value)}`);
-            //   // console.log('row=',row);
-            //   // console.log('column=', column);
-            //   // console.log('column.choices=', column.choices);
-            //
-            //
-            //   const onCellChange = (e) => {
-            //     updateMyData(row.index, column.id, e);
-            //   };
-            //
-            //   return <SingleSelect
-            //       options={column.choices}
-            //       onChange={onCellChange}
-            //   />
-            // }
 
             reactCol.Cell = EditableSelectCell;
 

@@ -86,5 +86,6 @@ export const EditableSelectCell = ({value, row, column, updateMyData}) => {
   return <SingleSelect
       options={column.choices}
       onChange={onCellChange}
+      defaultValue="Laptops"
   />
 }

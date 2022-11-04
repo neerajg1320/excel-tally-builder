@@ -1,6 +1,6 @@
 import Form from 'react-bootstrap/Form';
 
-function SingleSelect({options, onChange}) {
+function SingleSelect({options, onChange, defaultValue}) {
   const handleChange = (e) => {
     // console.log('SingleSelect:handleChange', e.target.value);
     if (onChange) {
@@ -14,7 +14,15 @@ function SingleSelect({options, onChange}) {
           {/*<option>Open this select menu</option>*/}
           {
             options && (
-                options.map((opt, index) => <option key={index} value={opt.value}>{opt.label}</option>)
+                options.map((opt, index) =>
+                    <option
+                        key={index}
+                        value={opt.value}
+                        selected={defaultValue ? (opt.value == defaultValue ? true : false) : false}
+                    >
+                      {opt.label}
+                    </option>
+                )
               )
           }
         </Form.Select>
