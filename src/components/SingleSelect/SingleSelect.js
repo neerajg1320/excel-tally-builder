@@ -1,4 +1,5 @@
 import Form from 'react-bootstrap/Form';
+import './style.css';
 
 function SingleSelect({options, onChange, defaultValue}) {
   const handleChange = (e) => {

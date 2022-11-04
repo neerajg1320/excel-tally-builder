@@ -58,6 +58,7 @@ function DynamicEditableReactTable({columns, data}) {
         const reactCol = {
           Header: col.title,
           accessor:col.key,
+          width:200
         }
 
         if (col.editable) {
@@ -65,8 +66,8 @@ function DynamicEditableReactTable({columns, data}) {
             reactCol.choices = col.options.map(opt => {
               return {label: opt, value: opt}
             });
-
             reactCol.Cell = EditableSelectCell;
+
 
             // We need to find a way to pass the Select
             // reactCol.Cell = EditableSelectCell;
