@@ -8,7 +8,7 @@ export const readExcel = (file) => {
 
     fileReader.onload = (e) => {
       const bufferArray = e.target.result;
-      const wb = XLSX.read(bufferArray, {type: 'buffer'});
+      const wb = XLSX.read(bufferArray, {type: 'buffer',cellDates: true});
       const wsname = wb.SheetNames[0];
       const ws = wb.Sheets[wsname];
 

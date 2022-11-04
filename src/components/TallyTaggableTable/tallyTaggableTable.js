@@ -55,9 +55,10 @@ function TallyTaggableTable({columns, data, onDataChange}) {
   return (
       <div>
         {/* Keep the checks intact, onCellDataChange needs to have latest value of data*/}
-        {(modifiedColumns.length && data.length) &&
+        {(modifiedColumns.length && data.length) ?
             // <DynamicReactTable columns={modifiedColumns} data={data} onCellDataChange={onCellDataChange}/>
-            <DynamicEditableReactTable columns={modifiedColumns} data={data} onDataChange={onDataChange}/>
+            <DynamicEditableReactTable columns={modifiedColumns} data={data} onDataChange={onDataChange}/> :
+            <span></span>
         }
       </div>
   );
