@@ -56,7 +56,7 @@ function ExcelViewerSheetjs({data, onDataChange}) {
   return (
     <div className="excel-preview-wrapper">
       <input type="file" onChange={handleFileSelection}/>
-      <TallyTaggableTable data={data} columns={columns} onDataChange={onDataChange}/>
+      <TallyTaggableTable columns={columns} data={data} onDataChange={onDataChange}/>
     </div>
   );
 }

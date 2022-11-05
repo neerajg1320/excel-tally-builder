@@ -37,26 +37,11 @@ function TallyTaggableTable({columns, data, onDataChange}) {
     }
 
   }, [columns, tallyLedgers]);
-
-  useEffect(() => {
-    console.log('TallyTaggableTable:useEffect data modified', data);
-    // console.log(JSON.stringify(data, null, 2));
-  }, [data]);
-
-  // We need useCallback, otherwise the value of data is [] in the function without it.
-  // const onCellDataChange = useCallback(({row, key, value}) => {
-  //   console.log("onCellDataChange: row=", row);
-  //   if (data.length) {
-  //     data[row.id][key] = value;
-  //   }
-  //   console.log('TallyTaggableTable:onCellDataChange data modified', data);
-  // }, [data]);
-
+  
   return (
       <div>
         {/* Keep the checks intact, onCellDataChange needs to have latest value of data*/}
         {(modifiedColumns.length && data.length) ?
-            // <DynamicReactTable columns={modifiedColumns} data={data} onCellDataChange={onCellDataChange}/>
             <DynamicEditableReactTable columns={modifiedColumns} data={data} onDataChange={onDataChange}/> :
             <span></span>
         }
