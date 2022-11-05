@@ -28,6 +28,12 @@ function TallyTaggableTable({columns, data, onDataChange}) {
               key: 'Remarks',
               type: 'text',
               editable: true,
+            },
+            {
+              title: 'VoucherID',
+              key: 'VoucherID',
+              type: 'text',
+              editable: false,
             }
           ]
       );

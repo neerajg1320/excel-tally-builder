@@ -2,7 +2,7 @@ import ExcelViewerSheetjs from "../ExcelViewerSheetjs/excelViewer";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 import Button from "react-bootstrap/Button";
 import './style.css';
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 const { ipcRenderer } = window.require('electron');
 
@@ -22,21 +22,43 @@ function ExcelTallyHandler() {
     setData(newData);
   };
 
+  const handleResponse = (response) => {
+    console.log(`command:vouchers:response response=${JSON.stringify(response, null, 2)}`);
+    if (response.command == 'ADD_BANK_TRANSACTIONS') {
+      const resultMap = Object.fromEntries(response.results.map(res => [res.id, res.voucher_id]));
+      console.log(`resultMap=${JSON.stringify(resultMap)}`);
+      const newData = data.map(row => {
+        return {
+          ...row,
+          'VoucherID': resultMap[row.Serial]
+        }
+      });
+
+      setData(newData);
+    }
+  };
+
   const handleSubmit = (e) => {
     if (tallyStatus) {
       //TBD: This should be put in the Tally specific code
       if (data.length) {
         ipcRenderer.once('command:vouchers:response', (event, response) => {
-          console.log(`command:vouchers:response results=${JSON.stringify(response, null, 2)}`);
+          handleResponse(response);
+        });
+
+        // Add id to the rows
+        const requestData = data.map(row => {
+          // console.log('handleSubmit:', row)
+          return {...row, id:row.Serial};
         });
 
         ipcRenderer.send('command:vouchers:request', {
           command: 'ADD_BANK_TRANSACTIONS',
-          data: data.map(row => {
-            console.log('handleSubmit:', row)
-            return {...row, id:row.Serial};
-          })
+          data: requestData
         });
+
+        // setData(requestData);
+        onDataChange(requestData);
       }
     }
   };

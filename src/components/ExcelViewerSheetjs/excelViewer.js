@@ -19,31 +19,50 @@ function ExcelViewerSheetjs({data, onDataChange}) {
   }, [])
 
 
+
   const handleFileSelection = (e) => {
     const file = e.target.files[0];
     readExcel(file)
       .then(resp => {
-        const rows = resp.map(row => {
-
-          const transactionDate = DateFromString(row['Transaction Date'], "dd/MM/yyyy hh:mm aa")
-          // console.log(`transactionDate=${transactionDate}`);
-          const valueDate = DateFromString(row['Value Date'], "dd/MM/yyyy");
-          // console.log(`valueDate=${valueDate}`);
-
-          const parsedRow = {
-            ...row,
-            'Transaction Date': DateToStringDate(transactionDate),
-            'Value Date': DateToStringDate(valueDate),
-            'Balance': NumberFromString(row['Balance'])
-          }
-          if (Object.keys(row).includes('Debit')) {
-            parsedRow['Debit'] = NumberFromString(row['Debit'])
-          }
-          if (Object.keys(row).includes('Credit')) {
-            parsedRow['Credit'] = NumberFromString(row['Credit'])
+        const rows = resp.map((row) => {
+          console.log(`handleFileSelection: '${row['Transaction Date']}' '${row['Value Date']}'`);
+          let transactionDate = row['Transaction Date'];
+          if (!transactionDate instanceof Date) {
+            transactionDate = DateFromString(transactionDate, "dd/MM/yyyy hh:mm aa")
           }
 
-          return parsedRow;
+          let valueDate = row['Value Date'];
+          if (!valueDate instanceof Date) {
+            valueDate = DateFromString(valueDate, "dd/MM/yyyy");
+          }
+
+          try {
+            const parsedRow = {
+              ...row,
+              'Transaction Date': DateToStringDate(transactionDate),
+              'Value Date': DateToStringDate(valueDate),
+              'Balance': NumberFromString(row['Balance'])
+            }
+            if (Object.keys(row).includes('Debit')) {
+              parsedRow['Debit'] = NumberFromString(row['Debit'])
+            }
+            if (Object.keys(row).includes('Credit')) {
+              parsedRow['Credit'] = NumberFromString(row['Credit'])
+            }
+
+            return parsedRow;
+            //The following catch needs to be removed
+          } catch (error) {
+            console.log(error);
+            // console.log(`handleFileSelection: row=${JSON.stringify(row, null, 2)}`)
+
+            const parsedRow = {
+              ...row,
+              'Transaction Date': transactionDate.toString(),
+              'Value Date': valueDate.toString(),
+            }
+            return parsedRow;
+          }
         });
 
         console.log(`Read from file, rows=`, rows);
