@@ -7,7 +7,8 @@ import DynamicReactTable from "../DynamicReactTable/dynamicReactTable";
 import TallyTaggableTable from "../TallyTaggableTable/tallyTaggableTable";
 import {tallyColumns, kotakbankColumns} from "./presetColumns";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
-import {DateToStringDate} from "../../utils/date";
+import {DateToStringDate, DateFromString} from "../../utils/date";
+import {NumberFromString} from "../../utils/number";
 
 function ExcelViewerSheetjs({onDataChange}) {
   const [columns, setColumns] = useState([]);
@@ -24,10 +25,26 @@ function ExcelViewerSheetjs({onDataChange}) {
     readExcel(file)
       .then(resp => {
         const data = resp.map(row => {
-          return {
+
+          const transactionDate = DateFromString(row['Transaction Date'], "dd/MM/yyyy hh:mm aa")
+          console.log(`transactionDate=${transactionDate}`);
+          const valueDate = DateFromString(row['Value Date'], "dd/MM/yyyy");
+          console.log(`valueDate=${valueDate}`);
+
+          const parsedRow = {
             ...row,
-            'Transaction Date': DateToStringDate(new Date("2022-06-02"))
+            'Transaction Date': DateToStringDate(transactionDate),
+            'Value Date': DateToStringDate(valueDate),
+            'Balance': NumberFromString(row['Balance'])
           }
+          if (Object.keys(row).includes('Debit')) {
+            parsedRow['Debit'] = NumberFromString(row['Debit'])
+          }
+          if (Object.keys(row).includes('Credit')) {
+            parsedRow['Credit'] = NumberFromString(row['Credit'])
+          }
+
+          return parsedRow;
         });
         console.log(data);
         setItems(data);
