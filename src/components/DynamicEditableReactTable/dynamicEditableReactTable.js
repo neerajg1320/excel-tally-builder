@@ -117,13 +117,8 @@ function DynamicEditableReactTable({columns, data, onDataChange}) {
     setSkipPageReset(false)
   }, [data])
 
-  // Let's add a data resetter/randomizer to help
-  // illustrate that flow...
-  const resetData = () => setCurrentData(originalData)
-
   return (
       <Styles>
-        <button onClick={resetData}>Reset Data</button>
         <EditableReactTable
             columns={reactColumns}
             data={data}

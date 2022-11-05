@@ -37,7 +37,7 @@ function TallyTaggableTable({columns, data, onDataChange}) {
     }
 
   }, [columns, tallyLedgers]);
-  
+
   return (
       <div>
         {/* Keep the checks intact, onCellDataChange needs to have latest value of data*/}

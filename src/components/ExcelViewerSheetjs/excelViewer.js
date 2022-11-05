@@ -1,5 +1,5 @@
 import * as XLSX from "xlsx";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {readExcel} from "../../excel/read";
 import './style.css';
 import DynamicTable from "../DynamicTable/dynamicTable";
@@ -12,6 +12,7 @@ import {NumberFromString} from "../../utils/number";
 
 function ExcelViewerSheetjs({data, onDataChange}) {
   const [columns, setColumns] = useState([]);
+  const [fileData, setFileData] = useState([]);
 
   useEffect(() => {
     setColumns(kotakbankColumns);
@@ -22,7 +23,7 @@ function ExcelViewerSheetjs({data, onDataChange}) {
     const file = e.target.files[0];
     readExcel(file)
       .then(resp => {
-        const items = resp.map(row => {
+        const rows = resp.map(row => {
 
           const transactionDate = DateFromString(row['Transaction Date'], "dd/MM/yyyy hh:mm aa")
           // console.log(`transactionDate=${transactionDate}`);
@@ -45,17 +46,30 @@ function ExcelViewerSheetjs({data, onDataChange}) {
           return parsedRow;
         });
 
-        console.log(`Read from file, item=`, items);
+        console.log(`Read from file, rows=`, rows);
+        setFileData(rows);
 
         if (onDataChange) {
-          onDataChange(items);
+          onDataChange(rows);
         }
       });
   }
 
+  // Let's add a data resetter/randomizer to help
+  // illustrate that flow...
+  const resetData = () => {
+    if (onDataChange) {
+      onDataChange(fileData);
+    }
+  }
+
+
   return (
     <div className="excel-preview-wrapper">
-      <input type="file" onChange={handleFileSelection}/>
+      <div>
+        <input type="file" onChange={handleFileSelection}/>
+        <button onClick={resetData}>Reset Data</button>
+      </div>
       <TallyTaggableTable columns={columns} data={data} onDataChange={onDataChange}/>
     </div>
   );
