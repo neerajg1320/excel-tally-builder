@@ -7,7 +7,7 @@ import DynamicReactTable from "../DynamicReactTable/dynamicReactTable";
 import TallyTaggableTable from "../TallyTaggableTable/tallyTaggableTable";
 import {tallyColumns, kotakbankColumns} from "./presetColumns";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
-import {DateToStringDate, DateFromString} from "../../utils/date";
+import {DateToStringDate, DateFromString, isDate} from "../../utils/date";
 import {NumberFromString} from "../../utils/number";
 
 function ExcelViewerSheetjs({data, onDataChange}) {
@@ -21,19 +21,29 @@ function ExcelViewerSheetjs({data, onDataChange}) {
 
 
   const handleFileSelection = (e) => {
+    const debugFn = false;
     const file = e.target.files[0];
     readExcel(file)
       .then(resp => {
         const rows = resp.map((row) => {
-          console.log(`handleFileSelection: '${row['Transaction Date']}' '${row['Value Date']}'`);
+          if (debugFn) {
+            console.log(`handleFileSelection: '${row['Transaction Date']}' '${row['Value Date']}'`);
+          }
+
           let transactionDate = row['Transaction Date'];
-          if (!transactionDate instanceof Date) {
-            transactionDate = DateFromString(transactionDate, "dd/MM/yyyy hh:mm aa")
+          if (!isDate(transactionDate)) {
+            transactionDate = DateFromString(transactionDate, "dd/MM/yyyy hh:mm aa");
+            if (debugFn) {
+              console.log('transactionDate converted to type Date', transactionDate.toString());
+            }
           }
 
           let valueDate = row['Value Date'];
-          if (!valueDate instanceof Date) {
+          if (!isDate(valueDate)) {
             valueDate = DateFromString(valueDate, "dd/MM/yyyy");
+            if (debugFn) {
+              console.log('valueDate converted to type Date', valueDate.toString());
+            }
           }
 
           try {
