@@ -10,12 +10,10 @@ import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton"
 import {DateToStringDate, DateFromString} from "../../utils/date";
 import {NumberFromString} from "../../utils/number";
 
-function ExcelViewerSheetjs({onDataChange}) {
+function ExcelViewerSheetjs({data, onDataChange}) {
   const [columns, setColumns] = useState([]);
-  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    // setColumns(tallyColumns);
     setColumns(kotakbankColumns);
   }, [])
 
@@ -24,7 +22,7 @@ function ExcelViewerSheetjs({onDataChange}) {
     const file = e.target.files[0];
     readExcel(file)
       .then(resp => {
-        const data = resp.map(row => {
+        const items = resp.map(row => {
 
           const transactionDate = DateFromString(row['Transaction Date'], "dd/MM/yyyy hh:mm aa")
           // console.log(`transactionDate=${transactionDate}`);
@@ -47,10 +45,10 @@ function ExcelViewerSheetjs({onDataChange}) {
           return parsedRow;
         });
 
-        console.log(data);
-        setItems(data);
+        console.log(`Read from file, item=`, items);
+
         if (onDataChange) {
-          onDataChange(data);
+          onDataChange(items);
         }
       });
   }
@@ -58,7 +56,7 @@ function ExcelViewerSheetjs({onDataChange}) {
   return (
     <div className="excel-preview-wrapper">
       <input type="file" onChange={handleFileSelection}/>
-      <TallyTaggableTable data={items} columns={columns} onDataChange={onDataChange}/>
+      <TallyTaggableTable data={data} columns={columns} onDataChange={onDataChange}/>
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import Form from 'react-bootstrap/Form';
 import './style.css';
+import {useEffect} from "react";
 
-function SingleSelect({options, onChange, defaultValue}) {
+function SingleSelect({options, onChange, value}) {
   const handleChange = (e) => {
     // console.log('SingleSelect:handleChange', e.target.value);
     if (onChange) {
@@ -9,9 +10,13 @@ function SingleSelect({options, onChange, defaultValue}) {
     }
   }
 
+  // useEffect(() => {
+  //   console.log(`defaultValue=${defaultValue}`);
+  // }, [defaultValue])
+
   return (
       <div className="select-wrapper">
-        <Form.Select aria-label="Default select example" onChange={handleChange} defaultValue={defaultValue}>
+        <Form.Select aria-label="Default select example" onChange={handleChange} value={value} >
           {/*<option>Open this select menu</option>*/}
           {
             options && (

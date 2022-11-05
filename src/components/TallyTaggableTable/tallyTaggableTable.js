@@ -44,13 +44,13 @@ function TallyTaggableTable({columns, data, onDataChange}) {
   }, [data]);
 
   // We need useCallback, otherwise the value of data is [] in the function without it.
-  const onCellDataChange = useCallback(({row, key, value}) => {
-    console.log("onCellDataChange: row=", row);
-    if (data.length) {
-      data[row.id][key] = value;
-    }
-    console.log('TallyTaggableTable:onCellDataChange data modified', data);
-  }, [data]);
+  // const onCellDataChange = useCallback(({row, key, value}) => {
+  //   console.log("onCellDataChange: row=", row);
+  //   if (data.length) {
+  //     data[row.id][key] = value;
+  //   }
+  //   console.log('TallyTaggableTable:onCellDataChange data modified', data);
+  // }, [data]);
 
   return (
       <div>

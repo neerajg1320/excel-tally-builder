@@ -37,7 +37,7 @@ function ExcelTallyHandler() {
 
   return (
     <div className="excel-handler-wrapper">
-      <ExcelViewerSheetjs onDataChange={onDataChange}/>
+      <ExcelViewerSheetjs data={data} onDataChange={onDataChange}/>
       <ConditionalTooltipButton condition={true} message="Submit To Tally">
         <Button variant="primary" onClick={handleSubmit}>Submit To Tally</Button>
       </ConditionalTooltipButton>

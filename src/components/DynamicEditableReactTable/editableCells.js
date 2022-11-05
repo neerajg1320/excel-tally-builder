@@ -73,7 +73,7 @@ export const EditableNumberCell = ({
 
 // We will come back to this later
 export const EditableSelectCell = ({value:initialValue, row, column, updateMyData}) => {
-  // console.log(`value=${JSON.stringify(initialValue)}`);
+  // console.log(`value=${JSON.stringify(value)}`);
   // console.log('row=',row);
   // console.log('column=', column);
   // console.log('column.choices=', column.choices);
@@ -86,6 +86,6 @@ export const EditableSelectCell = ({value:initialValue, row, column, updateMyDat
   return <SingleSelect
       options={column.choices}
       onChange={onCellChange}
-      defaultValue={initialValue}
+      value={initialValue}
   />
 }

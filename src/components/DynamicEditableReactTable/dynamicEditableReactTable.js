@@ -68,7 +68,6 @@ function DynamicEditableReactTable({columns, data, onDataChange}) {
             });
             reactCol.Cell = EditableSelectCell;
 
-
             // We need to find a way to pass the Select
             // reactCol.Cell = EditableSelectCell;
           } else if (col.type === 'text') {
