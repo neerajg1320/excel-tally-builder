@@ -15,6 +15,8 @@ import {useSelector} from "react-redux";
 function ExcelViewerSheetjs({data, onDataChange}) {
   const [columns, setColumns] = useState([]);
   const [fileData, setFileData] = useState([]);
+  const [selectedBank, setSelectedBank] = useState("");
+
   const tallyBankOptions = useSelector((state) => {
     const tallyBankLedgers = state.tally.ledgers.filter(lgr => lgr.parent === "Bank Accounts")
     const options = tallyBankLedgers.map((lgr) => {
@@ -31,6 +33,18 @@ function ExcelViewerSheetjs({data, onDataChange}) {
 
   const handleBankSelection = (e) => {
     console.log(`Selected Bank: ${e}`);
+    setSelectedBank(e);
+
+    const newData = data.map(row => {
+      return {
+        ...row,
+        Bank: e
+      }
+    })
+
+    if (onDataChange) {
+      onDataChange(newData);
+    }
   }
 
 
@@ -44,6 +58,10 @@ function ExcelViewerSheetjs({data, onDataChange}) {
             console.log(`handleFileSelection: '${row['Transaction Date']}' '${row['Value Date']}'`);
           }
 
+          if (selectedBank !== "") {
+            row.Bank = selectedBank;
+          }
+          
           let transactionDate = row['Transaction Date'];
           if (!isDate(transactionDate)) {
             transactionDate = DateFromString(transactionDate, "dd/MM/yyyy hh:mm aa");
