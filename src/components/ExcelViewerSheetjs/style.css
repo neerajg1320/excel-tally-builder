@@ -4,7 +4,30 @@
     min-height: 200px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
 }
 
+.excel-preview-header {
+    display: flex;
+    flex-direction: row;
+    /*border: 1px solid rebeccapurple;*/
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0 20px 0;
+}
+
+.bank-selection-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 30%;
+}
+
+.excel-table-wrapper {
+    width: 100%;
+    border: 1px dashed purple;
+    overflow: scroll;
+}

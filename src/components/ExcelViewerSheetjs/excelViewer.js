@@ -9,15 +9,29 @@ import {tallyColumns, kotakbankColumns} from "./presetColumns";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 import {DateToStringDate, DateFromString, isDate} from "../../utils/date";
 import {NumberFromString} from "../../utils/number";
+import SingleSelect from "../SingleSelect/SingleSelect";
+import {useSelector} from "react-redux";
 
 function ExcelViewerSheetjs({data, onDataChange}) {
   const [columns, setColumns] = useState([]);
   const [fileData, setFileData] = useState([]);
+  const tallyBankOptions = useSelector((state) => {
+    const tallyBankLedgers = state.tally.ledgers.filter(lgr => lgr.parent === "Bank Accounts")
+    const options = tallyBankLedgers.map((lgr) => {
+      return {label: lgr.name, value: lgr.name}
+    });
+
+    return [{label: "Select Bank", value:""}].concat(options);
+  });
+
 
   useEffect(() => {
     setColumns(kotakbankColumns);
   }, [])
 
+  const handleBankSelection = (e) => {
+    console.log(`Selected Bank: ${e}`);
+  }
 
 
   const handleFileSelection = (e) => {
@@ -95,11 +109,17 @@ function ExcelViewerSheetjs({data, onDataChange}) {
 
   return (
     <div className="excel-preview-wrapper">
-      <div>
+      <div className="excel-preview-header">
+        <div className="bank-selection-box">
+          <label>Select Bank</label>
+          <SingleSelect options={tallyBankOptions} onChange={handleBankSelection}/>
+        </div>
         <input type="file" onChange={handleFileSelection}/>
         <button onClick={resetData}>Reset Data</button>
       </div>
-      <TallyTaggableTable columns={columns} data={data} onDataChange={onDataChange}/>
+      <div className="excel-table-wrapper">
+        <TallyTaggableTable columns={columns} data={data} onDataChange={onDataChange}/>
+      </div>
     </div>
   );
 }
