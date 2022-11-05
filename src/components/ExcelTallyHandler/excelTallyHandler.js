@@ -26,6 +26,7 @@ function ExcelTallyHandler() {
     if (tallyStatus) {
       //TBD: This should be put in the Tally specific code
       if (data.length) {
+
         ipcRenderer.send('command:request', {
           command: 'ADD_BANK_TRANSACTIONS',
           data

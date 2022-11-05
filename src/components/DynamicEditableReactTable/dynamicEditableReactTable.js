@@ -82,11 +82,9 @@ function DynamicEditableReactTable({columns, data, onDataChange}) {
   }, [columns]);
 
   useEffect(() => {
-    console.log('curentData:', currentData);
-    if (onDataChange) {
-      onDataChange(currentData);
-    }
-  }, [currentData]);
+    console.log('curentData:', data);
+    setCurrentData(data);
+  }, [data]);
 
   // We need to keep the table from resetting the pageIndex when we
   // Update data. So we can keep track of that flag with a ref.
@@ -98,17 +96,19 @@ function DynamicEditableReactTable({columns, data, onDataChange}) {
     console.log(`updateCurrentData: rowIndex=${rowIndex} columnsId=${columnId} value=${value}` )
     // We also turn on the flag to not reset the page
     setSkipPageReset(true)
-    setCurrentData(old =>
-        old.map((row, index) => {
-          if (index === rowIndex) {
-            return {
-              ...old[rowIndex],
-              [columnId]: value,
-            }
-          }
-          return row
-        })
-    )
+    const newData = currentData.map((row, index) => {
+      if (index === rowIndex) {
+        return {
+          ...row,
+          [columnId]: value,
+        }
+      }
+      return row
+    })
+
+    if (onDataChange) {
+      onDataChange(newData);
+    }
   }
 
   // After data chagnes, we turn the flag back off

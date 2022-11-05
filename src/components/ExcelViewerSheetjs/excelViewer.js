@@ -27,9 +27,9 @@ function ExcelViewerSheetjs({onDataChange}) {
         const data = resp.map(row => {
 
           const transactionDate = DateFromString(row['Transaction Date'], "dd/MM/yyyy hh:mm aa")
-          console.log(`transactionDate=${transactionDate}`);
+          // console.log(`transactionDate=${transactionDate}`);
           const valueDate = DateFromString(row['Value Date'], "dd/MM/yyyy");
-          console.log(`valueDate=${valueDate}`);
+          // console.log(`valueDate=${valueDate}`);
 
           const parsedRow = {
             ...row,
@@ -46,6 +46,7 @@ function ExcelViewerSheetjs({onDataChange}) {
 
           return parsedRow;
         });
+
         console.log(data);
         setItems(data);
         if (onDataChange) {
@@ -57,8 +58,6 @@ function ExcelViewerSheetjs({onDataChange}) {
   return (
     <div className="excel-preview-wrapper">
       <input type="file" onChange={handleFileSelection}/>
-      {/*<DynamicTable data={items} columns={columns}/>*/}
-      {/*<DynamicReactTable data={items} columns={columns}/>*/}
       <TallyTaggableTable data={items} columns={columns} onDataChange={onDataChange}/>
     </div>
   );
