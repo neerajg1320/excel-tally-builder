@@ -26,8 +26,11 @@ function ExcelTallyHandler() {
     if (tallyStatus) {
       //TBD: This should be put in the Tally specific code
       if (data.length) {
+        ipcRenderer.on('command:vouchers:response', (event, response) => {
+          console.log(`command:vouchers:response results=${JSON.stringify(response, null, 2)}`);
+        });
 
-        ipcRenderer.send('command:request', {
+        ipcRenderer.send('command:vouchers:request', {
           command: 'ADD_BANK_TRANSACTIONS',
           data
         });
