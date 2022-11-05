@@ -12,6 +12,7 @@ function TallyTaggableTable({columns, data, onDataChange}) {
 
   useEffect(() => {
     if (columns.length) {
+      console.log('tallyLedgers:', tallyLedgers);
       //TBD: Add column only if it is already not added
       const newColumns = columns.concat(
           [
@@ -20,7 +21,7 @@ function TallyTaggableTable({columns, data, onDataChange}) {
               key: 'Category',
               type: 'select',
               editable: true,
-              options: ['Select Ledger'].concat(tallyLedgers),
+              options: ['Select Ledger'].concat(tallyLedgers.map(tl => tl.name)),
               default: tallyLedgers.length ? tallyLedgers[3] : "",
             },
             {
