@@ -17,9 +17,9 @@ function ExcelTallyHandler() {
     }
   }, [tallyStatus]);
 
-  const onDataChange = (currentData) => {
-    console.log('ExcelTallyHandler:onDataChange: currentData=', currentData);
-    setData(currentData);
+  const onDataChange = (newData) => {
+    console.log('ExcelTallyHandler:onDataChange: newData=', newData);
+    setData(newData);
   };
 
   const handleSubmit = (e) => {
