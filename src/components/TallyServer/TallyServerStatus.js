@@ -17,9 +17,9 @@ function TallyServerStatus() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    ipcRenderer.on('tally:server:status', (event, status) => {
+    ipcRenderer.on('tally:server:status:response', (event, status) => {
       if (tallyDebug) {
-        console.log('mainWindow: tally:server:status=', status);
+        console.log('mainWindow: tally:server:status:response=', status);
       }
       dispatch(setStatus(status));
     });
@@ -43,8 +43,8 @@ function TallyServerStatus() {
 
     return () => {
       console.log('Removing Listeners');
-      ipcRenderer.removeListener('tally:server:status', () => {
-        console.log('tally:server:status')
+      ipcRenderer.removeListener('tally:server:status:response', () => {
+        console.log('tally:server:status:response')
       });
     }
   }, [])
