@@ -1,8 +1,6 @@
 import FilePickerComponent from "./FilePicker/filePickerComponent";
 import FileUploadSimple from "./FileUploadSimple/fileUpload";
 import FilesView from "./FilesList/filesView";
-import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
-import Button from "react-bootstrap/Button";
 
 function FilePickerWithList({files, onFilesChange}) {
   const flagShowSimpleBox = false;

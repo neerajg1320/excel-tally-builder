@@ -6,7 +6,7 @@ import {useCallback, useEffect, useState} from "react";
 import {useSelector} from "react-redux";
 const { ipcRenderer } = window.require('electron');
 
-function ExcelTallyHandler() {
+function ExcelBankTallyHandler() {
   const [data, setData] = useState([]);
   const tallyStatus = useSelector(state => state.tally.status);
 
@@ -18,7 +18,7 @@ function ExcelTallyHandler() {
   }, [tallyStatus]);
 
   const onDataChange = (newData) => {
-    console.log('ExcelTallyHandler:onDataChange: newData=', newData);
+    console.log('ExcelBankTallyHandler:onDataChange: newData=', newData);
     setData(newData);
   };
 
@@ -73,4 +73,4 @@ function ExcelTallyHandler() {
   );
 }
 
-export default ExcelTallyHandler;
+export default ExcelBankTallyHandler;
