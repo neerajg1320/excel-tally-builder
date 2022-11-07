@@ -24,7 +24,7 @@ function TallyServerStatus() {
       dispatch(setStatus(status));
     });
 
-    ipcRenderer.on('command:list:response', (event, commands) => {
+    ipcRenderer.once('command:list:response', (event, commands) => {
       console.log(`commands: ${commands}`);
       if (commands.length) {
         const options = commands.map((cmd) => {return {label: cmd, value:cmd}});
@@ -32,7 +32,7 @@ function TallyServerStatus() {
       }
     });
 
-    ipcRenderer.on('command:response', (event, {request, response}) => {
+    ipcRenderer.once('command:response', (event, {request, response}) => {
       if (request == "LEDGERS") {
         dispatch(setLedgers(response));
       }
