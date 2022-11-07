@@ -22,7 +22,7 @@ function createWindow() {
       `file://${path.join(__dirname, '../index.html')}`
   );
 
-  sayHello("Neeraj");
+  sayHello("Hello from Electron");
 }
 
 app.on('ready', createWindow);

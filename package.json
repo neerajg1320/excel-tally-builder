@@ -25,7 +25,6 @@
     "xlsx": "^0.18.5",
     "xml2js": "^0.4.23"
   },
-  "main_old_disabled": "electron-excel-tally/index_react.js",
   "main": "public/electron/main.js",
   "homepage": "./",
   "scripts": {
