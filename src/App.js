@@ -1,17 +1,18 @@
 import {useEffect, useState} from "react";
-import FilePickerComponent from "./components/FilePicker/filePickerComponent";
+import FilePickerComponent from "./components/FilePickerWithList/FilePicker/filePickerComponent";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import FileUploadSimple from "./components/FileUploadSimple/fileUpload";
+import FileUploadSimple from "./components/FilePickerWithList/FileUploadSimple/fileUpload";
 import './App.css';
-import FilesView from "./components/FilesList/filesView";
+import FilesView from "./components/FilePickerWithList/FilesList/filesView";
 import {useSelector, useDispatch} from "react-redux";
 
 import Button from 'react-bootstrap/Button';
 import ConditionalTooltipButton from "./components/TooltipButton/ConditionalTooltipButton";
 
 import TallyServerStatus from "./components/TallyServer/TallyServerStatus";
-import ExcelViewerSheetjs from "./components/ExcelViewerSheetjs/excelViewer";
 import ExcelTallyHandler from "./components/ExcelTallyHandler/excelTallyHandler";
+import FilePickerWithList from "./components/FilePickerWithList/filePickerWithList";
+
 
 const { ipcRenderer } = window.require('electron');
 
@@ -21,7 +22,7 @@ function App() {
   const [tooltipMessage, setTooltipMessage] = useState("Message to be set");
 
 
-  const flagShowSimpleBox = false;
+
   const tallyStatus = useSelector((state) => state.tally.status);
   const dispatch = useDispatch();
 
@@ -69,29 +70,13 @@ function App() {
 
       <ExcelTallyHandler />
 
-      <div className="app-box">
-        <div>
-          <FilePickerComponent onChange={setFiles} />
-        </div>
+      <FilePickerWithList files={files} onFilesChange={setFiles}/>
 
-        {flagShowSimpleBox &&
-          <div className="files-simple-box">
-            <FileUploadSimple onChange={setFiles}/>
-          </div>
-        }
-
-        <div className="files-view-box">
-          <FilesView files={files} onChange={setFiles}/>
-        </div>
-
-        <div className="submit-box">
-          <ConditionalTooltipButton condition={!submitEnabled} message={tooltipMessage}>
-            <Button variant="primary" onClick={handleSubmit}>Submit</Button>
-          </ConditionalTooltipButton>
-        </div>
+      <div className="submit-box">
+        <ConditionalTooltipButton condition={!submitEnabled} message={tooltipMessage}>
+          <Button variant="primary" onClick={handleSubmit}>Submit</Button>
+        </ConditionalTooltipButton>
       </div>
-
-
     </div>
   );
 }
