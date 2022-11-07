@@ -6,7 +6,7 @@ function FilePickerWithList({files, onFilesChange}) {
   const flagShowSimpleBox = false;
 
   return(
-      <div className="app-box">
+      <div>
         <div>
           <FilePickerComponent onChange={onFilesChange} />
         </div>

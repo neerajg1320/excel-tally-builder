@@ -70,7 +70,7 @@ function ExcelCommandTallyHandler() {
   }
 
   return (
-      <div>
+      <div className="app-box">
         <FilePickerWithList files={files} onFilesChange={setFiles}/>
         <TallySubmitButton files={files} onClick={handleSubmit}/>
       </div>
