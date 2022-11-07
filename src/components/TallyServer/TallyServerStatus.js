@@ -17,9 +17,18 @@ function TallyServerStatus() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    ipcRenderer.on('tally:server:status:response', (event, status) => {
+
+    ipcRenderer.once('tally:server:status:response', (event, status) => {
       if (tallyDebug) {
         console.log('mainWindow: tally:server:status:response=', status);
+      }
+      dispatch(setStatus(status));
+    });
+
+    // This is a health event which is sent by electron app without any request
+    ipcRenderer.on('tally:server:status:health', (event, status) => {
+      if (tallyDebug) {
+        console.log('mainWindow: tally:server:status:health=', status);
       }
       dispatch(setStatus(status));
     });
@@ -39,7 +48,10 @@ function TallyServerStatus() {
     });
 
     console.log('Sending server command');
+
+    ipcRenderer.send('tally:server:status:request');
     ipcRenderer.send('command:list:request');
+
 
     return () => {
       console.log('Removing Listeners');
