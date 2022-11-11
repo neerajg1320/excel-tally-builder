@@ -1,0 +1,8 @@
+Asset validation failed (90296)
+App sandbox not enabled. The following executables must include the "com.apple.security.app-sandbox" entitlement with a Boolean value of true in the entitlements property list: [( "com.glassball.tallyconnect.pkg/Payload/TallyPad.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Helpers/chrome_crashpad_handler", "com.glassball.tallyconnect.pkg/Payload/TallyPad.app/Contents/Frameworks/Squirrel.framework/Versions/A/Resources/ShipIt", "com.glassball.tallyconnect.pkg/Payload/TallyPad.app/Contents/Frameworks/TallyPad Helper (GPU).app/Contents/MacOS/TallyPad Helper (GPU)", "com.glassball.tallyconnect.pkg/Payload/TallyPad.app/Contents/Frameworks/TallyPad Helper (Plugin).app/Contents/MacOS/TallyPad Helper (Plugin)", "com.glassball.tallyconnect.pkg/Payload/TallyPad.app/Contents/Frameworks/TallyPad Helper (Renderer).app/Contents/MacOS/TallyPad Helper (Renderer)", "com.glassball.tallyconnect.pkg/Payload/TallyPad.app/Contents/Frameworks/TallyPad Helper.app/Contents/MacOS/TallyPad Helper", "com.glassball.tallyconnect.pkg/Payload/TallyPad.app/Contents/MacOS/TallyPad" )] Refer to App Sandbox page at https://developer.apple.com/documentation/security/app_sandbox for more information on sandboxing your app. (ID: c90bd159-e459-4b6b-b9e3-76d8fab9fc30)
+
+Asset validation failed (90237)
+The product archive package's signature is invalid. Ensure that it is signed with your "3rd Party Mac Developer Installer" certificate. (ID: aad6b5bb-e148-4736-a112-6b643639f878)
+
+Asset validation failed (90266)
+Your application bundle must install to '/Applications'. (ID: a447b7e1-92e7-4680-aaac-9cb1323ec1d3)
