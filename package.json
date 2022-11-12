@@ -1,6 +1,6 @@
 {
   "name": "TallyKit",
-  "version": "0.4.4",
+  "version": "0.4.7",
   "description": "Tally Connector for importing Bank Statements",
   "private": true,
   "dependencies": {
@@ -105,7 +105,7 @@
           ]
         }
       ],
-      "certificateFile": ".local/DeveloperIDCertificate.p12",
+      "certificateFile": ".local/ComodoCodeSign.pfx",
       "certificatePassword": "token@123",
       "verifyUpdateCodeSignature": false
     },
