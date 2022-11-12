@@ -1,0 +1,1 @@
+GH_TOKEN=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 yarn electron:release:w

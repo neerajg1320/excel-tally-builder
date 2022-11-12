@@ -99,16 +99,20 @@
     "win": {
       "target": [
         {
-          "target": "default",
+          "target": "nsis",
           "arch": [
-            "x64",
-            "arm64"
+            "x64"
           ]
         }
       ],
       "certificateFile": ".local/DeveloperIDCertificate.p12",
       "certificatePassword": "token@123",
       "verifyUpdateCodeSignature": false
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": true,
+      "createStartMenuShortcut": true
     }
   },
 
