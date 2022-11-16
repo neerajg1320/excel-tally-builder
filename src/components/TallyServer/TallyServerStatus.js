@@ -15,7 +15,7 @@ const remoteCall = (channel, command) => {
 
     try {
       ipcRenderer.send(channel, command);
-      ipcRenderer.once('command:response', (event, response) => {
+      ipcRenderer.once(channel, (event, response) => {
         console.log(`remoteCall: command:response command=${command}`);
         resolve(response)
       });
@@ -34,20 +34,20 @@ function TallyServerStatus() {
 
   useEffect(() => {
 
-    ipcRenderer.once('tally:server:status:response', (event, status) => {
-      if (tallyDebug) {
-        console.log('mainWindow: tally:server:status:response=', status);
-      }
-      dispatch(setStatus(status));
-    });
+    // ipcRenderer.once('tally:server:status', (event, status) => {
+    //   if (tallyDebug) {
+    //     console.log('mainWindow: tally:server:status:response=', status);
+    //   }
+    //   dispatch(setStatus(status));
+    // });
 
     // This is a health event which is sent by electron app without any request
-    ipcRenderer.on('tally:server:status:health', (event, status) => {
-      if (tallyDebug) {
-        console.log('mainWindow: tally:server:status:health=', status);
-      }
-      dispatch(setStatus(status));
-    });
+    // ipcRenderer.on('tally:server:status:health', (event, status) => {
+    //   if (tallyDebug) {
+    //     console.log('mainWindow: tally:server:status:health=', status);
+    //   }
+    //   dispatch(setStatus(status));
+    // });
 
     ipcRenderer.once('command:list:response', (event, commands) => {
       console.log(`commands: ${commands}`);
@@ -59,7 +59,18 @@ function TallyServerStatus() {
 
     console.log('Sending server command');
 
-    ipcRenderer.send('tally:server:status:request');
+    // ipcRenderer.send('tally:server:status:request');
+    remoteCall('tally:server:status')
+        .then(status => {
+          if (tallyDebug) {
+            console.log('mainWindow: tally:server:status:response=', status);
+          }
+          dispatch(setStatus(status));
+        })
+        .catch(error => {
+          console.log(`TallyServerStatus:useEffect[] error=${error}`);
+        });
+
     ipcRenderer.send('command:list:request');
 
     return () => {
@@ -77,7 +88,7 @@ function TallyServerStatus() {
     } else {
       console.log('The Tally Server is OFF');
       ipcRenderer.removeListener('command:tally:ledgers:request', () => {
-        console.log('Removed command:tally:request');
+        console.log('Removed command:tally:ledgers:request');
       });
     }
 
@@ -87,7 +98,7 @@ function TallyServerStatus() {
     console.log('selected command:', selectedCommand);
     if (tallyStatus) {
 
-      remoteCall('command:tally:request', selectedCommand)
+      remoteCall('tally:command', selectedCommand)
           .then(({request, response}) => {
             if (request == "LEDGERS") {
               dispatch(setLedgers(response));
