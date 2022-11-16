@@ -10,7 +10,7 @@ function ExcelCommandTallyHandler() {
   const handleSubmit = (e) => {
     const filePaths = files.map(file => file.path);
     console.log(`Send the files`, filePaths);
-    
+
     remoteCall('excel:file:processor', filePaths)
         .then(response => {
           console.log('handleSubmit: response=', response);

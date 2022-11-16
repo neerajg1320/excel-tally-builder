@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {setCompanies, setLedgers, setStatus} from "../../redux/tallyServer/tallyActions";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
-import {remoteCall} from "../../utils/rpc";
+import {remoteCall, remoteMonitorStart, remoteMonitorStop} from "../../utils/rpc";
 
 
 function TallyServerStatus() {
@@ -15,6 +15,7 @@ function TallyServerStatus() {
   const tallyStatus = useSelector((state) => state.tally.status);
   const tallyDebug = useSelector((state) => state.tally.debug);
   const dispatch = useDispatch();
+  const channelServerHealth = 'tally:server:status:health';
 
   useEffect(() => {
     remoteCall('command:list', {})
@@ -37,8 +38,15 @@ function TallyServerStatus() {
           console.log(`TallyServerStatus:useEffect[] error=${error}`);
         });
 
+    remoteMonitorStart(channelServerHealth, (event, status) => {
+      console.log(`useEffect[] Monitor status=${status}`);
+      dispatch(setStatus(status));
+    });
+
     return () => {
-      console.log('Removing Listeners if any');
+      remoteMonitorStop(channelServerHealth, (event, response) => {
+        console.log("Health Listener closed");
+      });
     }
   }, [])
 
@@ -51,7 +59,6 @@ function TallyServerStatus() {
   const handleUpdateClick = (e) => {
     console.log('selected command:', selectedCommand);
     if (tallyStatus) {
-
       remoteCall('tally:command', selectedCommand)
           .then(({request, response}) => {
             if (request == "LEDGERS") {
