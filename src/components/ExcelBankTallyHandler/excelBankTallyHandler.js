@@ -33,18 +33,17 @@ function ExcelBankTallyHandler() {
 
   const handleResponse = (response) => {
     console.log(`handleResponse: response=${JSON.stringify(response, null, 2)}`);
-    if (response.command == 'ADD_BANK_TRANSACTIONS') {
-      const resultMap = Object.fromEntries(response.results.map(res => [res.id, res.voucher_id]));
-      console.log(`resultMap=${JSON.stringify(resultMap)}`);
-      const newData = data.map(row => {
-        return {
-          ...row,
-          'VoucherID': resultMap[row.Serial]
-        }
-      });
 
-      setData(newData);
-    }
+    const resultMap = Object.fromEntries(response.map(res => [res.id, res.voucher_id]));
+    console.log(`resultMap=${JSON.stringify(resultMap)}`);
+    const newData = data.map(row => {
+      return {
+        ...row,
+        'VoucherID': resultMap[row.Serial]
+      }
+    });
+
+    setData(newData);
   };
 
   const handleSubmit = (e) => {
@@ -56,10 +55,16 @@ function ExcelBankTallyHandler() {
           return {...row, id:row.Serial};
         });
 
-        remoteCall('tally:command:vouchers:add', {
-          command: 'ADD_BANK_TRANSACTIONS',
-          data: requestData
-        })
+        // remoteCall('tally:command:vouchers:add', {
+        //   command: 'ADD_BANK_TRANSACTIONS',
+        //   data: requestData
+        // })
+        //     .then(handleResponse)
+        //     .catch(error => {
+        //       console.error(`handleSubmit: error=${error}`);
+        //     });
+
+        remoteCall('tally:command:vouchers:add', requestData)
             .then(handleResponse)
             .catch(error => {
               console.error(`handleSubmit: error=${error}`);
