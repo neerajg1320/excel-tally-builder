@@ -6,6 +6,7 @@ import {useCallback, useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {remoteCall} from "../../utils/rpc";
 import {setLedgers} from "../../redux/tallyServer/tallyActions";
+
 const { ipcRenderer } = window.require('electron');
 
 function ExcelBankTallyHandler() {
@@ -51,9 +52,9 @@ function ExcelBankTallyHandler() {
     if (tallyStatus) {
       //TBD: This should be put in the Tally specific code
       if (data.length) {
-        ipcRenderer.once('tally:command:vouchers:add', (event, response) => {
-          handleResponse(response);
-        });
+        // ipcRenderer.once('tally:command:vouchers:add', (event, response) => {
+        //   handleResponse(response);
+        // });
 
         // Add id to the rows
         const requestData = data.map(row => {
@@ -61,10 +62,19 @@ function ExcelBankTallyHandler() {
           return {...row, id:row.Serial};
         });
 
-        ipcRenderer.send('tally:command:vouchers:add', {
+        // ipcRenderer.send('tally:command:vouchers:add', {
+        //   command: 'ADD_BANK_TRANSACTIONS',
+        //   data: requestData
+        // });
+
+        remoteCall('tally:command:vouchers:add', {
           command: 'ADD_BANK_TRANSACTIONS',
           data: requestData
-        });
+        })
+            .then(handleResponse)
+            .catch(error => {
+              console.error(`handleSubmit: error=${error}`);
+            });
 
         // setData(requestData);
         onDataChange(requestData);
