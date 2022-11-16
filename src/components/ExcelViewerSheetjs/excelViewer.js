@@ -128,13 +128,21 @@ function ExcelViewerSheetjs({data, onDataChange}) {
   return (
     <div className="excel-preview-wrapper">
       <div className="excel-preview-header">
-        <div className="bank-selection-box">
-          <label>Select Bank</label>
-          <SingleSelect options={tallyBankOptions} onChange={handleBankSelection}/>
+        <div className="top-header">
+          <div className="bank-selection-box">
+            <label>Select Bank</label>
+            <SingleSelect options={tallyBankOptions} onChange={handleBankSelection}/>
+          </div>
+          <button onClick={resetData}>Reset Data</button>
         </div>
-        <input type="file" onChange={handleFileSelection}/>
-        <button onClick={resetData}>Reset Data</button>
+        <div className="input-file-box">
+          <div>
+            <p>Drop a file</p>
+          </div>
+          <input className="input-selection-component" type="file" onChange={handleFileSelection}/>
+        </div>
       </div>
+
       <div className="excel-table-wrapper">
         <TallyTaggableTable columns={columns} data={data} onDataChange={onDataChange}/>
       </div>

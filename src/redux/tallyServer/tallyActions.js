@@ -1,4 +1,4 @@
-import { START_PING, STOP_PING, SET_STATUS, SET_DEBUG, SET_LEDGERS } from "./tallyActionTypes";
+import { START_PING, STOP_PING, SET_STATUS, SET_DEBUG, SET_LEDGERS, SET_COMPANIES } from "./tallyActionTypes";
 
 const startPing = () => {
   return {
@@ -39,4 +39,13 @@ const setLedgers = (value) => {
   };
 };
 
-export { startPing, stopPing, setStatus, setDebug, setLedgers };
+const setCompanies= (value) => {
+  return {
+    type: SET_COMPANIES,
+    payload: {
+      value
+    }
+  };
+};
+
+export { startPing, stopPing, setStatus, setDebug, setLedgers, setCompanies };

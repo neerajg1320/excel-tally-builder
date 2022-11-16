@@ -4,7 +4,7 @@ import SingleSelect from "../SingleSelect/SingleSelect";
 import Button from "react-bootstrap/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {setStatus, setLedgers} from "../../redux/tallyServer/tallyActions";
+import {setStatus, setLedgers, setCompanies} from "../../redux/tallyServer/tallyActions";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 
 const { ipcRenderer } = window.require('electron');
@@ -41,9 +41,11 @@ function TallyServerStatus() {
       }
     });
 
-    ipcRenderer.once('command:response', (event, {request, response}) => {
+    ipcRenderer.on('command:response', (event, {request, response}) => {
       if (request == "LEDGERS") {
         dispatch(setLedgers(response));
+      } else if (request == "COMPANIES") {
+        dispatch(setCompanies(response));
       }
     });
 
@@ -52,19 +54,32 @@ function TallyServerStatus() {
     ipcRenderer.send('tally:server:status:request');
     ipcRenderer.send('command:list:request');
 
-
     return () => {
       console.log('Removing Listeners');
       ipcRenderer.removeListener('tally:server:status:response', () => {
-        console.log('tally:server:status:response')
+        console.log('Remove tally:server:status:response')
       });
     }
   }, [])
+
+  useEffect(() => {
+    if (tallyStatus) {
+      console.log('The Tally Server is ON');
+      ipcRenderer.send('command:tally:ledgers:request', 'LEDGERS');
+    } else {
+      console.log('The Tally Server is OFF');
+      ipcRenderer.removeListener('command:tally:ledgers:request', () => {
+        console.log('Removed command:tally:request');
+      });
+    }
+
+  }, [tallyStatus])
 
   const handleUpdateClick = (e) => {
     console.log('selected command:', selectedCommand);
     if (tallyStatus) {
       ipcRenderer.send('command:tally:request', selectedCommand);
+
     }
   }
 

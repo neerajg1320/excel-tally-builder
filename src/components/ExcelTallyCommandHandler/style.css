@@ -1,0 +1,9 @@
+.app-box {
+    /*border: 1px solid sienna;*/
+    width: 80%;
+    padding: 20px 100px;
+    margin: 40px;
+    background-color: #ebe6ba;
+    border-radius: 10px;
+    min-height: 600px;
+}

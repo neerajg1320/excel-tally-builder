@@ -13,7 +13,7 @@ function ExcelBankTallyHandler() {
   useEffect(() => {
     if (tallyStatus) {
       //TBD: This should be put in the Tally specific code
-      ipcRenderer.send('command:tally:request', 'LEDGERS');
+      ipcRenderer.send('command:tally:ledgers:request', 'LEDGERS');
     }
   }, [tallyStatus]);
 

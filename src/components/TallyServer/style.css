@@ -1,9 +1,13 @@
 .server-container {
-    /*border: 1px dashed black;*/
+    border: 1px dashed black;
+    border-radius: 20px;
+    background-color: #f5e290;
     width: 80%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    padding: 20px;
+    margin: 20px;
 }
 
 .server-status-box {

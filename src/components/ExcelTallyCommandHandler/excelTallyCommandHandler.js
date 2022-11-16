@@ -1,3 +1,4 @@
+import './style.css';
 import {useEffect, useState} from "react";
 import FilePickerWithList from "../FilePickerWithList/filePickerWithList";
 import TallySubmitButton from "../TallySubmitButton/tallySubmitButton";
