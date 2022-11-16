@@ -1,11 +1,12 @@
-import { SET_STATUS, SET_DEBUG, SET_LEDGERS } from "./tallyActionTypes";
+import { SET_STATUS, SET_DEBUG, SET_LEDGERS, SET_COMPANIES } from "./tallyActionTypes";
 
 const flagDebugTallyReducer = false;
 
 const initialState = {
   status: false,
   debug: false,
-  ledgers: ['Cash', 'Bank']
+  ledgers: ['Cash', 'Bank'],
+  companies: []
 };
 
 const tallyReducer = (state = initialState, action) => {
@@ -30,6 +31,12 @@ const tallyReducer = (state = initialState, action) => {
       return {
         ...state,
         ledgers: action.payload.value
+      };
+
+    case SET_COMPANIES:
+      return {
+        ...state,
+        companies: action.payload.value
       };
 
     default:

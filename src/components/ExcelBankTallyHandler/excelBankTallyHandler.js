@@ -15,7 +15,7 @@ function ExcelBankTallyHandler() {
 
   useEffect(() => {
     if (tallyStatus) {
-      remoteCall('tally:command', 'LEDGERS')
+      remoteCall('tally:command:ledgers:list', {})
           .then(({request, response}) => {
             dispatch(setLedgers(response));
             console.log(`Updated ledgers request=${request}`);
@@ -54,15 +54,6 @@ function ExcelBankTallyHandler() {
           // console.log('handleSubmit:', row)
           return {...row, id:row.Serial};
         });
-
-        // remoteCall('tally:command:vouchers:add', {
-        //   command: 'ADD_BANK_TRANSACTIONS',
-        //   data: requestData
-        // })
-        //     .then(handleResponse)
-        //     .catch(error => {
-        //       console.error(`handleSubmit: error=${error}`);
-        //     });
 
         remoteCall('tally:command:vouchers:add', requestData)
             .then(handleResponse)

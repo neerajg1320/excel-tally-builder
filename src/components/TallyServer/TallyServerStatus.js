@@ -7,29 +7,27 @@ import {useEffect, useState} from "react";
 import {setCompanies, setLedgers, setStatus} from "../../redux/tallyServer/tallyActions";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 import {remoteCall, remoteMonitorStart, remoteMonitorStop} from "../../utils/rpc";
-
-const listToOptions = (items, title) => {
-  if (items.length) {
-    return [{label: `Select ${title} ...`, value: ''}]
-        .concat(items.map((item) => {return {label: item, value:item}}));
-  }
-
-  return [];
-}
+import {listToOptions} from "../../utils/options";
+import {useSelect} from "../../helpers/hooks";
 
 function TallyServerStatus() {
   const [commandOptions, setCommandOptions] = useState([]);
   const [selectedCommand, setSelectedCommand] = useState('');
+
+  const [companyOptions, setCompanyOptions] = useState([]);
+  const [selectedCompany, setSelectedCompany] = useState('');
+
   const tallyStatus = useSelector((state) => state.tally.status);
   const tallyDebug = useSelector((state) => state.tally.debug);
+  const tallyCompanies = useSelector((state) => state.tally.companies);
   const dispatch = useDispatch();
-  const channelServerHealth = 'tally:server:status:health';
+
 
   useEffect(() => {
     remoteCall('command:list', {})
         .then(commands => {
           setCommandOptions(listToOptions(commands, 'Command'));
-        })
+        });
 
     const channelStatus = 'tally:server:status';
     remoteCall(channelStatus)
@@ -43,8 +41,9 @@ function TallyServerStatus() {
           console.log(`TallyServerStatus:useEffect[] error=${error}`);
         });
 
+    const channelServerHealth = 'tally:server:status:health';
     remoteMonitorStart(channelServerHealth, (event, status) => {
-      console.log(`useEffect[] Monitor status=${status}`);
+      // console.log(`useEffect[] Monitor status=${status}`);
       dispatch(setStatus(status));
     });
 
@@ -58,14 +57,26 @@ function TallyServerStatus() {
   useEffect(() => {
     if (tallyStatus) {
       console.log('The Tally Server is ON');
+      remoteCall('tally:command:companies:list', {})
+          .then(({request, response}) => {
+            console.log(`useEffect[tallyStatus] companies=${JSON.stringify(response, null, 2)}`);
+            dispatch(setCompanies(response));
+          });
+
     }
   }, [tallyStatus])
+
+  useEffect(() => {
+    // console.log(`tallyCompanies: ${JSON.stringify(tallyCompanies, null, 2)}`);
+    setCompanyOptions(listToOptions(tallyCompanies.map(company => company.name), "Company"));
+  }, [tallyCompanies])
 
   const handleUpdateClick = (e) => {
     console.log('selected command:', selectedCommand);
     if (tallyStatus) {
       remoteCall('tally:command', selectedCommand)
           .then(({request, response}) => {
+            console.log(`handleUpdateClick: request=${request} response=${JSON.stringify(response, null, 2)}`);
             if (request == "LEDGERS") {
               dispatch(setLedgers(response));
             } else if (request == "COMPANIES") {
@@ -86,6 +97,8 @@ function TallyServerStatus() {
 
       <div className="server-command-box">
         <SingleSelect options={commandOptions} onChange={setSelectedCommand} />
+        <SingleSelect options={companyOptions} onChange={setSelectedCompany} />
+
         <div className="server-command-button">
           <ConditionalTooltipButton condition={!tallyStatus} message="No connection to Tally!">
             <Button variant="outline-dark" onClick={handleUpdateClick}>Update</Button>

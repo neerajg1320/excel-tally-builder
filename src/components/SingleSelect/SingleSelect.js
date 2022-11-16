@@ -10,9 +10,6 @@ function SingleSelect({options, onChange, value}) {
     }
   }
 
-  // useEffect(() => {
-  //   console.log(`defaultValue=${defaultValue}`);
-  // }, [defaultValue])
 
   return (
       <div className="select-wrapper">
