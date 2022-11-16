@@ -2,12 +2,11 @@ import ExcelViewerSheetjs from "../ExcelViewerSheetjs/excelViewer";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 import Button from "react-bootstrap/Button";
 import './style.css';
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {remoteCall} from "../../utils/rpc";
 import {setLedgers} from "../../redux/tallyServer/tallyActions";
 
-const { ipcRenderer } = window.require('electron');
 
 function ExcelBankTallyHandler() {
   const [data, setData] = useState([]);
@@ -50,22 +49,12 @@ function ExcelBankTallyHandler() {
 
   const handleSubmit = (e) => {
     if (tallyStatus) {
-      //TBD: This should be put in the Tally specific code
       if (data.length) {
-        // ipcRenderer.once('tally:command:vouchers:add', (event, response) => {
-        //   handleResponse(response);
-        // });
-
         // Add id to the rows
         const requestData = data.map(row => {
           // console.log('handleSubmit:', row)
           return {...row, id:row.Serial};
         });
-
-        // ipcRenderer.send('tally:command:vouchers:add', {
-        //   command: 'ADD_BANK_TRANSACTIONS',
-        //   data: requestData
-        // });
 
         remoteCall('tally:command:vouchers:add', {
           command: 'ADD_BANK_TRANSACTIONS',
