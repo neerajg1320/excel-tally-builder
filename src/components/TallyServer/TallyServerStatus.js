@@ -9,6 +9,22 @@ import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton"
 
 const { ipcRenderer } = window.require('electron');
 
+const remoteCall = (channel, command) => {
+  return new Promise((resolve, reject) => {
+    console.log(`remoteCall: command=${command}`);
+
+    try {
+      ipcRenderer.send(channel, command);
+      ipcRenderer.once('command:response', (event, response) => {
+        console.log(`remoteCall: command:response command=${command}`);
+        resolve(response)
+      });
+    } catch (e) {
+      reject(e);
+    }
+  })
+}
+
 function TallyServerStatus() {
   const [commandOptions, setCommandOptions] = useState([]);
   const [selectedCommand, setSelectedCommand] = useState('');
@@ -41,14 +57,6 @@ function TallyServerStatus() {
       }
     });
 
-    ipcRenderer.on('command:response', (event, {request, response}) => {
-      if (request == "LEDGERS") {
-        dispatch(setLedgers(response));
-      } else if (request == "COMPANIES") {
-        dispatch(setCompanies(response));
-      }
-    });
-
     console.log('Sending server command');
 
     ipcRenderer.send('tally:server:status:request');
@@ -78,8 +86,18 @@ function TallyServerStatus() {
   const handleUpdateClick = (e) => {
     console.log('selected command:', selectedCommand);
     if (tallyStatus) {
-      ipcRenderer.send('command:tally:request', selectedCommand);
 
+      remoteCall('command:tally:request', selectedCommand)
+          .then(({request, response}) => {
+            if (request == "LEDGERS") {
+              dispatch(setLedgers(response));
+            } else if (request == "COMPANIES") {
+              dispatch(setCompanies(response));
+            }
+          })
+          .catch(error => {
+            console.log(`handleUpdateClick: error=${error}`);
+          });
     }
   }
 
