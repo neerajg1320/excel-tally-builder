@@ -8,6 +8,14 @@ import {setCompanies, setLedgers, setStatus} from "../../redux/tallyServer/tally
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 import {remoteCall, remoteMonitorStart, remoteMonitorStop} from "../../utils/rpc";
 
+const listToOptions = (items, title) => {
+  if (items.length) {
+    return [{label: `Select ${title} ...`, value: ''}]
+        .concat(items.map((item) => {return {label: item, value:item}}));
+  }
+
+  return [];
+}
 
 function TallyServerStatus() {
   const [commandOptions, setCommandOptions] = useState([]);
@@ -20,10 +28,7 @@ function TallyServerStatus() {
   useEffect(() => {
     remoteCall('command:list', {})
         .then(commands => {
-          if (commands.length) {
-            const options = commands.map((cmd) => {return {label: cmd, value:cmd}});
-            setCommandOptions(options);
-          }
+          setCommandOptions(listToOptions(commands, 'Command'));
         })
 
     const channelStatus = 'tally:server:status';
