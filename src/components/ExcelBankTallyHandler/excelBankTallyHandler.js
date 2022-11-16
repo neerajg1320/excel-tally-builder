@@ -3,17 +3,29 @@ import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton"
 import Button from "react-bootstrap/Button";
 import './style.css';
 import {useCallback, useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
+import {remoteCall} from "../../utils/rpc";
+import {setLedgers} from "../../redux/tallyServer/tallyActions";
 const { ipcRenderer } = window.require('electron');
 
 function ExcelBankTallyHandler() {
   const [data, setData] = useState([]);
   const tallyStatus = useSelector(state => state.tally.status);
-
+  const dispatch = useDispatch();
+  
   useEffect(() => {
     if (tallyStatus) {
       //TBD: This should be put in the Tally specific code
-      ipcRenderer.send('command:tally:ledgers:request', 'LEDGERS');
+      // ipcRenderer.send('command:tally:ledgers:request', 'LEDGERS');
+      // ipcRenderer.send('command:tally:ledgers:request', 'LEDGERS');
+      remoteCall('tally:command', 'LEDGERS')
+          .then(({request, response}) => {
+            dispatch(setLedgers(response));
+            console.log(`Updated ledgers request=${request}`);
+          })
+          .catch(error => {
+            console.log(`useEffect[tallyStatus]: error=${error}`);
+          });
     }
   }, [tallyStatus]);
 

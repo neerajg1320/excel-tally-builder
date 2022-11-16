@@ -4,26 +4,10 @@ import SingleSelect from "../SingleSelect/SingleSelect";
 import Button from "react-bootstrap/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {setStatus, setLedgers, setCompanies} from "../../redux/tallyServer/tallyActions";
+import {setCompanies, setLedgers, setStatus} from "../../redux/tallyServer/tallyActions";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
+import {remoteCall} from "../../utils/rpc";
 
-const { ipcRenderer } = window.require('electron');
-
-const remoteCall = (channel, command) => {
-  return new Promise((resolve, reject) => {
-    console.log(`remoteCall: command=${command}`);
-
-    try {
-      ipcRenderer.send(channel, command);
-      ipcRenderer.once(channel, (event, response) => {
-        console.log(`remoteCall: command:response command=${command}`);
-        resolve(response)
-      });
-    } catch (e) {
-      reject(e);
-    }
-  })
-}
 
 function TallyServerStatus() {
   const [commandOptions, setCommandOptions] = useState([]);
@@ -33,37 +17,19 @@ function TallyServerStatus() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    remoteCall('command:list', {})
+        .then(commands => {
+          if (commands.length) {
+            const options = commands.map((cmd) => {return {label: cmd, value:cmd}});
+            setCommandOptions(options);
+          }
+        })
 
-    // ipcRenderer.once('tally:server:status', (event, status) => {
-    //   if (tallyDebug) {
-    //     console.log('mainWindow: tally:server:status:response=', status);
-    //   }
-    //   dispatch(setStatus(status));
-    // });
-
-    // This is a health event which is sent by electron app without any request
-    // ipcRenderer.on('tally:server:status:health', (event, status) => {
-    //   if (tallyDebug) {
-    //     console.log('mainWindow: tally:server:status:health=', status);
-    //   }
-    //   dispatch(setStatus(status));
-    // });
-
-    ipcRenderer.once('command:list:response', (event, commands) => {
-      console.log(`commands: ${commands}`);
-      if (commands.length) {
-        const options = commands.map((cmd) => {return {label: cmd, value:cmd}});
-        setCommandOptions(options);
-      }
-    });
-
-    console.log('Sending server command');
-
-    // ipcRenderer.send('tally:server:status:request');
-    remoteCall('tally:server:status')
+    const channelStatus = 'tally:server:status';
+    remoteCall(channelStatus)
         .then(status => {
           if (tallyDebug) {
-            console.log('mainWindow: tally:server:status:response=', status);
+            console.log(`${channelStatus}=${status}`);
           }
           dispatch(setStatus(status));
         })
@@ -71,27 +37,15 @@ function TallyServerStatus() {
           console.log(`TallyServerStatus:useEffect[] error=${error}`);
         });
 
-    ipcRenderer.send('command:list:request');
-
     return () => {
-      console.log('Removing Listeners');
-      ipcRenderer.removeListener('tally:server:status:response', () => {
-        console.log('Remove tally:server:status:response')
-      });
+      console.log('Removing Listeners if any');
     }
   }, [])
 
   useEffect(() => {
     if (tallyStatus) {
       console.log('The Tally Server is ON');
-      ipcRenderer.send('command:tally:ledgers:request', 'LEDGERS');
-    } else {
-      console.log('The Tally Server is OFF');
-      ipcRenderer.removeListener('command:tally:ledgers:request', () => {
-        console.log('Removed command:tally:ledgers:request');
-      });
     }
-
   }, [tallyStatus])
 
   const handleUpdateClick = (e) => {
