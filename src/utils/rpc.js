@@ -15,3 +15,8 @@ export const remoteCall = (channel, command) => {
     }
   })
 }
+
+export const removeListeners = () => {
+  console.log('Removing Listeners');
+  ipcRenderer.removeAllListeners();
+}
