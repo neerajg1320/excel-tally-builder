@@ -32,7 +32,7 @@ function ExcelBankTallyHandler() {
   };
 
   const handleResponse = (response) => {
-    console.log(`command:vouchers:response response=${JSON.stringify(response, null, 2)}`);
+    console.log(`handleResponse: response=${JSON.stringify(response, null, 2)}`);
     if (response.command == 'ADD_BANK_TRANSACTIONS') {
       const resultMap = Object.fromEntries(response.results.map(res => [res.id, res.voucher_id]));
       console.log(`resultMap=${JSON.stringify(resultMap)}`);
@@ -51,7 +51,7 @@ function ExcelBankTallyHandler() {
     if (tallyStatus) {
       //TBD: This should be put in the Tally specific code
       if (data.length) {
-        ipcRenderer.once('command:vouchers:response', (event, response) => {
+        ipcRenderer.once('tally:command:vouchers:add', (event, response) => {
           handleResponse(response);
         });
 
@@ -61,7 +61,7 @@ function ExcelBankTallyHandler() {
           return {...row, id:row.Serial};
         });
 
-        ipcRenderer.send('command:vouchers:request', {
+        ipcRenderer.send('tally:command:vouchers:add', {
           command: 'ADD_BANK_TRANSACTIONS',
           data: requestData
         });
