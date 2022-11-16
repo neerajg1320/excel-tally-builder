@@ -12,8 +12,8 @@ function ExcelCommandTallyHandler() {
   useEffect(() => {
     console.log('useEffect: Creating Listeners');
 
-    ipcRenderer.on('excel:processed', (event, files) => {
-      console.log('mainWindow: excel:processed=', files);
+    ipcRenderer.on('excel:file:processor', (event, files) => {
+      // console.log('mainWindow: excel:processed=', files);
       setFiles([]);
     });
 
@@ -27,7 +27,7 @@ function ExcelCommandTallyHandler() {
   const handleSubmit = (e) => {
     const filePaths = files.map(file => file.path);
     console.log(`Send the files`, filePaths);
-    ipcRenderer.send('excel:submit', filePaths);
+    ipcRenderer.send('excel:file:processor', filePaths);
   }
 
   return (

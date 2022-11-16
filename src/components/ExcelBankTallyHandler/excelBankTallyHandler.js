@@ -12,12 +12,9 @@ function ExcelBankTallyHandler() {
   const [data, setData] = useState([]);
   const tallyStatus = useSelector(state => state.tally.status);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (tallyStatus) {
-      //TBD: This should be put in the Tally specific code
-      // ipcRenderer.send('command:tally:ledgers:request', 'LEDGERS');
-      // ipcRenderer.send('command:tally:ledgers:request', 'LEDGERS');
       remoteCall('tally:command', 'LEDGERS')
           .then(({request, response}) => {
             dispatch(setLedgers(response));
