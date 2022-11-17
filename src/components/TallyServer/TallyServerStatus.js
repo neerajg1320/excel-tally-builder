@@ -98,7 +98,7 @@ function TallyServerStatus() {
   const handleUpdateClick = (e) => {
     console.log('selected command:', selectedCommand);
     if (tallyStatus) {
-      remoteCall('tally:command', selectedCommand)
+      remoteCall('tally:command', {command: selectedCommand, company: tallyTargetCompany})
           .then(({request, response}) => {
             console.log(`handleUpdateClick: request=${request} response=${JSON.stringify(response, null, 2)}`);
             if (request == "LEDGERS") {
