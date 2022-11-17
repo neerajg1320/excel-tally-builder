@@ -11,20 +11,19 @@ import {setLedgers} from "../../redux/tallyServer/tallyActions";
 function ExcelBankTallyHandler() {
   const [data, setData] = useState([]);
   const tallyStatus = useSelector(state => state.tally.status);
+  const tallyTargetCompany = useSelector(state => state.tally.targetCompany);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (tallyStatus) {
-      remoteCall('tally:command:ledgers:list', {})
-          .then(({request, response}) => {
-            dispatch(setLedgers(response));
-            console.log(`Updated ledgers request=${request}`);
-          })
-          .catch(error => {
-            console.log(`useEffect[tallyStatus]: error=${error}`);
-          });
-    }
-  }, [tallyStatus]);
+    remoteCall('tally:command:ledgers:list', {company: tallyTargetCompany})
+        .then(({request, response}) => {
+          dispatch(setLedgers(response));
+          console.log(`Updated ledgers request=${request}`);
+        })
+        .catch(error => {
+          console.log(`useEffect[tallyStatus]: error=${error}`);
+        });
+  }, [tallyTargetCompany]);
 
   const onDataChange = (newData) => {
     console.log('ExcelBankTallyHandler:onDataChange: newData=', newData);

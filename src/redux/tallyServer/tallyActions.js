@@ -1,18 +1,27 @@
-import { START_PING, STOP_PING, SET_STATUS, SET_DEBUG, SET_LEDGERS, SET_COMPANIES, SET_CURRENT_COMPANY } from "./tallyActionTypes";
+import {
+  START_PING,
+  STOP_PING,
+  SET_STATUS,
+  SET_DEBUG,
+  SET_LEDGERS,
+  SET_COMPANIES,
+  SET_CURRENT_COMPANY,
+  SET_TARGET_COMPANY
+} from "./tallyActionTypes";
 
-const startPing = () => {
+export const startPing = () => {
   return {
     type: START_PING,
   };
 };
 
-const stopPing = () => {
+export const stopPing = () => {
   return {
     type: STOP_PING,
   };
 };
 
-const setStatus = (value) => {
+export const setStatus = (value) => {
   return {
     type: SET_STATUS,
     payload: {
@@ -21,7 +30,7 @@ const setStatus = (value) => {
   };
 };
 
-const setDebug = (value) => {
+export const setDebug = (value) => {
   return {
     type: SET_DEBUG,
     payload: {
@@ -30,7 +39,7 @@ const setDebug = (value) => {
   };
 };
 
-const setLedgers = (value) => {
+export const setLedgers = (value) => {
   return {
     type: SET_LEDGERS,
     payload: {
@@ -39,7 +48,7 @@ const setLedgers = (value) => {
   };
 };
 
-const setCompanies= (value) => {
+export const setCompanies= (value) => {
   return {
     type: SET_COMPANIES,
     payload: {
@@ -48,7 +57,7 @@ const setCompanies= (value) => {
   };
 };
 
-const setCurrentCompany= (value) => {
+export const setCurrentCompany= (value) => {
   return {
     type: SET_CURRENT_COMPANY,
     payload: {
@@ -57,5 +66,12 @@ const setCurrentCompany= (value) => {
   };
 };
 
+export const setTargetCompany= (value) => {
+  return {
+    type: SET_TARGET_COMPANY,
+    payload: {
+      value
+    }
+  };
+};
 
-export { startPing, stopPing, setStatus, setDebug, setLedgers, setCompanies, setCurrentCompany };

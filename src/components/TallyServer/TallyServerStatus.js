@@ -4,7 +4,13 @@ import SingleSelect from "../SingleSelect/SingleSelect";
 import Button from "react-bootstrap/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {setCompanies, setCurrentCompany, setLedgers, setStatus} from "../../redux/tallyServer/tallyActions";
+import {
+  setCompanies,
+  setCurrentCompany,
+  setLedgers,
+  setStatus,
+  setTargetCompany
+} from "../../redux/tallyServer/tallyActions";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 import {remoteCall, remoteMonitorStart, remoteMonitorStop} from "../../utils/rpc";
 import {listToOptions} from "../../utils/options";
@@ -14,12 +20,14 @@ function TallyServerStatus() {
   const [selectedCommand, setSelectedCommand] = useState('');
 
   const [companyOptions, setCompanyOptions] = useState([]);
-  const [selectedCompany, setSelectedCompany] = useState('');
+  // const [targetCompany, setTargetCompany] = useState('');
 
   const tallyStatus = useSelector((state) => state.tally.status);
   const tallyDebug = useSelector((state) => state.tally.debug);
   const tallyCompanies = useSelector((state) => state.tally.companies);
   const tallyCurrentCompany = useSelector((state) => state.tally.currentCompany);
+  const tallyTargetCompany = useSelector((state) => state.tally.targetCompany);
+
   const dispatch = useDispatch();
 
 
@@ -79,8 +87,13 @@ function TallyServerStatus() {
   }, [tallyCompanies])
 
   useEffect(() => {
-    setSelectedCompany(tallyCurrentCompany);
+    dispatch(setTargetCompany(tallyCurrentCompany))
   }, [tallyCurrentCompany]);
+
+  const handleTargetCompanyChange = (e) => {
+    console.log(`e=${JSON.stringify(e, null, 2)}`)
+    dispatch(setTargetCompany(e));
+  }
 
   const handleUpdateClick = (e) => {
     console.log('selected command:', selectedCommand);
@@ -109,7 +122,7 @@ function TallyServerStatus() {
       <div className="server-info-box">
         <div className="server-company-box">
           <span className="server-company-selectbox-title">Company</span>
-          <SingleSelect options={companyOptions} onChange={setSelectedCompany} value={selectedCompany}/>
+          <SingleSelect options={companyOptions} onChange={handleTargetCompanyChange} value={tallyTargetCompany}/>
         </div>
 
         <div className="server-command-box">
