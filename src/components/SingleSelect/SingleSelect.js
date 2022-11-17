@@ -10,7 +10,6 @@ function SingleSelect({options, onChange, value}) {
     }
   }
 
-
   return (
       <div className="select-wrapper">
         <Form.Select aria-label="Default select example" onChange={handleChange} value={value} >

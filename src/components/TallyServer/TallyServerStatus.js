@@ -95,14 +95,19 @@ function TallyServerStatus() {
         <Connection title={"Tally Server"} status={tallyStatus}/>
       </div>
 
-      <div className="server-command-box">
-        <SingleSelect options={commandOptions} onChange={setSelectedCommand} />
-        <SingleSelect options={companyOptions} onChange={setSelectedCompany} />
+      <div className="server-info-box">
+        <div className="server-company-box">
+          <span className="server-company-selectbox-title">Company</span>
+          <SingleSelect options={companyOptions} onChange={setSelectedCompany} />
+        </div>
 
-        <div className="server-command-button">
-          <ConditionalTooltipButton condition={!tallyStatus} message="No connection to Tally!">
-            <Button variant="outline-dark" onClick={handleUpdateClick}>Update</Button>
-          </ConditionalTooltipButton>
+        <div className="server-command-box">
+          <SingleSelect options={commandOptions} onChange={setSelectedCommand} />
+          <div className="server-command-button">
+            <ConditionalTooltipButton condition={!tallyStatus} message="No connection to Tally!">
+              <Button variant="outline-dark" onClick={handleUpdateClick}>Update</Button>
+            </ConditionalTooltipButton>
+          </div>
         </div>
       </div>
 

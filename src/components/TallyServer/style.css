@@ -18,13 +18,34 @@
     /*border: 1px dashed red;*/
 }
 
-.server-command-box {
-    /*margin-right: 20px;*/
+.server-info-box {
     display: flex;
     flex-direction: row;
-    justify-content: right;
+    justify-content: space-between;
     width: 100%;
+    align-items: flex-end;
     /*border: 1px solid sienna;*/
+}
+
+.server-company-box {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.server-company-selectbox-title {
+    font-size: 1.15em;
+    font-weight: bold;
+    padding: 2px;
+}
+
+.server-command-box {
+    /*border: 1px dashed red;*/
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    /*width: 30%;*/
 }
 
 .server-command-button {
