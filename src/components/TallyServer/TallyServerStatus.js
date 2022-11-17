@@ -4,11 +4,10 @@ import SingleSelect from "../SingleSelect/SingleSelect";
 import Button from "react-bootstrap/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {setCompanies, setLedgers, setStatus} from "../../redux/tallyServer/tallyActions";
+import {setCompanies, setCurrentCompany, setLedgers, setStatus} from "../../redux/tallyServer/tallyActions";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 import {remoteCall, remoteMonitorStart, remoteMonitorStop} from "../../utils/rpc";
 import {listToOptions} from "../../utils/options";
-import {useSelect} from "../../helpers/hooks";
 
 function TallyServerStatus() {
   const [commandOptions, setCommandOptions] = useState([]);
@@ -20,6 +19,7 @@ function TallyServerStatus() {
   const tallyStatus = useSelector((state) => state.tally.status);
   const tallyDebug = useSelector((state) => state.tally.debug);
   const tallyCompanies = useSelector((state) => state.tally.companies);
+  const tallyCurrentCompany = useSelector((state) => state.tally.currentCompany);
   const dispatch = useDispatch();
 
 
@@ -69,7 +69,18 @@ function TallyServerStatus() {
   useEffect(() => {
     // console.log(`tallyCompanies: ${JSON.stringify(tallyCompanies, null, 2)}`);
     setCompanyOptions(listToOptions(tallyCompanies.map(company => company.name), "Company"));
+
+    remoteCall('tally:command:companies:current', {})
+        .then(({request, response}) => {
+          console.log(`currentCompany: ${JSON.stringify(response.value, null, 2)}`);
+          // setCurrentCompany(response);
+          dispatch(setCurrentCompany(response.value));
+        })
   }, [tallyCompanies])
+
+  useEffect(() => {
+    setSelectedCompany(tallyCurrentCompany);
+  }, [tallyCurrentCompany]);
 
   const handleUpdateClick = (e) => {
     console.log('selected command:', selectedCommand);
@@ -98,11 +109,11 @@ function TallyServerStatus() {
       <div className="server-info-box">
         <div className="server-company-box">
           <span className="server-company-selectbox-title">Company</span>
-          <SingleSelect options={companyOptions} onChange={setSelectedCompany} />
+          <SingleSelect options={companyOptions} onChange={setSelectedCompany} value={selectedCompany}/>
         </div>
 
         <div className="server-command-box">
-          <SingleSelect options={commandOptions} onChange={setSelectedCommand} />
+          <SingleSelect options={commandOptions} onChange={setSelectedCommand}/>
           <div className="server-command-button">
             <ConditionalTooltipButton condition={!tallyStatus} message="No connection to Tally!">
               <Button variant="outline-dark" onClick={handleUpdateClick}>Update</Button>
