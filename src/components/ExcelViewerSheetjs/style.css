@@ -1,7 +1,7 @@
 .excel-preview-wrapper {
     /*border: 1px solid sienna;*/
     width: 100%;
-    min-height: 200px;
+    /*min-height: 200px;*/
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -37,6 +37,12 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.file-buttons-box {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
 
 .input-drop-text,p {

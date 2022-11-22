@@ -2,15 +2,13 @@ import * as XLSX from "xlsx";
 import React, {useEffect, useState} from "react";
 import {readExcel} from "../../excel/read";
 import './style.css';
-import DynamicTable from "../DynamicTable/dynamicTable";
-import DynamicReactTable from "../DynamicReactTable/dynamicReactTable";
 import TallyTaggableTable from "../TallyTaggableTable/tallyTaggableTable";
 import {tallyColumns, kotakbankColumns} from "./presetColumns";
-import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 import {DateToStringDate, DateFromString, isDate} from "../../utils/date";
 import {NumberFromString} from "../../utils/number";
 import SingleSelect from "../SingleSelect/SingleSelect";
 import {useSelector} from "react-redux";
+import Button from "react-bootstrap/Button";
 
 function ExcelViewerSheetjs({data, onDataChange}) {
   const [columns, setColumns] = useState([]);
@@ -124,6 +122,13 @@ function ExcelViewerSheetjs({data, onDataChange}) {
     }
   }
 
+  const cancel = () => {
+    if (onDataChange) {
+      onDataChange([]);
+    }
+    // Initial data
+    setFileData([]);
+  }
 
   return (
     <div className="excel-preview-wrapper">
@@ -133,14 +138,20 @@ function ExcelViewerSheetjs({data, onDataChange}) {
             <label>Select Bank</label>
             <SingleSelect options={tallyBankOptions} onChange={handleBankSelection}/>
           </div>
-          <button onClick={resetData}>Reset Data</button>
-        </div>
-        <div className="input-file-box">
-          <div>
-            <p>Drop a file</p>
+          <div className="file-buttons-box">
+            <Button className="btn-outline-danger bg-transparent" onClick={resetData}>Reset Data</Button>
+            <Button className="btn-danger" onClick={cancel}>Cancel</Button>
           </div>
-          <input className="input-selection-component" type="file" onChange={handleFileSelection}/>
         </div>
+
+        {fileData.length == 0 &&
+            (<div className="input-file-box">
+              <div>
+                <p>Drop a file</p>
+              </div>
+              <input className="input-selection-component" type="file" onChange={handleFileSelection}/>
+            </div>)
+        }
       </div>
 
       <div className="excel-table-wrapper">
