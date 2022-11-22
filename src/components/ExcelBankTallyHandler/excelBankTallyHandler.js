@@ -11,11 +11,11 @@ import {setLedgers} from "../../redux/tallyServer/tallyActions";
 function ExcelBankTallyHandler() {
   const [data, setData] = useState([]);
   const tallyStatus = useSelector(state => state.tally.status);
-  const tallyTargetCompany = useSelector(state => state.tally.targetCompany);
+  const targetCompany = useSelector(state => state.tally.targetCompany);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    remoteCall('tally:command:ledgers:list', {company: tallyTargetCompany})
+    remoteCall('tally:command:ledgers:list', {company: targetCompany})
         .then(({request, response}) => {
           dispatch(setLedgers(response));
           console.log(`Updated ledgers request=${request}`);
@@ -23,7 +23,7 @@ function ExcelBankTallyHandler() {
         .catch(error => {
           console.log(`useEffect[tallyStatus]: error=${error}`);
         });
-  }, [tallyTargetCompany]);
+  }, [targetCompany]);
 
   const onDataChange = (newData) => {
     console.log('ExcelBankTallyHandler:onDataChange: newData=', newData);
@@ -49,19 +49,19 @@ function ExcelBankTallyHandler() {
     if (tallyStatus) {
       if (data.length) {
         // Add id to the rows
-        const requestData = data.map(row => {
+        const rows = data.map(row => {
           // console.log('handleSubmit:', row)
           return {...row, id:row.Serial};
         });
 
-        remoteCall('tally:command:vouchers:add', requestData)
+        remoteCall('tally:command:vouchers:add', {targetCompany, rows})
             .then(handleResponse)
             .catch(error => {
               console.error(`handleSubmit: error=${error}`);
             });
 
         // setData(requestData);
-        onDataChange(requestData);
+        onDataChange(rows);
       }
     }
   };
