@@ -15,7 +15,7 @@ function ExcelBankTallyHandler() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    remoteCall('tally:command:ledgers:list', {company: targetCompany})
+    remoteCall('tally:command:ledgers:list', {targetCompany})
         .then(({request, response}) => {
           dispatch(setLedgers(response));
           console.log(`Updated ledgers request=${request}`);
