@@ -15,14 +15,16 @@ function ExcelBankTallyHandler() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    remoteCall('tally:command:ledgers:list', {targetCompany})
-        .then(({request, response}) => {
-          dispatch(setLedgers(response));
-          console.log(`Updated ledgers request=${request}`);
-        })
-        .catch(error => {
-          console.log(`useEffect[tallyStatus]: error=${error}`);
-        });
+    if (targetCompany !== '') {
+      remoteCall('tally:command:ledgers:list', {targetCompany})
+          .then(({request, response}) => {
+            dispatch(setLedgers(response));
+            console.log(`Updated ledgers request=${request}`);
+          })
+          .catch(error => {
+            console.log(`useEffect[tallyStatus]: error=${error}`);
+          });
+    }
   }, [targetCompany]);
 
   const onDataChange = (newData) => {

@@ -76,14 +76,16 @@ function TallyServerStatus() {
 
   useEffect(() => {
     // console.log(`tallyCompanies: ${JSON.stringify(tallyCompanies, null, 2)}`);
-    setCompanyOptions(listToOptions(tallyCompanies.map(company => company.name), "Company"));
+    if (tallyCompanies.length) {
+      setCompanyOptions(listToOptions(tallyCompanies.map(company => company.name), "Company"));
 
-    remoteCall('tally:command:companies:current', {})
-        .then(({request, response}) => {
-          console.log(`currentCompany: ${JSON.stringify(response.value, null, 2)}`);
-          // setCurrentCompany(response);
-          dispatch(setCurrentCompany(response.value));
-        })
+      remoteCall('tally:command:companies:current', {})
+          .then(({request, response}) => {
+            console.log(`currentCompany: ${JSON.stringify(response.value, null, 2)}`);
+            // setCurrentCompany(response);
+            dispatch(setCurrentCompany(response.value));
+          })
+    }
   }, [tallyCompanies])
 
   useEffect(() => {
