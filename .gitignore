@@ -26,4 +26,4 @@ yarn-error.log*
 /dist
 /.local
 temp.xml
-/electron-excel-tally
+/excel-tally-electron
