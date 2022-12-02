@@ -17,7 +17,7 @@ const initialState = {
   companies: [],
   currentCompany: '',
   targetCompany: '',
-  currentServerURL: 'http://192.168.64.3:9000'
+  currentServerUrl: 'http://localhost:9000'
 };
 
 const tallyReducer = (state = initialState, action) => {

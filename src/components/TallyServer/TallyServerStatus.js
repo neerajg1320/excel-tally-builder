@@ -31,6 +31,7 @@ function TallyServerStatus() {
 
   const dispatch = useDispatch();
   const config = useSelector((state) => state.config);
+  const tallyServerUrl = useSelector((state) => state.tally.currentServerUrl);
   const channelServerHealth = 'tally:server:status:health';
 
   const tallyServerSetup = () => {
@@ -79,6 +80,10 @@ function TallyServerStatus() {
       });
     }
   };
+
+  useEffect(() => {
+    setServerUrl(tallyServerUrl);
+  }, [tallyServerUrl])
 
   useEffect(() => {
     if (tallyStatus) {
