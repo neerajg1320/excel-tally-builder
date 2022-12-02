@@ -1,4 +1,12 @@
-import { SET_STATUS, SET_DEBUG, SET_LEDGERS, SET_COMPANIES, SET_CURRENT_COMPANY, SET_TARGET_COMPANY } from "./tallyActionTypes";
+import {
+  SET_STATUS,
+  SET_DEBUG,
+  SET_LEDGERS,
+  SET_COMPANIES,
+  SET_CURRENT_COMPANY,
+  SET_TARGET_COMPANY,
+  SET_CURRENT_SERVER
+} from "./tallyActionTypes";
 
 const flagDebugTallyReducer = false;
 
@@ -8,7 +16,8 @@ const initialState = {
   ledgers: ['Cash', 'Bank'],
   companies: [],
   currentCompany: '',
-  targetCompany: ''
+  targetCompany: '',
+  currentServerURL: 'http://192.168.64.3:9000'
 };
 
 const tallyReducer = (state = initialState, action) => {
@@ -51,6 +60,12 @@ const tallyReducer = (state = initialState, action) => {
       return {
         ...state,
         targetCompany: action.payload.value
+      };
+
+    case SET_CURRENT_SERVER:
+      return {
+        ...state,
+        currentServerURL: action.payload.value
       };
 
     default:

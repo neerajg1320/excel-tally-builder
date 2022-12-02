@@ -1,7 +1,4 @@
 .server-container {
-    /*border: 1px dashed black;*/
-    /*border-radius: 20px;*/
-    /*background-color: #f5e290;*/
     background-color: honeydew;
     width: 80%;
     display: flex;
@@ -17,7 +14,6 @@
     flex-direction: row;
     justify-content: right;
     width: 100%;
-    /*border: 1px dashed red;*/
 }
 
 .server-info-box {
@@ -42,12 +38,10 @@
 }
 
 .server-command-box {
-    /*border: 1px dashed red;*/
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     gap: 10px;
-    /*width: 30%;*/
 }
 
 .server-command-button {

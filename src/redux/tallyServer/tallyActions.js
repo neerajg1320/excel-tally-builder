@@ -6,7 +6,8 @@ import {
   SET_LEDGERS,
   SET_COMPANIES,
   SET_CURRENT_COMPANY,
-  SET_TARGET_COMPANY
+  SET_TARGET_COMPANY,
+  SET_CURRENT_SERVER
 } from "./tallyActionTypes";
 
 export const startPing = () => {
@@ -75,3 +76,11 @@ export const setTargetCompany= (value) => {
   };
 };
 
+export const setCurrentServer= (value) => {
+  return {
+    type: SET_CURRENT_SERVER,
+    payload: {
+      value
+    }
+  };
+};

@@ -21,6 +21,7 @@ function TallyServerStatus() {
 
   const [companyOptions, setCompanyOptions] = useState([]);
   // const [targetCompany, setTargetCompany] = useState('');
+  const [serverUrl, setServerUrl] = useState('');
 
   const tallyStatus = useSelector((state) => state.tally.status);
   const tallyDebug = useSelector((state) => state.tally.debug);
@@ -30,9 +31,9 @@ function TallyServerStatus() {
 
   const dispatch = useDispatch();
   const config = useSelector((state) => state.config);
+  const channelServerHealth = 'tally:server:status:health';
 
-
-  useEffect(() => {
+  const tallyServerSetup = () => {
     if (config.debug) {
       remoteCall('command:list', {})
           .then(commands => {
@@ -52,18 +53,32 @@ function TallyServerStatus() {
           console.log(`TallyServerStatus:useEffect[] error=${error}`);
         });
 
-    const channelServerHealth = 'tally:server:status:health';
+
     remoteMonitorStart(channelServerHealth, (event, status) => {
       // console.log(`useEffect[] Monitor status=${status}`);
       dispatch(setStatus(status));
     });
+  }
+
+  const setServerClick = () => {
+    if (serverUrl) {
+      const serverInit = 'tally:server:init';
+      remoteCall(serverInit, {serverUrl})
+          .then(response => {
+            console.log(`serverInit: response=${response}`);
+            tallyServerSetup();
+          })
+          .catch(error => {
+            console.error(`serverInit: error=${error}`);
+          })
+    }
 
     return () => {
       remoteMonitorStop(channelServerHealth, (event, response) => {
         console.log("Health Listener closed");
       });
     }
-  }, [])
+  };
 
   useEffect(() => {
     if (tallyStatus) {
@@ -78,7 +93,6 @@ function TallyServerStatus() {
   }, [tallyStatus])
 
   useEffect(() => {
-    // console.log(`tallyCompanies: ${JSON.stringify(tallyCompanies, null, 2)}`);
     if (tallyCompanies.length) {
       setCompanyOptions(listToOptions(tallyCompanies.map(company => company.name), "Company"));
 
@@ -106,9 +120,9 @@ function TallyServerStatus() {
       remoteCall('tally:command', {command: selectedCommand, targetCompany: tallyTargetCompany})
           .then(({request, response}) => {
             console.log(`handleUpdateClick: request=${request} response=${JSON.stringify(response, null, 2)}`);
-            if (request == "LEDGERS") {
+            if (request === "LEDGERS") {
               dispatch(setLedgers(response));
-            } else if (request == "COMPANIES") {
+            } else if (request === "COMPANIES") {
               dispatch(setCompanies(response));
             }
           })
@@ -141,6 +155,10 @@ function TallyServerStatus() {
               </div>
             </div>)
         }
+        <div className="server-config-box">
+          <input type="text" value={serverUrl} onChange={e => setServerUrl(e.target.value)} />
+          <button onClick={setServerClick}>Set Server</button>
+        </div>
       </div>
 
     </div>
