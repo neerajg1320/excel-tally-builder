@@ -140,10 +140,6 @@ function TallyServerStatus() {
 
   return (
     <div className="server-container">
-      <div className="server-status-box">
-        <Connection title={"Tally Server"} status={tallyStatus}/>
-      </div>
-
       <div className="server-info-box">
         <div className="server-company-box">
           <span className="server-company-selectbox-title">Company</span>
@@ -163,6 +159,9 @@ function TallyServerStatus() {
         }
       </div>
 
+      <div className="server-status-box">
+        <Connection title={"Tally Server"} status={tallyStatus}/>
+      </div>
     </div>
 
   );

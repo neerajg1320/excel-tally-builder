@@ -4,7 +4,7 @@ import {useState} from "react";
 import Button from "react-bootstrap/Button";
 
 function Connection({title, status}) {
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(false);
   const handleSettingsClick = (e) => {
     setActive(!active);
   };
