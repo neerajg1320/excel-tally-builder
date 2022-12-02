@@ -29,13 +29,16 @@ function TallyServerStatus() {
   const tallyTargetCompany = useSelector((state) => state.tally.targetCompany);
 
   const dispatch = useDispatch();
+  const config = useSelector((state) => state.config);
 
 
   useEffect(() => {
-    remoteCall('command:list', {})
-        .then(commands => {
-          setCommandOptions(listToOptions(commands, 'Command'));
-        });
+    if (config.debug) {
+      remoteCall('command:list', {})
+          .then(commands => {
+            setCommandOptions(listToOptions(commands, 'Command'));
+          });
+    }
 
     const channelStatus = 'tally:server:status';
     remoteCall(channelStatus)
@@ -127,14 +130,17 @@ function TallyServerStatus() {
           <SingleSelect options={companyOptions} onChange={handleTargetCompanyChange} value={tallyTargetCompany}/>
         </div>
 
-        <div className="server-command-box">
-          <SingleSelect options={commandOptions} onChange={setSelectedCommand}/>
-          <div className="server-command-button">
-            <ConditionalTooltipButton condition={!tallyStatus} message="No connection to Tally!">
-              <Button variant="outline-dark" onClick={handleUpdateClick}>Update</Button>
-            </ConditionalTooltipButton>
-          </div>
-        </div>
+        {
+          config.debug &&
+            (<div className="server-command-box">
+              <SingleSelect options={commandOptions} onChange={setSelectedCommand}/>
+              <div className="server-command-button">
+                <ConditionalTooltipButton condition={!tallyStatus} message="No connection to Tally!">
+                  <Button variant="outline-dark" onClick={handleUpdateClick}>Update</Button>
+                </ConditionalTooltipButton>
+              </div>
+            </div>)
+        }
       </div>
 
     </div>
