@@ -19,6 +19,7 @@
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^8.1.0",
+    "react-icons": "^4.7.1",
     "react-redux": "^8.0.4",
     "react-scripts": "5.0.1",
     "react-table": "^7.8.0",
@@ -37,12 +38,10 @@
     "eject": "react-scripts eject",
     "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
     "electron:start": "wait-on tcp:3000 && electron .",
-
     "electron:build": "yarn build && electron-builder -c.extraMetadata.main=build/electron/main.js",
     "electron:build:mw": "yarn build && electron-builder -mw -c.extraMetadata.main=build/electron/main.js",
     "electron:build:w": "yarn build && electron-builder -w -c.extraMetadata.main=build/electron/main.js",
     "electron:build:all": "yarn build && electron-builder -mwl -c.extraMetadata.main=build/electron/main.js",
-
     "electron:release": "electron-builder -m -p onTagOrDraft -c.extraMetadata.main=build/electron/main.js",
     "electron:release:m": "electron-builder -m -p onTagOrDraft -c.extraMetadata.main=build/electron/main.js",
     "electron:release:w": "electron-builder -w -p onTagOrDraft -c.extraMetadata.main=build/electron/main.js",
@@ -80,7 +79,6 @@
     "appId": "com.glassball.tallykit",
     "productName": "TallyKit",
     "copyright": "Neeraj Gupta",
-
     "publish": {
       "provider": "github",
       "owner": "neeraj76",
@@ -115,8 +113,6 @@
       "createStartMenuShortcut": true
     }
   },
-
-
   "build_worked": {
     "appId": "com.glassball.tallyconnect",
     "productName": "TallyPad",

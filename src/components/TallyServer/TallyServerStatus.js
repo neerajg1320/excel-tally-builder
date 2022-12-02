@@ -14,6 +14,7 @@ import {
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 import {remoteCall, remoteMonitorStart, remoteMonitorStop} from "../../utils/rpc";
 import {listToOptions} from "../../utils/options";
+import {AiFillSetting} from "react-icons/ai";
 
 function TallyServerStatus() {
   const [commandOptions, setCommandOptions] = useState([]);
@@ -160,10 +161,6 @@ function TallyServerStatus() {
               </div>
             </div>)
         }
-        <div className="server-config-box">
-          <input type="text" value={serverUrl} onChange={e => setServerUrl(e.target.value)} />
-          <button onClick={setServerClick}>Set Server</button>
-        </div>
       </div>
 
     </div>
