@@ -5,7 +5,7 @@ import {
   SET_COMPANIES,
   SET_CURRENT_COMPANY,
   SET_TARGET_COMPANY,
-  SET_CURRENT_SERVER
+  SET_SERVER
 } from "./tallyActionTypes";
 
 const flagDebugTallyReducer = false;
@@ -17,7 +17,10 @@ const initialState = {
   companies: [],
   currentCompany: '',
   targetCompany: '',
-  currentServerUrl: 'http://localhost:9000'
+  serverAddr: {
+    host:'192.168.64.3',
+    port: 9000
+  }
 };
 
 const tallyReducer = (state = initialState, action) => {
@@ -62,10 +65,10 @@ const tallyReducer = (state = initialState, action) => {
         targetCompany: action.payload.value
       };
 
-    case SET_CURRENT_SERVER:
+    case SET_SERVER:
       return {
         ...state,
-        currentServerURL: action.payload.value
+        serverAddr: action.payload.value
       };
 
     default:

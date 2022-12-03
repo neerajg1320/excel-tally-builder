@@ -14,15 +14,12 @@ import {
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 import {remoteCall, remoteMonitorStart, remoteMonitorStop} from "../../utils/rpc";
 import {listToOptions} from "../../utils/options";
-import {AiFillSetting} from "react-icons/ai";
 
 function TallyServerStatus() {
   const [commandOptions, setCommandOptions] = useState([]);
   const [selectedCommand, setSelectedCommand] = useState('');
 
   const [companyOptions, setCompanyOptions] = useState([]);
-  // const [targetCompany, setTargetCompany] = useState('');
-  const [serverUrl, setServerUrl] = useState('');
 
   const tallyStatus = useSelector((state) => state.tally.status);
   const tallyDebug = useSelector((state) => state.tally.debug);
@@ -32,7 +29,7 @@ function TallyServerStatus() {
 
   const dispatch = useDispatch();
   const config = useSelector((state) => state.config);
-  const tallyServerUrl = useSelector((state) => state.tally.currentServerUrl);
+  const serverAddr = useSelector((state) => state.tally.serverAddr);
   const channelServerHealth = 'tally:server:status:health';
 
   const tallyServerSetup = () => {
@@ -57,15 +54,14 @@ function TallyServerStatus() {
 
 
     remoteMonitorStart(channelServerHealth, (event, status) => {
-      // console.log(`useEffect[] Monitor status=${status}`);
       dispatch(setStatus(status));
     });
   }
 
-  const setServerClick = () => {
-    if (serverUrl) {
+  useEffect(() => {
+    if (serverAddr) {
       const serverInit = 'tally:server:init';
-      remoteCall(serverInit, {serverUrl})
+      remoteCall(serverInit, {serverAddr})
           .then(response => {
             console.log(`serverInit: response=${response}`);
             tallyServerSetup();
@@ -80,11 +76,7 @@ function TallyServerStatus() {
         console.log("Health Listener closed");
       });
     }
-  };
-
-  useEffect(() => {
-    setServerUrl(tallyServerUrl);
-  }, [tallyServerUrl])
+  }, [serverAddr]);
 
   useEffect(() => {
     if (tallyStatus) {
