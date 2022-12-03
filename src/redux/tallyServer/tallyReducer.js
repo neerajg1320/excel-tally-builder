@@ -18,8 +18,8 @@ const initialState = {
   currentCompany: '',
   targetCompany: '',
   serverAddr: {
-    host:'192.168.64.3',
-    port: 9000
+    host:'',
+    port: 0
   }
 };
 

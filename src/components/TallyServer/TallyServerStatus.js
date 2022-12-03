@@ -7,7 +7,7 @@ import {useEffect, useState} from "react";
 import {
   setCompanies,
   setCurrentCompany,
-  setLedgers,
+  setLedgers, setServer,
   setStatus,
   setTargetCompany
 } from "../../redux/tallyServer/tallyActions";
@@ -31,6 +31,17 @@ function TallyServerStatus() {
   const config = useSelector((state) => state.config);
   const serverAddr = useSelector((state) => state.tally.serverAddr);
   const channelServerHealth = 'tally:server:status:health';
+
+  // dep: []
+  useEffect(() => {
+    console.log(`TallyServerStatus: useEffect[]`);
+
+    remoteCall('tally:ready', {})
+        .then((config) => {
+          console.log(`config=${JSON.stringify(config)}`);
+          dispatch(setServer(config));
+        });
+  }, [])
 
   const tallyServerSetup = () => {
     if (config.debug) {
@@ -58,9 +69,10 @@ function TallyServerStatus() {
     });
   }
 
+  // dep: serverAddr
   useEffect(() => {
-    if (serverAddr) {
-      const serverInit = 'tally:server:init';
+    if (serverAddr.host !== "") {
+      const serverInit = 'tally:server:set';
       remoteCall(serverInit, {serverAddr})
           .then(response => {
             console.log(`serverInit: response=${response}`);
@@ -78,6 +90,7 @@ function TallyServerStatus() {
     }
   }, [serverAddr]);
 
+  // dep: tallyStatus
   useEffect(() => {
     if (tallyStatus) {
       console.log('The Tally Server is ON');
@@ -90,6 +103,7 @@ function TallyServerStatus() {
     }
   }, [tallyStatus])
 
+  // dep: tallyCompanies
   useEffect(() => {
     if (tallyCompanies.length) {
       setCompanyOptions(listToOptions(tallyCompanies.map(company => company.name), "Company"));
@@ -103,6 +117,7 @@ function TallyServerStatus() {
     }
   }, [tallyCompanies])
 
+  // dep: tallyCurrentCompany
   useEffect(() => {
     dispatch(setTargetCompany(tallyCurrentCompany))
   }, [tallyCurrentCompany]);
