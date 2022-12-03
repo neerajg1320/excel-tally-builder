@@ -23,8 +23,7 @@ function Connection({title, status}) {
         }
       </div>
       <div style={{display: "flex", gap: "20px"}}>
-        <div className="menu-container">
-          <div className="settings-container">
+        <div className="settings-container">
             <div className="settings-input-trigger">
               <span>Settings</span>
               <AiFillSetting size={24} onClick={handleSettingsClick}/>
@@ -44,7 +43,6 @@ function Connection({title, status}) {
               </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
   );
