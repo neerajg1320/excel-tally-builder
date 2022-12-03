@@ -12,14 +12,23 @@ function Connection({title, status}) {
   const serverAddr = useSelector((state) => state.tally.serverAddr);
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const fillServerAddr = () => {
     setHost(serverAddr.host);
     setPort(serverAddr.port);
+  }
+
+  useEffect(() => {
+    fillServerAddr();
   }, [serverAddr]);
 
   const handleSettingsClick = (e) => {
     setActive(!active);
   };
+
+  const handleCancelClick = (e) => {
+    setActive(!active);
+    fillServerAddr();
+  }
 
   const handleSaveClick = (e) => {
     setActive(!active);
@@ -60,7 +69,7 @@ function Connection({title, status}) {
                     onChange={(e) => setPort(e.target.value)}
                 />              </div>
               <div className="settings-buttons-container">
-                <Button className="bg-transparent  btn-outline-danger" onClick={handleSaveClick}>Cancel</Button>
+                <Button className="bg-transparent  btn-outline-danger" onClick={handleCancelClick}>Cancel</Button>
                 <Button className="btn-primary" onClick={handleSaveClick}>Save</Button>
               </div>
             </div>
