@@ -1,4 +1,23 @@
-const { ipcRenderer } = window.require('electron');
+
+let ipcRenderer;
+
+try {
+  ipcRenderer = window.require('electron').ipcRenderer;
+} catch (err) {
+
+  const stubEventSender = (channel, arg) => {
+    console.log(`${channel}: stub call`);
+  };
+  const stubListenerInvoker = (channel, arg) => {
+    console.log(`${channel}: stub call`);
+  };
+
+  ipcRenderer = {
+    on: stubListenerInvoker,
+    once: stubListenerInvoker,
+    send: stubEventSender
+  }
+}
 
 export const remoteCall = (channel, command) => {
   return new Promise((resolve, reject) => {

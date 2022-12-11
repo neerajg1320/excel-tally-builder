@@ -1,12 +1,12 @@
 .server-container {
-    background-color: honeydew;
-    width: 80%;
+    /*background-color: honeydew;*/
+    /*width: 80%;*/
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     /*align-items: flex-end;*/
     padding: 20px;
-    margin: 20px;
+    margin: 10px 0;
     box-shadow: 1px 2px 3px 4px rgba(20,20,20,0.4);
 }
 
