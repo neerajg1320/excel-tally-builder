@@ -16,20 +16,21 @@ import {SmartTable} from "./components/smart-tables/column-modify/SmartTable";
 import TallyServerStatus from "./components/tally/TallyServerStatus/TallyServerStatus";
 
 function App() {
-
   const [tabKey, setTabKey] = useState("readExcel");
+  const boxShadow = "rgba(0, 0, 0, 0.24) 0px 3px 8px";
+  // const boxShadow = "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px";
 
   return (
       <div
           style={{
-            display:"flex", flexDirection: "column", alignItems: "center"
+            display:"flex", flexDirection: "column", alignItems: "center", gap: "10px"
           }}
         >
         <div style={{
             marginTop: "20px",
             height: "15vh",
             width: "90%",
-            boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"
+            boxShadow
           }}
         >
           <TallyServerStatus />
@@ -42,7 +43,7 @@ function App() {
             padding: "30px",
             margin: "20px",
             overflow: "scroll",
-            boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"
+            boxShadow
           }}
         >
           <Tabs className="mb-3"
