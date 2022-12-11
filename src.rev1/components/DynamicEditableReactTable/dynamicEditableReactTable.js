@@ -58,7 +58,6 @@ function DynamicEditableReactTable({columns, data, onDataChange}) {
         const reactCol = {
           Header: col.title,
           accessor:col.key,
-          width:200
         }
 
         if (col.editable) {

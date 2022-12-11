@@ -12,7 +12,7 @@ function DynamicReactTable({columns, data, onCellDataChange}) {
       const reactTableColumns  = columns.map(col => {
         const reactCol = {
           Header: col.title,
-          accessor:col.key
+          accessor:col.key,
         }
         if (col.type == 'select') {
           reactCol.Cell = ({value, row}) => {

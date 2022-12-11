@@ -1,6 +1,10 @@
-import { createStore } from "redux";
-import allReducers from "./reducers";
+import { createStore, combineReducers } from "redux";
+import rowsReducer from "./reducers/rowsReducer";
+import columnsReducer from "./reducers/columnsReducer";
 
-const store = createStore(allReducers);
+const store = createStore(combineReducers({
+  rows: rowsReducer,
+  columns: columnsReducer
+}));
 
 export default store;

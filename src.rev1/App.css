@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap");
+
+html {
+    height: 100%;
+    background-image: linear-gradient(to right, #35BBCA, #0191B4, #35BBCA);
+}
+#root {
+    height: 100%;
+}
+
+.App {
+    /*border: 1px dashed royalblue;*/
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    align-items: center;
+    padding: 20px;
+    gap: 40px;
+    padding: 40px 0 80px 0;
+    height: 100%;
+    background-image: linear-gradient(to right, #35BBCA, #0191B4, #35BBCA);
+}
+
+
+
+.files-simple-box {
+    /*border: 1px solid blue;*/
+}
+
+.files-view-box {
+    /*border: 1px solid blue;*/
+    min-height: 200px;
+}
+
+.submit-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

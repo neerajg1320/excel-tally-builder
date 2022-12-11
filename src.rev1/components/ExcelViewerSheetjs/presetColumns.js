@@ -12,24 +12,25 @@ export const kotakbankColumns = [
     "type": "date",
     "key": "Transaction Date"
   },
-  {
-    "title": "ValueDate",
-    "hidden": false,
-    "type": "date",
-    "key": "Value Date"
-  },
-  {
-    "title": "ReferenceNum",
-    "hidden": false,
-    "type": "text",
-    "key": "Chq / Ref number"
-  },
+  // {
+  //   "title": "ValueDate",
+  //   "hidden": false,
+  //   "type": "date",
+  //   "key": "Value Date"
+  // },
   {
     "title": "ReferenceNum",
     "hidden": false,
     "type": "text",
-    "key": "Description"
+    "key": "Chq / Ref number",
   },
+  // {
+  //   "title": "Description",
+  //   "hidden": false,
+  //   "type": "text",
+  //   "key": "Description",
+  //   "width": "50",
+  // },
   {
     "title": "Debit",
     "hidden": false,
