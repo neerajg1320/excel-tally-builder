@@ -10,10 +10,10 @@ import {
   setLedgers, setServer,
   setStatus,
   setTargetCompany
-} from "../../redux/tallyServer/tallyActions";
+} from "../../../redux/tallyServer/tallyActions";
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
-import {remoteCall, remoteMonitorStart, remoteMonitorStop} from "../../utils/rpc";
-import {listToOptions} from "../../utils/options";
+import {remoteCall, remoteMonitorStart, remoteMonitorStop} from "../../../utils/tallyRpc";
+import {listToOptions} from "../../../utils/options";
 
 function TallyServerStatus() {
   const [commandOptions, setCommandOptions] = useState([]);
