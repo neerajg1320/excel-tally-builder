@@ -17,7 +17,7 @@ import TallyServerStatus from "./components/tally/TallyServerStatus/TallyServerS
 
 function App() {
   const [tabKey, setTabKey] = useState("readExcel");
-  const boxShadow = "rgba(0, 0, 0, 0.24) 0px 3px 8px";
+  const boxShadow = "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px";
   // const boxShadow = "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px";
 
   return (
