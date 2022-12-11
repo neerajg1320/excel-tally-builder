@@ -1,4 +1,4 @@
-import MOCK_DATA from "../../assets/MOCK_SMALL.json";
+import MOCK_DATA from "../../../assets/MOCK_SMALL.json";
 import * as ActionTypes from '../actionTypes';
 
 const initialState = MOCK_DATA;

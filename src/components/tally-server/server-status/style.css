@@ -1,0 +1,50 @@
+.server-container {
+    background-color: honeydew;
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /*align-items: flex-end;*/
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 1px 2px 3px 4px rgba(20,20,20,0.4);
+}
+
+.server-status-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    width: 40%;
+    /*border: 1px solid sienna;*/
+}
+
+.server-info-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 40%;
+    align-items: flex-end;
+}
+
+.server-company-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.server-company-selectbox-title {
+    font-size: 1.15em;
+    font-weight: bold;
+    padding: 2px;
+}
+
+.server-command-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.server-command-button {
+    margin-left: 10px;
+}

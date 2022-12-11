@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useEffect} from "react";
-import {addColumn} from "../../../redux/actions";
+import {addColumn} from "../../../redux/table/actions";
 import {exportJsonToExcel} from "../../excel/xlsx/excel";
 import {presetColumns} from "../../../features/presetColumns";
 import {colToRTCol} from "../../adapters/reactTableAdapter";

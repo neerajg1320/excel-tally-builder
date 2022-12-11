@@ -1,6 +1,6 @@
 import { createStore, combineReducers } from "redux";
-import rowsReducer from "./reducers/rowsReducer";
-import columnsReducer from "./reducers/columnsReducer";
+import rowsReducer from "./table/reducers/rowsReducer";
+import columnsReducer from "./table/reducers/columnsReducer";
 
 const store = createStore(combineReducers({
   rows: rowsReducer,
