@@ -5,17 +5,22 @@ try {
   ipcRenderer = window.require('electron').ipcRenderer;
 } catch (err) {
 
-  const stubEventSender = (channel, arg) => {
-    console.log(`${channel}: stub call`);
+  const eventSender = (channel, arg) => {
+    console.log(`stubEventSender: ${channel}: stub call`);
   };
-  const stubListenerInvoker = (channel, arg) => {
-    console.log(`${channel}: stub call`);
+  const addListener = (channel, arg) => {
+    console.log(`addListener: ${channel}: stub call`);
+  };
+  const removeListener = (channel, arg) => {
+    console.log(`removeListener: ${channel}: stub call`);
   };
 
   ipcRenderer = {
-    on: stubListenerInvoker,
-    once: stubListenerInvoker,
-    send: stubEventSender
+    on: addListener,
+    once: addListener,
+    send: eventSender,
+    removeListener: removeListener,
+    removeListeners: removeListener
   }
 }
 

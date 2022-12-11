@@ -13,19 +13,34 @@ import {RowModifyFilterIconTable} from "./components/tables/selection-table/row-
 import ReadExcel from "./components/excel/xlsx/ReadExcel";
 import {useState} from "react";
 import {SmartTable} from "./components/smart-tables/column-modify/SmartTable";
+import TallyServerStatus from "./components/tally/TallyServerStatus/TallyServerStatus";
 
 function App() {
 
   const [tabKey, setTabKey] = useState("readExcel");
 
   return (
-      <div style={{display:"flex", justifyContent:"center", height:"100%"}}>
+      <div
+          style={{
+            display:"flex", flexDirection: "column", alignItems: "center"
+          }}
+        >
         <div style={{
+            marginTop: "20px",
+            height: "15vh",
+            width: "90%",
+            boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"
+          }}
+        >
+          <TallyServerStatus />
+        </div>
+
+        <div style={{
+          height: "75vh",
             width: "90%",
             borderRadius: "4px",
             padding: "30px",
             margin: "20px",
-            height: "90vh",
             overflow: "scroll",
             boxShadow: "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px"
           }}
