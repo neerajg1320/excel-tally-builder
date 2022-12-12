@@ -3,7 +3,7 @@ import Connection from "../ConnectionStatus/Connection";
 import SingleSelect from "../SingleSelect/SingleSelect";
 import Button from "react-bootstrap/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {
   setCompanies,
   setCurrentCompany,
@@ -14,6 +14,7 @@ import {
 import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton";
 import {remoteCall, remoteMonitorStart, remoteMonitorStop} from "../../../utils/tallyRpc";
 import {listToOptions} from "../../../utils/options";
+import {DateToStringDate} from "../../../utils/date";
 
 function TallyServerStatus({ onLedgersChange }) {
   const [commandOptions, setCommandOptions] = useState([]);
@@ -32,6 +33,7 @@ function TallyServerStatus({ onLedgersChange }) {
   const config = useSelector((state) => state.config);
   const serverAddr = useSelector((state) => state.tally.serverAddr);
   const channelServerHealth = 'tally:server:status:health';
+  const rows = useSelector(state => state.rows);
 
   // dep: []
   useEffect(() => {
@@ -167,6 +169,37 @@ function TallyServerStatus({ onLedgersChange }) {
     }
   }
 
+  const handleResponse = useCallback((response) => {
+    console.log(`handleResponse: response=${JSON.stringify(response, null, 2)}`);
+
+    // const resultMap = Object.fromEntries(response.map(res => [res.id, res.voucher_id]));
+    // console.log(`resultMap=${JSON.stringify(resultMap)}`);
+    // const newData = data.map(row => {
+    //   return {
+    //     ...row,
+    //     'VoucherID': resultMap[row.Serial]
+    //   }
+    // });
+    //
+    // setData(newData);
+  }, []);
+
+  const handleSubmitClick = useCallback((data) => {
+    console.log(`data=${JSON.stringify(data, null, 2)}`);
+    const tData = data.map(item => {return {
+      ...item,
+      Bank: "ICICIBank",
+      ["Transaction Date"]: DateToStringDate(item["Transaction Date"]),
+      ["Value Date"]: DateToStringDate(item["Value Date"])
+    }});
+
+    remoteCall('tally:command:vouchers:add', {tallyTargetCompany, rows: tData})
+        .then(handleResponse)
+        .catch(error => {
+          console.error(`handleSubmit: error=${error}`);
+        });
+  }, []);
+
   return (
     <div className="server-container">
       <div className="server-info-box">
@@ -178,7 +211,7 @@ function TallyServerStatus({ onLedgersChange }) {
           <ConditionalTooltipButton
               condition={!tallyStatus} message="No connection to Tally"
           >
-            <Button>Submit To Tally</Button>
+            <Button onClick={e => handleSubmitClick(rows)}>Submit To Tally</Button>
           </ConditionalTooltipButton>
         </div>
 
