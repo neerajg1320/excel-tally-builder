@@ -175,7 +175,9 @@ function TallyServerStatus({ onLedgersChange }) {
           <SingleSelect options={companyOptions} onChange={handleTargetCompanyChange} value={tallyTargetCompany}/>
         </div>
         <div style={{}}>
-          <ConditionalTooltipButton condition={!tallyStatus} message="No connection to Tally">
+          <ConditionalTooltipButton
+              condition={!tallyStatus} message="No connection to Tally"
+          >
             <Button>Submit To Tally</Button>
           </ConditionalTooltipButton>
         </div>
