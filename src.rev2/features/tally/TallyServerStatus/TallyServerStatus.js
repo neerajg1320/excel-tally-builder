@@ -15,7 +15,8 @@ import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton"
 import {remoteCall, remoteMonitorStart, remoteMonitorStop} from "../../../utils/tallyRpc";
 import {listToOptions} from "../../../utils/options";
 import {DateToStringDate} from "../../../utils/date";
-import {setRows} from "../../../redux/table/actions";
+import {addColumn, setRows} from "../../../redux/table/actions";
+import {presetColumns} from "../../presetColumns";
 
 function TallyServerStatus({ onLedgersChange }) {
   const [commandOptions, setCommandOptions] = useState([]);
@@ -185,15 +186,24 @@ function TallyServerStatus({ onLedgersChange }) {
 
           const resultMap = Object.fromEntries(response.map(res => [res.id, res.voucher_id]));
           console.log(`resultMap=${JSON.stringify(resultMap)}`);
+
+          // Add column for showing voucherId
+          const voucherIdCol = presetColumns.filter(col => col.key === 'voucherId');
+          if (voucherIdCol.length > 0) {
+            dispatch(addColumn(voucherIdCol[0]));
+          }
+
+          // Add voucherId
           const newData = data.map(row => {
             console.log(`row=${JSON.stringify(row, null, 2)}`);
             return {
               ...row,
-              'voucherID': resultMap[row.id]
+              'voucherId': resultMap[row.id]
             }
           });
           console.log(`Saved to Tally: newData=${JSON.stringify(newData, null, 2)}`)
           dispatch(setRows(newData));
+
         })
         .catch(error => {
           console.error(`handleSubmit: error=${error}`);
