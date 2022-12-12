@@ -168,22 +168,7 @@ function TallyServerStatus({ onLedgersChange }) {
           });
     }
   }
-
-  const handleResponse = useCallback((response) => {
-    console.log(`handleResponse: response=${JSON.stringify(response, null, 2)}`);
-
-    // const resultMap = Object.fromEntries(response.map(res => [res.id, res.voucher_id]));
-    // console.log(`resultMap=${JSON.stringify(resultMap)}`);
-    // const newData = data.map(row => {
-    //   return {
-    //     ...row,
-    //     'VoucherID': resultMap[row.Serial]
-    //   }
-    // });
-    //
-    // setData(newData);
-  }, []);
-
+  
   const handleSubmitClick = useCallback((data) => {
     console.log(`data=${JSON.stringify(data, null, 2)}`);
     const tData = data.map(item => {return {
@@ -194,7 +179,20 @@ function TallyServerStatus({ onLedgersChange }) {
     }});
 
     remoteCall('tally:command:vouchers:add', {tallyTargetCompany, rows: tData})
-        .then(handleResponse)
+        .then((response) => {
+          console.log(`handleResponse: response=${JSON.stringify(response, null, 2)}`);
+
+          const resultMap = Object.fromEntries(response.map(res => [res.id, res.voucher_id]));
+          console.log(`resultMap=${JSON.stringify(resultMap)}`);
+          const newData = data.map(row => {
+            return {
+              ...row,
+              'VoucherID': resultMap[row.Serial]
+            }
+          });
+          console.log(`Saved to Tally: newData=${JSON.stringify(newData, null, 2)}`)
+          // dispatch(setRows(newData));
+        })
         .catch(error => {
           console.error(`handleSubmit: error=${error}`);
         });
