@@ -36,7 +36,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   const columns = useSelector(state => state.columns);
   const choices = useSelector(state => state.choices);
   const dispatch = useDispatch();
-  
+
   const createRTCol = useCallback((col, index) => {
     const mPresetCols = presetColumns.filter(pcol=> pcol.key === col.key);
 
@@ -46,9 +46,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
       if (col.type === 'select') {
         console.log(`Column choices=${JSON.stringify(col.choices, null, 2)}`);
         console.log(`Tally choices=${JSON.stringify(choices[col.key.toLowerCase()], null, 2)}`);
-        console.log(`Preset column=`, col.key);
         col.choices = choices[col.key.toLowerCase()];
-        // console.log(`Preset column choices=`, col.choices);
       }
     }
 
