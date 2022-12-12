@@ -46,6 +46,12 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
 
     if (mPresetCols.length) {
       col = mPresetCols[0];
+
+      if (col.type === 'select') {
+        console.log(`Preset column=`, col.key);
+        col.choices = choices[col.key.toLowerCase()];
+        console.log(`Preset column choices=`, col.choices);
+      }
     }
 
     col.index = index;
