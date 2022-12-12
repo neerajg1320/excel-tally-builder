@@ -18,5 +18,13 @@ export const presetColumns = [
     bulk: false,
     type: 'input',
     show: false
+  },
+  {
+    label: "VoucherId",
+    key: "voucherId",
+    edit: false,
+    bulk: false,
+    // type: 'input',
+    // show: false
   }
 ];

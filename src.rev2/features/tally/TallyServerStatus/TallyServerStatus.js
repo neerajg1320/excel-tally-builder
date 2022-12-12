@@ -15,6 +15,7 @@ import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton"
 import {remoteCall, remoteMonitorStart, remoteMonitorStop} from "../../../utils/tallyRpc";
 import {listToOptions} from "../../../utils/options";
 import {DateToStringDate} from "../../../utils/date";
+import {setRows} from "../../../redux/table/actions";
 
 function TallyServerStatus({ onLedgersChange }) {
   const [commandOptions, setCommandOptions] = useState([]);
@@ -168,7 +169,7 @@ function TallyServerStatus({ onLedgersChange }) {
           });
     }
   }
-  
+
   const handleSubmitClick = useCallback((data) => {
     console.log(`data=${JSON.stringify(data, null, 2)}`);
     const tData = data.map(item => {return {
@@ -185,13 +186,14 @@ function TallyServerStatus({ onLedgersChange }) {
           const resultMap = Object.fromEntries(response.map(res => [res.id, res.voucher_id]));
           console.log(`resultMap=${JSON.stringify(resultMap)}`);
           const newData = data.map(row => {
+            console.log(`row=${JSON.stringify(row, null, 2)}`);
             return {
               ...row,
-              'VoucherID': resultMap[row.Serial]
+              'voucherID': resultMap[row.id]
             }
           });
           console.log(`Saved to Tally: newData=${JSON.stringify(newData, null, 2)}`)
-          // dispatch(setRows(newData));
+          dispatch(setRows(newData));
         })
         .catch(error => {
           console.error(`handleSubmit: error=${error}`);
