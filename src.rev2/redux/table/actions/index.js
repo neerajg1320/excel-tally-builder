@@ -70,3 +70,13 @@ export const setColumns = (columns) => {
     'payload': columns
   }
 }
+
+export const setChoices = (column, choices) => {
+  return {
+    'type': ActionTypes.SET_CHOICES,
+    'payload': {
+      column,
+      choices
+    }
+  }
+}

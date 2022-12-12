@@ -15,7 +15,7 @@ import ConditionalTooltipButton from "../TooltipButton/ConditionalTooltipButton"
 import {remoteCall, remoteMonitorStart, remoteMonitorStop} from "../../../utils/tallyRpc";
 import {listToOptions} from "../../../utils/options";
 
-function TallyServerStatus() {
+function TallyServerStatus({ onLedgersChange }) {
   const [commandOptions, setCommandOptions] = useState([]);
   const [selectedCommand, setSelectedCommand] = useState('');
 
@@ -26,6 +26,7 @@ function TallyServerStatus() {
   const tallyCompanies = useSelector((state) => state.tally.companies);
   const tallyCurrentCompany = useSelector((state) => state.tally.currentCompany);
   const tallyTargetCompany = useSelector((state) => state.tally.targetCompany);
+  const tallyLedgers = useSelector((state) => state.tally.ledgers);
 
   const dispatch = useDispatch();
   const config = useSelector((state) => state.config);
@@ -36,7 +37,7 @@ function TallyServerStatus() {
   useEffect(() => {
     console.log(`TallyServerStatus: useEffect[]`);
 
-    remoteCall('tally:ready', {})
+    remoteCall('tally:ui:ready', {})
         .then((config) => {
           console.log(`config=${JSON.stringify(config)}`);
           dispatch(setServer(config));
@@ -121,6 +122,27 @@ function TallyServerStatus() {
   useEffect(() => {
     dispatch(setTargetCompany(tallyCurrentCompany))
   }, [tallyCurrentCompany]);
+
+  useEffect(() => {
+    if (onLedgersChange) {
+      onLedgersChange(tallyLedgers);
+    }
+  }, [tallyLedgers]);
+
+  // dep: tallyCurrentCompany
+  useEffect(() => {
+    // console.log(`Need to get the ledgers`);
+    if (tallyTargetCompany !== '') {
+      remoteCall('tally:command:ledgers:list', {tallyTargetCompany})
+          .then(({request, response}) => {
+            dispatch(setLedgers(response));
+            console.log(`Updated ledgers request=${request}`);
+          })
+          .catch(error => {
+            console.log(`useEffect[tallyStatus]: error=${error}`);
+          });
+    }
+  }, [tallyTargetCompany]);
 
   const handleTargetCompanyChange = (e) => {
     console.log(`e=${JSON.stringify(e, null, 2)}`)

@@ -34,7 +34,12 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   // Data variables
   const data = useSelector(state => state.rows);
   const columns = useSelector(state => state.columns);
+  const choices = useSelector(state => state.choices);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(choices);
+  }, [choices]);
 
   const createRTCol = useCallback((col, index) => {
     const mPresetCols = presetColumns.filter(pcol=> pcol.key === col.key);

@@ -8,3 +8,5 @@ export const DELETE_COLUMNS = 'DELETE_COLUMNS';
 export const EDIT_COLUMNS = 'EDIT_COLUMNS';
 export const ADD_COLUMN = 'ADD_COLUMN';
 export const SET_COLUMNS = 'SET_COLUMNS';
+
+export const SET_CHOICES = 'SET_CHOICES';

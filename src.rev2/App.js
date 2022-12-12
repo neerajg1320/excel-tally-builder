@@ -13,12 +13,19 @@ import {RowModifyFilterIconTable} from "./components/tables/selection-table/row-
 import ReadExcel from "./components/excel/xlsx/ReadExcel";
 import {useState} from "react";
 import {SmartTable} from "./components/smart-tables/column-modify/SmartTable";
-import TallyServerStatus from "./components/tally/TallyServerStatus/TallyServerStatus";
+import TallyServerStatus from "./features/tally/TallyServerStatus/TallyServerStatus";
+import {useDispatch} from "react-redux";
+import {MOCK_CHOICES} from "./assets/MOCK_CHOICES";
 
 function App() {
   const [tabKey, setTabKey] = useState("readExcel");
+  const [categories, setCategories] = useState(MOCK_CHOICES);
   const boxShadow = "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px";
-  // const boxShadow = "rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px";
+
+  const handleLedgersChange = (ledgers) => {
+    console.log(`ledgers=`, ledgers);
+    setCategories(ledgers.map(lgr => lgr.name));
+  }
 
   return (
       <div
@@ -33,7 +40,7 @@ function App() {
             boxShadow
           }}
         >
-          <TallyServerStatus />
+          <TallyServerStatus onLedgersChange={handleLedgersChange}/>
         </div>
 
         <div style={{
@@ -78,7 +85,7 @@ function App() {
             {/*  <RowModifyFilterIconTable />*/}
             {/*</Tab>*/}
             <Tab eventKey="addCategory" title="Add Category">
-              <SmartTable />
+              <SmartTable categories={categories}/>
             </Tab>
           </Tabs>
         </div>
