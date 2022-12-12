@@ -116,7 +116,6 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   useGlobalFilter,
   useRowSelect,
 
-
   (hooks) => {
     hooks.visibleColumns.push((columns) => {
       return [
