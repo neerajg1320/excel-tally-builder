@@ -36,11 +36,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   const columns = useSelector(state => state.columns);
   const choices = useSelector(state => state.choices);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log(choices);
-  }, [choices]);
-
+  
   const createRTCol = useCallback((col, index) => {
     const mPresetCols = presetColumns.filter(pcol=> pcol.key === col.key);
 
@@ -48,15 +44,17 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
       col = mPresetCols[0];
 
       if (col.type === 'select') {
+        console.log(`Column choices=${JSON.stringify(col.choices, null, 2)}`);
+        console.log(`Tally choices=${JSON.stringify(choices[col.key.toLowerCase()], null, 2)}`);
         console.log(`Preset column=`, col.key);
         col.choices = choices[col.key.toLowerCase()];
-        console.log(`Preset column choices=`, col.choices);
+        // console.log(`Preset column choices=`, col.choices);
       }
     }
 
     col.index = index;
     return colToRTCol(col);
-  }, [])
+  }, [choices])
 
   const [rtColumns, setRTColumns] = useState(columns.map(createRTCol));
 
