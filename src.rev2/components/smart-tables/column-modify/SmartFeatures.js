@@ -42,7 +42,7 @@ export const SmartFeatures = () => {
       <div
           style={{
             display:"flex", flexDirection:"row", justifyContent:"space-between",alignItems:"top",
-            border:"1px solid lightblue", borderRadius: "5px"
+            border:"1px solid lightblue", borderRadius: "5px",
           }}
       >
         <div style={{marginLeft:"10px", marginTop:"3px", fontSize:"0.8em"}}>
@@ -66,6 +66,7 @@ export const SmartFeatures = () => {
               className="btn-outline-primary bg-transparent"
               size="sm"
               onClick={handleAddCategoryClick}
+              style={{zIndex: "-1"}}
           >
             Add Category
           </Button>
