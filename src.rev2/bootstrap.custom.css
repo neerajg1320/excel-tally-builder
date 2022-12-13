@@ -1,0 +1,8 @@
+.btn-primary:hover {
+    background-color: lightblue;
+}
+
+.btn-outline-primary:hover {
+    background-color: lightblue !important;
+    color: blue !important;
+}

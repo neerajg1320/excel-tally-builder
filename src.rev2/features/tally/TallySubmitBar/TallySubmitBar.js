@@ -12,6 +12,7 @@ const TallySubmitBar = () => {
   const dispatch = useDispatch();
   const tallyStatus = useSelector((state) => state.tally.status);
   const tallyTargetCompany = useSelector((state) => state.tally.targetCompany);
+  const columns = useSelector(state => state.columns);
 
   const handleSubmitClick = useCallback((data) => {
     console.log(`data=${JSON.stringify(data, null, 2)}`);
@@ -30,9 +31,12 @@ const TallySubmitBar = () => {
           console.log(`resultMap=${JSON.stringify(resultMap)}`);
 
           // Add column for showing voucherId
-          const voucherIdCol = presetColumns.filter(col => col.key === 'voucherId');
-          if (voucherIdCol.length > 0) {
-            dispatch(addColumn(voucherIdCol[0]));
+          const tableVoucherCol = columns.filter(col => col.key === 'voucherId');
+          if (tableVoucherCol.length < 1) {
+            const voucherIdCol = presetColumns.filter(col => col.key === 'voucherId');
+            if (voucherIdCol.length > 0) {
+              dispatch(addColumn(voucherIdCol[0]));
+            }
           }
 
           // Add voucherId

@@ -176,8 +176,9 @@ function TallyServerStatus({ onLedgersChange }) {
     <div className="server-container">
       <div className="server-info-box">
         <div className="server-company-box">
-          <span className="server-company-selectbox-title">Company</span>
-          <SingleSelect options={companyOptions} onChange={handleTargetCompanyChange} value={tallyTargetCompany}/>
+          <span className="server-company-label">Company:{"  "}</span>
+          <span className="server-company-name">{tallyCurrentCompany}</span>
+          {/*<SingleSelect className="form-control" options={companyOptions} onChange={handleTargetCompanyChange} value={tallyTargetCompany}/>*/}
         </div>
         {
           config.debug &&

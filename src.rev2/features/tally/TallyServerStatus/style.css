@@ -1,12 +1,10 @@
 .server-container {
-    width: 100%;
+    height: 100%;
+    width: 90%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 20px;
-    /*margin: 10px 0;*/
-    background-color: white;
-    box-shadow: 0 0 3px 0 rgba(0,0,0,0.2);
+    padding: 10px;
 }
 
 .server-status-box {
@@ -26,16 +24,20 @@
 
 .server-company-box {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-direction: row;
+    align-items: center;
 }
 
-.server-company-selectbox-title {
+.server-company-label {
+    font-size: .8em;
+    padding: 2px;
+}
+
+.server-company-name {
     font-size: 1.15em;
     font-weight: bold;
     padding: 2px;
 }
-
 .server-command-box {
     display: flex;
     flex-direction: row;

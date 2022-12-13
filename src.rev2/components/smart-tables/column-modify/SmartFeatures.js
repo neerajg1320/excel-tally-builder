@@ -13,18 +13,20 @@ export const SmartFeatures = () => {
   const columns = useSelector(state => state.columns);
   const rows = useSelector(state => state.rows);
 
-  const categoryPresent = useCallback(() => {
-    const catCol = columns.filter(col => col.key?.toLowerCase() === "category");
-    return catCol.length > 0
-  }, [columns]);
-
-  const handleAddCategoryClick = useCallback((e) => {
+  const handleAddCategoryClick = useCallback((columns) => {
     // console.log(`Need to add a new column`);
-    const categoryColumn = presetColumns.filter(col => col.key.toLowerCase() === 'category');
-    if (categoryColumn.length) {
-      const categoryRTColumn = colToRTCol(categoryColumn[0]);
-      dispatch(addColumn(categoryRTColumn));
+    const tableCategoryColumn = columns.filter(col => col.key === "Category");
+
+    if (tableCategoryColumn.length < 1) {
+      const categoryColumn = presetColumns.filter(col => col.key === 'Category');
+      if (categoryColumn.length) {
+        const categoryRTColumn = colToRTCol(categoryColumn[0]);
+        dispatch(addColumn(categoryRTColumn));
+      }
+    } else {
+      alert("Category is already present");
     }
+
   }, []);
 
   const handleSaveClick = useCallback((e) => {
@@ -62,11 +64,9 @@ export const SmartFeatures = () => {
             Save Table
           </Button>
           <Button
-              disabled={categoryPresent()}
               className="btn-outline-primary bg-transparent"
               size="sm"
-              onClick={handleAddCategoryClick}
-              style={{zIndex: "-1"}}
+              onClick={e => handleAddCategoryClick(columns)}
           >
             Add Category
           </Button>

@@ -7,6 +7,7 @@ import {SmartTable} from "./components/smart-tables/column-modify/SmartTable";
 import TallyServerStatus from "./features/tally/TallyServerStatus/TallyServerStatus";
 import {MOCK_CHOICES} from "./assets/MOCK_CHOICES";
 import TallySubmitBar from "./features/tally/TallySubmitBar/TallySubmitBar";
+import "./bootstrap.custom.css";
 
 function App() {
   const [tabKey, setTabKey] = useState("readExcel");
@@ -28,7 +29,8 @@ function App() {
         <div style={{
           height: "100px", width: "100%",
           position: "fixed", top: 0,
-          boxShadow
+          display: "flex", flexDirection: "row", justifyContent:"center",
+          boxShadow: "0 0 3px 0 rgba(0,0,0,0.2)",
         }}
         >
           <TallyServerStatus onLedgersChange={handleLedgersChange}/>
