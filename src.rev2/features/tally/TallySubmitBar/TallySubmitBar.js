@@ -55,13 +55,19 @@ const TallySubmitBar = () => {
   return (
       <div
           style={{
-            height: "100%", padding: "10px", backgroundColor: "white",
-            display: "flex", justifyContent:"flex-end", alignItems:"center",
-            boxShadow: "0 0 3px rgba(0,0,0,0.2)"
+            height: "100%",
+            backgroundColor: "white",
+            boxShadow: "0 0 3px rgba(0,0,0,0.2)",
+            display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center"
           }}
       >
-        <div style={{border:"1px dashed black", marginRight:"40px"}}>
-          {/*<Button className="btn-primary">Submit To Tally</Button>*/}
+        <div
+            style={{
+              width: "90%",
+              // border: "1px dashed blue",
+              display: "flex", justifyContent:"flex-end", alignItems:"center",
+            }}
+        >
           <ConditionalTooltipButton
               condition={!tallyStatus} message="No connection to Tally"
           >

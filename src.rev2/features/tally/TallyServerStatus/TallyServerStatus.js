@@ -179,7 +179,6 @@ function TallyServerStatus({ onLedgersChange }) {
           <span className="server-company-selectbox-title">Company</span>
           <SingleSelect options={companyOptions} onChange={handleTargetCompanyChange} value={tallyTargetCompany}/>
         </div>
-        
         {
           config.debug &&
             (<div className="server-command-box">
