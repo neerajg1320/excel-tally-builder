@@ -281,7 +281,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
         </div>
       </div>
 
-      <div style={{height:"60vh", overflow:"scroll"}}>
+      <div style={{height:"50vh", overflow:"scroll"}}>
         <table {...getTableProps()}>
           <thead>
           {headerGroups.map(headerGroup => (

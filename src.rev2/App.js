@@ -22,53 +22,44 @@ function App() {
 
       <div
           style={{
-            display:"flex", flexDirection: "column", alignItems: "center", gap: "10px"
+            display:"flex", flexDirection:"column", alignItems:"center", gap: "10px", justifyContent:"space-between"
           }}
+      >
+        <div style={{
+          height: "100px", width: "100%",
+          position: "fixed", top: 0,
+          boxShadow
+        }}
         >
-        <div
-            style={{
-              margin:"0 0 100px 0", width: "100%",
-              display: "flex", flexDirection: "column",
-            }}
-        >
-          <div style={{
-            height: "100px",
-            width: "100%",
-            top: 0,
-            position: "fixed",
-            boxShadow
-          }}
-          >
-            <TallyServerStatus onLedgersChange={handleLedgersChange}/>
-          </div>
-
-          <div style={{
-            // height: "75vh",
-            marginTop:"100px",
-            borderRadius: "4px",
-            overflow: "scroll",
-            boxShadow
-          }}
-          >
-            <Tabs className="mb-3"
-                  activeKey={tabKey}
-                  onSelect={k => setTabKey(k)}
-            >
-              <Tab eventKey="readExcel" title="Read Excel">
-                <ReadExcel onComplete={e => {setTabKey("addCategory")}}/>
-              </Tab>
-              <Tab eventKey="addCategory" title="Add Category">
-                <SmartTable categories={categories}/>
-              </Tab>
-            </Tabs>
-          </div>
+          <TallyServerStatus onLedgersChange={handleLedgersChange}/>
         </div>
 
+        <div style={{
+          marginTop: "150px",
+          marginBottom: "100px",
+          width: "90%",
+          borderRadius: "4px",
+          // position: "fixed", top: "110px",
+          boxShadow
+        }}
+        >
+          <Tabs className="mb-3"
+                activeKey={tabKey}
+                onSelect={k => setTabKey(k)}
+          >
+            <Tab eventKey="readExcel" title="Read Excel">
+              <ReadExcel onComplete={e => {setTabKey("addCategory")}}/>
+            </Tab>
+            <Tab eventKey="addCategory" title="Add Category">
+              <SmartTable categories={categories}/>
+            </Tab>
+          </Tabs>
+        </div>
 
         <div style={{
-              height: "70px", width:"100%",
-              position: "fixed", bottom: "0", left: "0",
-            }}
+          height: "70px", width:"100%",
+          position: "fixed", bottom: "0",
+        }}
         >
           <TallySubmitBar />
         </div>

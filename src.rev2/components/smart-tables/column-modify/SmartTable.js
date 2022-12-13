@@ -13,7 +13,7 @@ export const SmartTable = ({ categories }) => {
   }, [categories])
 
   return (
-    <div >
+    <div style={{border:"2px dashed black"}}>
       <SmartFeatures />
       <RowModifyFilterIconTable />
     </div>

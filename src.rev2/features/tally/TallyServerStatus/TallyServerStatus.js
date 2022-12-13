@@ -171,44 +171,6 @@ function TallyServerStatus({ onLedgersChange }) {
     }
   }
 
-  const handleSubmitClick = useCallback((data) => {
-    console.log(`data=${JSON.stringify(data, null, 2)}`);
-    const tData = data.map(item => {return {
-      ...item,
-      Bank: "ICICIBank",
-      ["Transaction Date"]: DateToStringDate(item["Transaction Date"]),
-      ["Value Date"]: DateToStringDate(item["Value Date"])
-    }});
-
-    remoteCall('tally:command:vouchers:add', {tallyTargetCompany, rows: tData})
-        .then((response) => {
-          console.log(`handleResponse: response=${JSON.stringify(response, null, 2)}`);
-
-          const resultMap = Object.fromEntries(response.map(res => [res.id, res.voucher_id]));
-          console.log(`resultMap=${JSON.stringify(resultMap)}`);
-
-          // Add column for showing voucherId
-          const voucherIdCol = presetColumns.filter(col => col.key === 'voucherId');
-          if (voucherIdCol.length > 0) {
-            dispatch(addColumn(voucherIdCol[0]));
-          }
-
-          // Add voucherId
-          const newData = data.map(row => {
-            console.log(`row=${JSON.stringify(row, null, 2)}`);
-            return {
-              ...row,
-              'voucherId': resultMap[row.id]
-            }
-          });
-          console.log(`Saved to Tally: newData=${JSON.stringify(newData, null, 2)}`)
-          dispatch(setRows(newData));
-
-        })
-        .catch(error => {
-          console.error(`handleSubmit: error=${error}`);
-        });
-  }, []);
 
   return (
     <div className="server-container">
@@ -217,14 +179,7 @@ function TallyServerStatus({ onLedgersChange }) {
           <span className="server-company-selectbox-title">Company</span>
           <SingleSelect options={companyOptions} onChange={handleTargetCompanyChange} value={tallyTargetCompany}/>
         </div>
-        <div style={{}}>
-          <ConditionalTooltipButton
-              condition={!tallyStatus} message="No connection to Tally"
-          >
-            <Button onClick={e => handleSubmitClick(rows)}>Submit To Tally</Button>
-          </ConditionalTooltipButton>
-        </div>
-
+        
         {
           config.debug &&
             (<div className="server-command-box">
