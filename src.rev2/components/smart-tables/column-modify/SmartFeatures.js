@@ -29,16 +29,7 @@ export const SmartFeatures = () => {
 
   }, []);
 
-  const handleSaveClick = useCallback((e) => {
-    const header = columns.map(col => col.label).filter(col => !!col);
 
-    const data = rows.map(row => {
-      const rowCopy = {...row};
-      delete rowCopy.id;
-      return rowCopy;
-    });
-    exportJsonToExcel(data, "file.xlsx", header);
-  }, [rows, columns]);
 
   return (
       <div
@@ -56,13 +47,7 @@ export const SmartFeatures = () => {
               display:"flex", flexDirection:"row", gap:"20px"
             }}
         >
-          <Button
-              className="btn-outline-primary bg-transparent"
-              size="sm"
-              onClick={handleSaveClick}
-          >
-            Save Table
-          </Button>
+
           <Button
               className="btn-outline-primary bg-transparent"
               size="sm"

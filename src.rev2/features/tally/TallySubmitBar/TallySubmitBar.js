@@ -6,13 +6,14 @@ import {remoteCall} from "../../../utils/tallyRpc";
 import {presetColumns} from "../../presetColumns";
 import {addColumn, setRows} from "../../../redux/table/actions";
 import {useDispatch, useSelector} from "react-redux";
+import {exportJsonToExcel} from "../../../components/excel/xlsx/excel";
 
 const TallySubmitBar = () => {
-  const rows = useSelector(state => state.rows);
   const dispatch = useDispatch();
   const tallyStatus = useSelector((state) => state.tally.status);
   const tallyTargetCompany = useSelector((state) => state.tally.targetCompany);
   const columns = useSelector(state => state.columns);
+  const rows = useSelector(state => state.rows);
 
   const handleSubmitClick = useCallback((data) => {
     console.log(`data=${JSON.stringify(data, null, 2)}`);
@@ -56,6 +57,17 @@ const TallySubmitBar = () => {
         });
   }, []);
 
+  const handleSaveClick = useCallback((e) => {
+    const header = columns.map(col => col.label).filter(col => !!col);
+
+    const data = rows.map(row => {
+      const rowCopy = {...row};
+      delete rowCopy.id;
+      return rowCopy;
+    });
+    exportJsonToExcel(data, "file.xlsx", header);
+  }, [rows, columns]);
+
   return (
       <div
           style={{
@@ -69,9 +81,16 @@ const TallySubmitBar = () => {
             style={{
               width: "90%",
               // border: "1px dashed blue",
-              display: "flex", justifyContent:"flex-end", alignItems:"center",
+              display: "flex", justifyContent:"flex-end", alignItems:"center", gap:"40px"
             }}
         >
+          <Button
+              className="btn-outline-primary bg-transparent"
+              onClick={handleSaveClick}
+          >
+            Save Table
+          </Button>
+
           <ConditionalTooltipButton
               condition={!tallyStatus} message="No connection to Tally"
           >
