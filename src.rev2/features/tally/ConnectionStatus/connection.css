@@ -47,7 +47,8 @@
 }
 
 .settings-input-box {
-    border: 1px solid gray;
+    /*border: 1px solid gray;*/
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.2);
     border-radius: 5px;
     padding: 20px 40px;
     background-color: white;
@@ -68,7 +69,10 @@
 }
 
 .settings-buttons-container {
+    width: 200px;
     display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     gap: 10px;
     margin-top: 5px;
 }

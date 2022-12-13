@@ -32,7 +32,7 @@ const TallySubmitBar = () => {
 
   }, []);
 
-  const handleSubmitClick = useCallback((data) => {
+  const handleSubmitClick = useCallback((data, columns) => {
     console.log(`data=${JSON.stringify(data, null, 2)}`);
     const tData = data.map(item => {return {
       ...item,
@@ -126,7 +126,7 @@ const TallySubmitBar = () => {
           <ConditionalTooltipButton
               condition={!tallyStatus} message="No connection to Tally"
           >
-            <Button onClick={e => handleSubmitClick(rows)}>Submit To Tally</Button>
+            <Button onClick={e => handleSubmitClick(rows, columns)}>Submit To Tally</Button>
           </ConditionalTooltipButton>
         </div>
 

@@ -54,7 +54,7 @@ function Connection({title, status}) {
               <div>
                 <label>Server IP</label>
                 <input
-                    className="settings-input-field"
+                    className="form-control settings-input-field"
                     type="text"
                     value={host}
                     onChange={(e) => setHost(e.target.value)}
@@ -63,14 +63,27 @@ function Connection({title, status}) {
               <div>
                 <label>Server Port</label>
                 <input
-                    className="settings-input-field"
+                    className="form-control settings-input-field"
+                    // className=""
                     type="text"
                     value={port}
                     onChange={(e) => setPort(e.target.value)}
                 />              </div>
               <div className="settings-buttons-container">
-                <Button className="bg-transparent  btn-outline-danger" onClick={handleCancelClick}>Cancel</Button>
-                <Button className="btn-primary" onClick={handleSaveClick}>Save</Button>
+                <Button
+                    className="bg-transparent  btn-outline-danger"
+                    onClick={handleCancelClick}
+                    size="sm"
+                >
+                  Cancel
+                </Button>
+                <Button
+                    className="btn-primary"
+                    onClick={handleSaveClick}
+                    size="sm"
+                >
+                  Save
+                </Button>
               </div>
             </div>
           </div>

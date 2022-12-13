@@ -10,7 +10,7 @@ import TallySubmitBar from "./features/tally/TallySubmitBar/TallySubmitBar";
 import "./bootstrap.custom.css";
 
 function App() {
-  const [tabKey, setTabKey] = useState("readExcel");
+  const [tabKey, setTabKey] = useState("transactionsTable");
   const [categories, setCategories] = useState(MOCK_CHOICES);
   const boxShadow = "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px";
 
@@ -41,7 +41,6 @@ function App() {
           marginBottom: "100px",
           width: "90%",
           borderRadius: "4px",
-          // position: "fixed", top: "110px",
           boxShadow
         }}
         >
@@ -50,9 +49,9 @@ function App() {
                 onSelect={k => setTabKey(k)}
           >
             <Tab eventKey="readExcel" title="Read Excel">
-              <ReadExcel onComplete={e => {setTabKey("addCategory")}}/>
+              <ReadExcel onComplete={e => {setTabKey("transactionsTable")}}/>
             </Tab>
-            <Tab eventKey="addCategory" title="Add Category">
+            <Tab eventKey="transactionsTable" title="Transactions">
               <SmartTable categories={categories}/>
             </Tab>
           </Tabs>
