@@ -1,5 +1,4 @@
 import {RowModifyFilterIconTable} from "../../tables/selection-table/row-modify-filtericon/RowModifyFilterIconTable";
-import {SmartFeatures} from "./SmartFeatures";
 import {useDispatch} from "react-redux";
 import {useEffect} from "react";
 import {setChoices} from "../../../redux/table/actions";
@@ -13,8 +12,11 @@ export const SmartTable = ({ categories }) => {
   }, [categories])
 
   return (
-    <div style={{border:"2px dashed black"}}>
-      <SmartFeatures />
+    <div
+        style={{
+          // border:"2px dashed black"
+        }}
+    >
       <RowModifyFilterIconTable />
     </div>
   );
