@@ -15,9 +15,9 @@ export function isDate(val) {
 }
 
 export function valToString(val) {
-  if (isDate(val)) {
-    return format(val, localDateFormat);
-  }
+  // if (isDate(val)) {
+  //   return format(val, localDateFormat);
+  // }
 
   // console.log(`typeof val: ${typeof val} ${val}`)
   return val.toString();
