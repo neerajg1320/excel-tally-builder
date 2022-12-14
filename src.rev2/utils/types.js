@@ -19,5 +19,6 @@ export function valToString(val) {
     return format(val, localDateFormat);
   }
 
+  // console.log(`typeof val: ${typeof val} ${val}`)
   return val.toString();
 }

@@ -68,7 +68,7 @@ export const editVouchers = (ids, values, targetCompany) => {
     remoteCall('tally:command:vouchers:modify', {targetCompany, vouchers, values})
         .then((response) => {
           console.log(response);
-          dispatch(deleteRows(ids));
+
         })
         .catch((error) => {
 

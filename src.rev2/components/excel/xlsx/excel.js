@@ -14,10 +14,12 @@ export function excelToJson (file) {
       const wb = XLSX.read(bStr, {type: 'binary', cellDates: true});
       wb.SheetNames.forEach((sheetName) => {
         const ws = wb.Sheets[sheetName];
+        // We will get dates as string as what is visible
+        const data = XLSX.utils.sheet_to_json(ws,{raw:false});
 
         const sheetObj = {
           sheetName,
-          data: XLSX.utils.sheet_to_json(ws)
+          data
         }
 
         sheetJsons.push(sheetObj);

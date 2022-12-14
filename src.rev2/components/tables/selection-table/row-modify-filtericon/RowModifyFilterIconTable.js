@@ -22,7 +22,7 @@ import ExpandableButton from "../../common/ExpandableButton";
 import {filterEmptyValues} from "../../common/filter/customFilter";
 import {colToRTCol} from "../../../adapters/reactTableAdapter";
 import {presetColumns} from "../../../../features/presetColumns";
-import {deleteVouchers} from "../../../../redux/table/actionCreators";
+import {deleteVouchers, editVouchers} from "../../../../redux/table/actionCreators";
 
 export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   // console.log(`Rendering <RowModifyFilterIconTable>`);
@@ -208,7 +208,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   const handleBulkEditSaveClick = useCallback((values, targetCompany) => {
     const ids = getRowIds(selectedFlatRows);
     // console.log(`handleBulkEditSaveClick: ids=${ids} values=${JSON.stringify(values)}`);
-    dispatch(editRows(ids, values));
+    dispatch(editVouchers(ids, values, targetCompany));
     setBulkEditExpanded(false);
     // eslint-disable-next-line
   }, [selectedFlatRows]);
