@@ -22,6 +22,7 @@ import ExpandableButton from "../../common/ExpandableButton";
 import {filterEmptyValues} from "../../common/filter/customFilter";
 import {colToRTCol} from "../../../adapters/reactTableAdapter";
 import {presetColumns} from "../../../../features/presetColumns";
+import {deleteVouchers} from "../../../../redux/table/actionCreators";
 
 export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   // console.log(`Rendering <RowModifyFilterIconTable>`);
@@ -74,7 +75,9 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
 
   const onRowDeleteClick = useCallback(  (id) => {
     // console.log(`delete click id=${id}`);
-    dispatch(deleteRows([id]));
+    // dispatch(deleteRows([id]));
+    dispatch(deleteVouchers([id]));
+
     // eslint-disable-next-line
   }, []);
 
@@ -199,7 +202,8 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   const handleBulkDeleteClick = useCallback(() => {
     const ids = getRowIds(selectedFlatRows);
     // console.log(`handleBulkDeleteClick: ids=${ids}`);
-    dispatch(deleteRows(ids));
+    // dispatch(deleteRows(ids));
+    dispatch(deleteVouchers(ids));
     setBulkEditExpanded(false);
     // eslint-disable-next-line
   }, [selectedFlatRows]);
