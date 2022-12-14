@@ -33,7 +33,7 @@ const TallySubmitBar = () => {
   }, []);
 
   const handleSubmitClick = useCallback((data, columns) => {
-    console.log(`data=${JSON.stringify(data, null, 2)}`);
+    // console.log(`data=${JSON.stringify(data, null, 2)}`);
     const tData = data.map(item => {return {
       ...item,
       Bank: "ICICIBank",
@@ -43,10 +43,10 @@ const TallySubmitBar = () => {
 
     remoteCall('tally:command:vouchers:add', {tallyTargetCompany, rows: tData})
         .then((response) => {
-          console.log(`handleResponse: response=${JSON.stringify(response, null, 2)}`);
+          // console.log(`handleResponse: response=${JSON.stringify(response, null, 2)}`);
 
           const resultMap = Object.fromEntries(response.map(res => [res.id, res.voucher_id]));
-          console.log(`resultMap=${JSON.stringify(resultMap)}`);
+          // console.log(`resultMap=${JSON.stringify(resultMap)}`);
 
           // Add column for showing voucherId
           const tableVoucherCol = columns.filter(col => col.key === 'VoucherId');
@@ -59,13 +59,13 @@ const TallySubmitBar = () => {
 
           // Add voucherId
           const newData = data.map(row => {
-            console.log(`row=${JSON.stringify(row, null, 2)}`);
+            // console.log(`row=${JSON.stringify(row, null, 2)}`);
             return {
               ...row,
               'VoucherId': resultMap[row.id]
             }
           });
-          console.log(`Saved to Tally: newData=${JSON.stringify(newData, null, 2)}`)
+          // console.log(`Saved to Tally: newData=${JSON.stringify(newData, null, 2)}`)
           dispatch(setRows(newData));
 
         })

@@ -10,7 +10,7 @@ import '../../../table.css';
 import {RowCheckbox} from "../../common/RowCheckbox";
 import {ShowObject} from "../../../show";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteRows, editRows} from "../../../../redux/table/actions";
+import {editRows} from "../../../../redux/table/actions";
 import {FaTrash, FaPen } from "react-icons/fa";
 import ColumnsEditBox from "../../common/ColumnsEditBox";
 import {GlobalFilter} from "../../common/filter/GlobalFilter";
@@ -45,8 +45,8 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
       col = mPresetCols[0];
 
       if (col.type === 'select') {
-        console.log(`Column choices=${JSON.stringify(col.choices, null, 2)}`);
-        console.log(`Tally choices=${JSON.stringify(choices[col.key.toLowerCase()], null, 2)}`);
+        // console.log(`Column choices=${JSON.stringify(col.choices, null, 2)}`);
+        // console.log(`Tally choices=${JSON.stringify(choices[col.key.toLowerCase()], null, 2)}`);
         col.choices = choices[col.key.toLowerCase()];
       }
     }
@@ -74,8 +74,6 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   }, []);
 
   const onRowDeleteClick = useCallback(  (id) => {
-    // console.log(`delete click id=${id}`);
-    // dispatch(deleteRows([id]));
     dispatch(deleteVouchers([id]));
 
     // eslint-disable-next-line
@@ -201,8 +199,6 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
 
   const handleBulkDeleteClick = useCallback(() => {
     const ids = getRowIds(selectedFlatRows);
-    // console.log(`handleBulkDeleteClick: ids=${ids}`);
-    // dispatch(deleteRows(ids));
     dispatch(deleteVouchers(ids));
     setBulkEditExpanded(false);
     // eslint-disable-next-line
