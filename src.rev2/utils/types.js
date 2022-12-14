@@ -1,4 +1,4 @@
-import {format, isDate as fnsIsDate} from "date-fns";
+import {format, isDate as fnsIsDate, addHours, addMinutes, addSeconds} from "date-fns";
 
 const isoDateFormat = "yyyy-MM-dd";
 const localDateFormat = "dd/MM/yyyy";
@@ -15,10 +15,23 @@ export function isDate(val) {
 }
 
 export function valToString(val) {
-  // if (isDate(val)) {
-  //   return format(val, localDateFormat);
-  // }
+  if (isDate(val)) {
+    return format(val, localDateFormat);
+  }
 
   // console.log(`typeof val: ${typeof val} ${val}`)
   return val.toString();
+}
+
+// Strangely Sheetjs reads the data and reduces 5:30 hrs and an adiitional 10 seconds
+export function fixDatesInObject(obj) {
+  const adjustedObj = Object.fromEntries(Object.entries(obj).map(([key, value]) =>{
+    if (isDate(value)) {
+      // console.log(`key=${key} value=${JSON.stringify(value)}`);
+      value = addSeconds(addMinutes(addHours(value, 5), 30), 10);
+    }
+    return [key, value];
+  }));
+
+  return adjustedObj;
 }

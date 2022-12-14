@@ -1,4 +1,5 @@
 import * as XLSX from 'xlsx';
+import {fixDatesInObject} from "../../../utils/types";
 
 export function excelToJson (file) {
   // console.log(`excelToJson: ${file}`);
@@ -11,15 +12,22 @@ export function excelToJson (file) {
 
       const sheetJsons = [];
 
-      const wb = XLSX.read(bStr, {type: 'binary', cellDates: true});
+      const readOptions = {
+        type: 'binary',
+        cellText: false,
+        cellDates: true
+      };
+      const wb = XLSX.read(bStr, readOptions);
       wb.SheetNames.forEach((sheetName) => {
         const ws = wb.Sheets[sheetName];
         // We will get dates as string as what is visible
-        const data = XLSX.utils.sheet_to_json(ws,{raw:false});
+        const data = XLSX.utils.sheet_to_json(ws, );
+        const dataAdjustedDates = data.map(item => fixDatesInObject(item));
+        console.log(JSON.stringify(dataAdjustedDates, null, 2));
 
         const sheetObj = {
           sheetName,
-          data
+          data:dataAdjustedDates
         }
 
         sheetJsons.push(sheetObj);
