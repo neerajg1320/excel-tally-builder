@@ -36,6 +36,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   const data = useSelector(state => state.rows);
   const columns = useSelector(state => state.columns);
   const choices = useSelector(state => state.choices);
+  const tallyTargetCompany = useSelector(state => state.tally.targetCompany);
   const dispatch = useDispatch();
 
   const createRTCol = useCallback((col, index) => {
@@ -73,8 +74,8 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
     // eslint-disable-next-line
   }, []);
 
-  const onRowDeleteClick = useCallback(  (id) => {
-    dispatch(deleteVouchers([id]));
+  const onRowDeleteClick = useCallback(  (id, targetCompany) => {
+    dispatch(deleteVouchers([id], targetCompany));
 
     // eslint-disable-next-line
   }, []);
@@ -176,7 +177,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
               </div>
               <FaTrash
                   style={{color:"mediumvioletred", cursor: "pointer"}}
-                  onClick={e => onRowDeleteClick(row.original.id)}/>
+                  onClick={e => onRowDeleteClick(row.original.id, tallyTargetCompany)}/>
             </div>
           ),
           disableFilters: true

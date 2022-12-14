@@ -41,7 +41,6 @@ const TallySubmitBar = () => {
       ["Value Date"]: DateToStringDate(item["Value Date"])
     }});
 
-    console.log(`Added vouchers by thunk`);
     dispatch(addVouchers(tData, company));
   }, []);
 

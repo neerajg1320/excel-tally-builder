@@ -44,9 +44,21 @@ export const addVouchers = (vouchers, targetCompany) => {
   }
 }
 
-export const deleteVouchers = (ids) => {
-  return async (dispatch) => {
-    dispatch(deleteRows(ids));
+export const deleteVouchers = (ids, targetCompany) => {
+  return async (dispatch, getState) => {
+    const data = getState().rows;
+    const vouchers = data.filter(item => ids.includes(item.id))
+
+    // console.log(`vouchers=${vouchers}`);
+
+    remoteCall('tally:command:vouchers:delete', {targetCompany, vouchers})
+        .then((response) => {
+          console.log(response);
+          dispatch(deleteRows(ids));
+        })
+        .catch((error) => {
+
+        });
   }
 }
 
