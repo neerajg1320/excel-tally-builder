@@ -1,5 +1,3 @@
-import * as ActionTypes from '../actionTypes';
-import * as Action from '../actions';
 import {addColumn, deleteRows, editRows, setRows} from "../actions";
 import {remoteCall} from "../../../utils/tallyRpc";
 import {presetColumns} from "../../../features/presetColumns";
@@ -47,9 +45,7 @@ export const addVouchers = (vouchers, targetCompany) => {
 export const deleteVouchers = (ids, targetCompany) => {
   return async (dispatch, getState) => {
     const data = getState().rows;
-    const vouchers = data.filter(item => ids.includes(item.id))
-
-    // console.log(`vouchers=${vouchers}`);
+    const vouchers = data.filter(item => ids.includes(item.id));
 
     remoteCall('tally:command:vouchers:delete', {targetCompany, vouchers})
         .then((response) => {
@@ -62,8 +58,20 @@ export const deleteVouchers = (ids, targetCompany) => {
   }
 }
 
-export const editVouchers = (ids, values) => {
-  return async (dispatch) => {
+export const editVouchers = (ids, values, targetCompany) => {
+  return async (dispatch, getState) => {
+    const data = getState().rows;
+    const vouchers = data.filter(item => ids.includes(item.id));
+
     dispatch(editRows(ids, values));
+
+    remoteCall('tally:command:vouchers:modify', {targetCompany, vouchers, values})
+        .then((response) => {
+          console.log(response);
+          dispatch(deleteRows(ids));
+        })
+        .catch((error) => {
+
+        });
   }
 }

@@ -198,14 +198,14 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
     });
   }, []);
 
-  const handleBulkDeleteClick = useCallback(() => {
+  const handleBulkDeleteClick = useCallback((targetCompany) => {
     const ids = getRowIds(selectedFlatRows);
-    dispatch(deleteVouchers(ids));
+    dispatch(deleteVouchers(ids, targetCompany));
     setBulkEditExpanded(false);
     // eslint-disable-next-line
   }, [selectedFlatRows]);
 
-  const handleBulkEditSaveClick = useCallback((values) => {
+  const handleBulkEditSaveClick = useCallback((values, targetCompany) => {
     const ids = getRowIds(selectedFlatRows);
     // console.log(`handleBulkEditSaveClick: ids=${ids} values=${JSON.stringify(values)}`);
     dispatch(editRows(ids, values));
@@ -242,7 +242,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
         <div style={{display:"flex", gap: "10px", padding:"20px"}}>
           <Button variant="danger" size="sm"
                   disabled={!bulkEnabled}
-                  onClick={handleBulkDeleteClick}
+                  onClick={e => handleBulkDeleteClick(tallyTargetCompany)}
           >
             Bulk Delete
           </Button>
@@ -257,7 +257,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
           >
             <ColumnsEditBox
                 columns={bulkColumns}
-                onEdit={handleBulkEditSaveClick}
+                onEdit={values => handleBulkEditSaveClick(values, tallyTargetCompany)}
                 onCancel={handleBulkEditCancelClick}
                 disabled={!bulkEnabled}
             />
