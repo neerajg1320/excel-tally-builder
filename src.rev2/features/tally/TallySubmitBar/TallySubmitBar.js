@@ -33,8 +33,7 @@ const TallySubmitBar = () => {
 
   }, []);
 
-  const handleSubmitClick = useCallback((data, columns) => {
-    // console.log(`data=${JSON.stringify(data, null, 2)}`);
+  const handleSubmitClick = useCallback((data, company) => {
     const tData = data.map(item => {return {
       ...item,
       Bank: "ICICIBank",
@@ -43,7 +42,7 @@ const TallySubmitBar = () => {
     }});
 
     console.log(`Added vouchers by thunk`);
-    dispatch(addVouchers(tData, tallyTargetCompany));
+    dispatch(addVouchers(tData, company));
   }, []);
 
   const handleSaveClick = useCallback((e) => {
@@ -98,7 +97,9 @@ const TallySubmitBar = () => {
           <ConditionalTooltipButton
               condition={!tallyStatus} message="No connection to Tally"
           >
-            <Button onClick={e => handleSubmitClick(rows, columns)}>Submit To Tally</Button>
+            <Button onClick={e => handleSubmitClick(rows, tallyTargetCompany)}>
+              Submit To Tally
+            </Button>
           </ConditionalTooltipButton>
         </div>
 

@@ -1,14 +1,6 @@
-/*.btn-primary:hover {*/
-/*    background-color: lightblue !important;*/
-/*}*/
-
 .btn-outline-primary:hover {
     background-color: lightblue !important;
     color: blue !important;
-}
-
-.btn-danger:hover {
-    background-color: lightpink !important;
 }
 
 .btn-outline-danger:hover {
