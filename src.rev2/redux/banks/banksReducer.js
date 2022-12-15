@@ -3,7 +3,7 @@ import * as ActionTypes from './actionTypes';
 
 const initialState = {
   current: undefined,
-  options: MOCK_BANKS
+  list: MOCK_BANKS
 };
 
 const banksReducer =  (state=initialState, action) => {
@@ -11,7 +11,7 @@ const banksReducer =  (state=initialState, action) => {
     case ActionTypes.SET_BANKS:
       return {
         ...state,
-        banks: action.payload
+        list: action.payload
       };
 
     case ActionTypes.SET_CURRENT_BANK:

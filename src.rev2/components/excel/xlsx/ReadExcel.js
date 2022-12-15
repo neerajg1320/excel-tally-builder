@@ -2,23 +2,27 @@ import {useCallback, useRef, useState} from "react";
 import Button from "react-bootstrap/Button";
 import {excelToJson} from "./excel";
 import {getColumns} from "./schema";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setColumns, setRows} from "../../../redux/table/actions";
 import {colToRTCol} from "../../adapters/reactTableAdapter";
 import {AiOutlineClose} from "react-icons/ai";
 import './readExcel.css';
 import Select from "react-select";
 import {MOCK_BANKS} from "../../../assets/MOCK_BANKS";
+import {setCurrentBank} from "../../../redux/banks/actions";
 
 const ReadExcel = ({onComplete}) => {
   const inputRef = useRef();
   const [files, setFiles] = useState([]);
-  const banksNames = MOCK_BANKS.map(bank => bank.name);
+  const banks = useSelector(state => state.banks.list);
 
-  const [bank, setBank] = useState(banksNames[0]);
-  const bankOptions = banksNames.map(name => {
-    return {label: name, value:name}
-  });
+  const currentBank = useSelector(state => state.banks.current);
+  const bankOptions = banks.map((bank) => {return {label: bank.name, value: bank.name}});
+  // const [bank, setBank] = useState(banksNames[0]);
+  // const bankOptions = banksNames.map(name => {
+  //   return {label: name, value:name}
+  // });
+
   const dispatch = useDispatch();
 
   const onChange = (e) => {
@@ -58,8 +62,8 @@ const ReadExcel = ({onComplete}) => {
   };
 
   const handleBankSelect = useCallback((opt) => {
-    console.log(opt);
-    setBank(opt.value);
+    // console.log(opt);
+    dispatch(setCurrentBank(opt.value));
   }, []);
 
   return (
@@ -90,7 +94,7 @@ const ReadExcel = ({onComplete}) => {
             <div style={{width:"200px"}}>
             <Select
                 options={bankOptions}
-                value={bankOptions.filter(opt => opt.value === bank)}
+                value={bankOptions.filter(opt => opt.value === currentBank)}
                 onChange={handleBankSelect}
             />
             </div>
