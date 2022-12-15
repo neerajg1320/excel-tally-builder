@@ -7,10 +7,18 @@ import {setColumns, setRows} from "../../../redux/table/actions";
 import {colToRTCol} from "../../adapters/reactTableAdapter";
 import {AiOutlineClose} from "react-icons/ai";
 import './readExcel.css';
+import Select from "react-select";
+import {MOCK_BANKS} from "../../../assets/MOCK_BANKS";
 
 const ReadExcel = ({onComplete}) => {
   const inputRef = useRef();
   const [files, setFiles] = useState([]);
+  const banksNames = MOCK_BANKS.map(bank => bank.name);
+
+  const [bank, setBank] = useState(banksNames[0]);
+  const bankOptions = banksNames.map(name => {
+    return {label: name, value:name}
+  });
   const dispatch = useDispatch();
 
   const onChange = (e) => {
@@ -49,6 +57,11 @@ const ReadExcel = ({onComplete}) => {
     }
   };
 
+  const handleBankSelect = useCallback((opt) => {
+    console.log(opt);
+    setBank(opt.value);
+  }, []);
+
   return (
     <div
         style={{
@@ -64,6 +77,25 @@ const ReadExcel = ({onComplete}) => {
       >
         <div style={{borderRadius:"4px", padding:"5px",
           display:"flex", flexDirection:"column", gap: "30px", justifyContent:"center", alignItems:"center"}}>
+
+          <div style={{
+                width: "100%",
+                display: "flex", flexDirection:"row", justifyContent: "space-between", alignItems: "center",
+                // border:"1px dashed gray"
+              }}
+          >
+            <label>
+              Select Bank
+            </label>
+            <div style={{width:"200px"}}>
+            <Select
+                options={bankOptions}
+                value={bankOptions.filter(opt => opt.value === bank)}
+                onChange={handleBankSelect}
+            />
+            </div>
+
+          </div>
 
           <div
               className="file-input-control"

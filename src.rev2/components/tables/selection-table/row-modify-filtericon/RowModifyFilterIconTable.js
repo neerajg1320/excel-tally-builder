@@ -186,8 +186,6 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
     })
   });
 
-  // return (<div>Temprary</div>);
-
   useEffect(() => {
     setBulkEnabled(selectedFlatRows.length > 0);
   }, [selectedFlatRows]);
