@@ -139,8 +139,9 @@ function TallyServerStatus({ onLedgersChange }) {
     if (tallyTargetCompany !== '') {
       remoteCall('tally:command:ledgers:list', {tallyTargetCompany})
           .then(({request, response}) => {
+            // console.log('ledgers:', JSON.stringify(response));
             dispatch(setLedgers(response));
-            console.log(`Updated ledgers request=${request}`);
+            // console.log(`Updated ledgers request=${request}`);
           })
           .catch(error => {
             console.log(`useEffect[tallyStatus]: error=${error}`);

@@ -8,15 +8,23 @@ import TallyServerStatus from "./features/tally/TallyServerStatus/TallyServerSta
 import {MOCK_CHOICES} from "./assets/MOCK_CHOICES";
 import TallySubmitBar from "./features/tally/TallySubmitBar/TallySubmitBar";
 import "./bootstrap.custom.css";
+import {useDispatch} from "react-redux";
+import {setBanks} from "./redux/banks/actions";
 
 function App() {
   const [tabKey, setTabKey] = useState("readExcel");
   const [categories, setCategories] = useState(MOCK_CHOICES);
   const boxShadow = "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px";
+  const dispatch = useDispatch();
 
   const handleLedgersChange = (ledgers) => {
-    console.log(`ledgers=`, ledgers);
+    // console.log(`ledgers=`, ledgers);
     setCategories(ledgers.map(lgr => lgr.name));
+    const banks = ledgers
+        .filter(lgr => lgr.parent === "Bank Accounts")
+        .map(lgr => {return {name: lgr.name}});
+    console.log(banks);
+    dispatch(setBanks(banks));
   }
 
   return (
