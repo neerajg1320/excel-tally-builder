@@ -16,6 +16,7 @@ const TallySubmitBar = () => {
   const tallyTargetCompany = useSelector((state) => state.tally.targetCompany);
   const columns = useSelector(state => state.columns);
   const rows = useSelector(state => state.rows);
+  const currentBank = useSelector(state => state.banks.current);
 
   const handleAddCategoryClick = useCallback((columns) => {
     // console.log(`Need to add a new column`);
@@ -36,7 +37,7 @@ const TallySubmitBar = () => {
   const handleSubmitClick = useCallback((data, company) => {
     const tData = data.map(item => {return {
       ...item,
-      Bank: "ICICIBank",
+      Bank: currentBank,
       ["Transaction Date"]: DateToStringDate(item["Transaction Date"]),
       ["Value Date"]: DateToStringDate(item["Value Date"])
     }});

@@ -18,10 +18,6 @@ const ReadExcel = ({onComplete}) => {
 
   const currentBank = useSelector(state => state.banks.current);
   const bankOptions = banks.map((bank) => {return {label: bank.name, value: bank.name}});
-  // const [bank, setBank] = useState(banksNames[0]);
-  // const bankOptions = banksNames.map(name => {
-  //   return {label: name, value:name}
-  // });
 
   const dispatch = useDispatch();
 
