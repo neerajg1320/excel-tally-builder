@@ -2,11 +2,11 @@ import {addColumn, deleteRows, editRows, setRows} from "../actions";
 import {remoteCall} from "../../../utils/tallyRpc";
 import {presetColumns} from "../../../features/presetColumns";
 
-export const addVouchers = (vouchers, targetCompany) => {
+export const addVouchers = (vouchers, targetCompany, bank) => {
   console.log(`targetCompany=${targetCompany}`);
 
   return async (dispatch, getState) => {
-    remoteCall('tally:command:vouchers:add', {targetCompany, vouchers})
+    remoteCall('tally:command:vouchers:add', {targetCompany, vouchers, bank})
         .then((response) => {
           // console.log(`handleResponse: response=${JSON.stringify(response, null, 2)}`);
 

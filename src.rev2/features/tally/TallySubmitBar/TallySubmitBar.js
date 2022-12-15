@@ -34,15 +34,14 @@ const TallySubmitBar = () => {
 
   }, []);
 
-  const handleSubmitClick = useCallback((data, company) => {
+  const handleSubmitClick = useCallback((data, company, bank) => {
     const tData = data.map(item => {return {
       ...item,
-      Bank: currentBank,
       ["Transaction Date"]: DateToStringDate(item["Transaction Date"]),
       ["Value Date"]: DateToStringDate(item["Value Date"])
     }});
 
-    dispatch(addVouchers(tData, company));
+    dispatch(addVouchers(tData, company, bank));
   }, []);
 
   const handleSaveClick = useCallback((e) => {
@@ -97,7 +96,7 @@ const TallySubmitBar = () => {
           <ConditionalTooltipButton
               condition={!tallyStatus} message="No connection to Tally"
           >
-            <Button onClick={e => handleSubmitClick(rows, tallyTargetCompany)}>
+            <Button onClick={e => handleSubmitClick(rows, tallyTargetCompany, currentBank)}>
               Submit To Tally
             </Button>
           </ConditionalTooltipButton>
