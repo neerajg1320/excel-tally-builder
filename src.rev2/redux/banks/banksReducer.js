@@ -2,7 +2,7 @@ import {MOCK_BANKS} from "../../assets/MOCK_BANKS";
 import * as ActionTypes from './actionTypes';
 
 const initialState = {
-  current: undefined,
+  current: "KotakBank",
   list: MOCK_BANKS
 };
 

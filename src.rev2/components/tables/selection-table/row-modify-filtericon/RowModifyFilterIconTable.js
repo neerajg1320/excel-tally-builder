@@ -37,6 +37,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   const columns = useSelector(state => state.columns);
   const choices = useSelector(state => state.choices);
   const tallyTargetCompany = useSelector(state => state.tally.targetCompany);
+  const currentBank = useSelector(state => state.banks.current);
   const dispatch = useDispatch();
 
   const createRTCol = useCallback((col, index) => {
@@ -89,6 +90,8 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   },[]);
 
   const updateMyData = (row, col, value) => {
+    // console.log('updateMyData', row, col, value);
+
     const id = row.original.id;
     // key is stored in col.id
     const values = {[col.id]: value};
@@ -203,10 +206,10 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
     // eslint-disable-next-line
   }, [selectedFlatRows]);
 
-  const handleBulkEditSaveClick = useCallback((values, targetCompany) => {
+  const handleBulkEditSaveClick = useCallback((values, targetCompany, bank) => {
     const ids = getRowIds(selectedFlatRows);
     // console.log(`handleBulkEditSaveClick: ids=${ids} values=${JSON.stringify(values)}`);
-    dispatch(editVouchers(ids, values, targetCompany));
+    dispatch(editVouchers(ids, values, targetCompany, bank));
     setBulkEditExpanded(false);
     // eslint-disable-next-line
   }, [selectedFlatRows]);
@@ -255,7 +258,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
           >
             <ColumnsEditBox
                 columns={bulkColumns}
-                onEdit={values => handleBulkEditSaveClick(values, tallyTargetCompany)}
+                onEdit={values => handleBulkEditSaveClick(values, tallyTargetCompany, currentBank)}
                 onCancel={handleBulkEditCancelClick}
                 disabled={!bulkEnabled}
             />

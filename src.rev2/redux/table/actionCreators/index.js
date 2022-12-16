@@ -58,14 +58,14 @@ export const deleteVouchers = (ids, targetCompany) => {
   }
 }
 
-export const editVouchers = (ids, values, targetCompany) => {
+export const editVouchers = (ids, values, targetCompany, bank) => {
   return async (dispatch, getState) => {
     const data = getState().rows;
     const vouchers = data.filter(item => ids.includes(item.id));
 
     dispatch(editRows(ids, values));
 
-    remoteCall('tally:command:vouchers:modify', {targetCompany, vouchers, values})
+    remoteCall('tally:command:vouchers:modify', {targetCompany, vouchers, bank, values})
         .then((response) => {
           console.log(response);
 

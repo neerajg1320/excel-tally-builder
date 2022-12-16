@@ -4,11 +4,9 @@ import {excelToJson} from "./excel";
 import {getColumns} from "./schema";
 import {useDispatch, useSelector} from "react-redux";
 import {setColumns, setRows} from "../../../redux/table/actions";
-import {colToRTCol} from "../../adapters/reactTableAdapter";
 import {AiOutlineClose} from "react-icons/ai";
 import './readExcel.css';
 import Select from "react-select";
-import {MOCK_BANKS} from "../../../assets/MOCK_BANKS";
 import {setCurrentBank} from "../../../redux/banks/actions";
 
 const ReadExcel = ({onComplete}) => {
