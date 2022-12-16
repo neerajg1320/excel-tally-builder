@@ -31,6 +31,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   const [debugSelection, setDebugSelection] = useState(false);
   const [bulkEnabled, setBulkEnabled] = useState(false);
   const [bulkEditExpanded, setBulkEditExpanded] = useState(false);
+  const [showColumnsExpanded, setShowColumnsExpanded] = useState(false);
 
   // Data variables
   const data = useSelector(state => state.rows);
@@ -117,7 +118,9 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
     toggleAllRowsSelected,
     state,
     setGlobalFilter,
-    setAllFilters
+    setAllFilters,
+    allColumns,
+    getToggleHideAllColumnsProps
   } = useTable({
     columns: rtColumns,
     data,
@@ -239,7 +242,41 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   return (
       <>
 
+
       <div style={{display: "flex", justifyContent:"space-between", alignItems:"center"}}>
+        <div style={{marginLeft: "20px"}}>
+          <ExpandableButton
+              title="Show Columns"
+              value={showColumnsExpanded}
+              onChange={setShowColumnsExpanded}
+              popupPosition={{top:"100%", left:"0px"}}
+          >
+            <div style={{
+                  width: "180px",
+                  padding: "10px",
+                  border: "1px dashed gray",
+                  borderRadius: "5px"
+                }}
+            >
+              <div>
+                <RowCheckbox {...getToggleHideAllColumnsProps()}/> Toggle All
+              </div>
+              {
+                allColumns.map(column => (
+                    <div key={column.id}>
+                      <div style={{display:"flex", flexDirection:"row", gap:"10px", alignItems: "center"}}>
+                        <input type="checkbox" {...column.getToggleHiddenProps()} />
+                        <span>{column.Header}</span>
+                      </div>
+                    </div>
+                ))
+              }
+            </div>
+          </ExpandableButton>
+        </div>
+
+
+
         <div style={{display:"flex", gap: "10px", padding:"20px"}}>
           <Button variant="danger" size="sm"
                   disabled={!bulkEnabled}
