@@ -37,7 +37,7 @@ export const addVouchers = (vouchers, targetCompany, bank) => {
 
         })
         .catch(error => {
-          console.error(`handleSubmit: error=${error}`);
+          alert("Error adding vouchers. Make sure Category is present in Tally")
         });
   }
 }
@@ -53,7 +53,7 @@ export const deleteVouchers = (ids, targetCompany) => {
           dispatch(deleteRows(ids));
         })
         .catch((error) => {
-
+          alert("Error deleting vouchers. Make sure master Id is correct")
         });
   }
 }
@@ -63,15 +63,13 @@ export const editVouchers = (ids, values, targetCompany, bank) => {
     const data = getState().rows;
     const vouchers = data.filter(item => ids.includes(item.id));
 
-    dispatch(editRows(ids, values));
-
     remoteCall('tally:command:vouchers:modify', {targetCompany, vouchers, bank, values})
         .then((response) => {
           console.log(response);
-
+          dispatch(editRows(ids, values));
         })
         .catch((error) => {
-
+          alert("Error modifying vouchers. Make sure master Id is correct")
         });
   }
 }
