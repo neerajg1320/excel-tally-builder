@@ -13,7 +13,7 @@ import {useDispatch} from "react-redux";
 import {setBanks} from "./redux/banks/actions";
 
 function App() {
-  const [tabKey, setTabKey] = useState("readExcel");
+  const [tabKey, setTabKey] = useState("columnsTable");
   const [categories, setCategories] = useState(MOCK_CHOICES);
   const boxShadow = "rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px";
   const dispatch = useDispatch();
@@ -65,7 +65,7 @@ function App() {
               <SmartTable categories={categories}/>
             </Tab>
             <Tab eventKey="columnsTable" title="Columns">
-              <ColumnsTable categories={categories}/>
+              <ColumnsTable />
             </Tab>
           </Tabs>
         </div>
