@@ -47,7 +47,6 @@ export const ColumnsTable = () => {
     const newItems = Array.from(items);
     const [reorderedItem] = newItems.splice(result.source.index, 1);
     newItems.splice(result.destination.index, 0, reorderedItem);
-
     setItems(newItems);
     setApplyEnabled(true);
   }
@@ -62,6 +61,7 @@ export const ColumnsTable = () => {
     })
     console.log(JSON.stringify(newColumns, null, 2));
     dispatch(setColumns(newColumns));
+    setApplyEnabled(false);
   }
 
   return (
@@ -102,8 +102,17 @@ export const ColumnsTable = () => {
               margin: "20px 0"
             }}
         >
-          <Button className="btn-outline-danger bg-transparent">Cancel</Button>
-          <Button onClick={handleSaveClick}>Save</Button>
+          <Button disabled={!applyEnabled}
+                  className="btn-outline-danger bg-transparent"
+          >
+            Cancel
+          </Button>
+          <Button disabled={!applyEnabled}
+                  className="btn-primary"
+                  onClick={handleSaveClick}
+          >
+            Save
+          </Button>
         </div>
       </div>
   );
