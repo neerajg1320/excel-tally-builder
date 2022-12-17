@@ -3,7 +3,8 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import ReadExcel from "./components/excel/xlsx/ReadExcel";
 import {useState} from "react";
-import {SmartTable} from "./components/smart-tables/column-modify/SmartTable";
+import {SmartTable} from "./components/smart-tables/transactions-table/SmartTable";
+import {ColumnsTable} from "./components/smart-tables/columns-table/ColumnsTable";
 import TallyServerStatus from "./features/tally/TallyServerStatus/TallyServerStatus";
 import {MOCK_CHOICES} from "./assets/MOCK_CHOICES";
 import TallySubmitBar from "./features/tally/TallySubmitBar/TallySubmitBar";
@@ -49,6 +50,7 @@ function App() {
           marginBottom: "100px",
           width: "90%",
           borderRadius: "4px",
+          minHeight: "60vh",
           boxShadow
         }}
         >
@@ -61,6 +63,9 @@ function App() {
             </Tab>
             <Tab eventKey="transactionsTable" title="Transactions">
               <SmartTable categories={categories}/>
+            </Tab>
+            <Tab eventKey="columnsTable" title="Columns">
+              <ColumnsTable categories={categories}/>
             </Tab>
           </Tabs>
         </div>
