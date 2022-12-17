@@ -1,5 +1,7 @@
 .columns-table {
-    min-height: 60vh;
+    min-height: 40vh;
+    min-width: 400px;
+    border: 1px solid lightsteelblue;
     display: flex;
     flex-direction: column;
     align-items: center;
