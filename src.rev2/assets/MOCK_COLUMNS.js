@@ -2,7 +2,7 @@ import {valToString} from "../utils/types";
 
 // id is required for Table component
 
-export const MOCK_COLUMNS = [
+export const MOCK_COLUMNS_OLD = [
   {
     id: 'Id',
     Header: 'Id',
@@ -72,3 +72,58 @@ export const MOCK_COLUMNS = [
   }
 ];
 
+export const MOCK_COLUMNS = [
+  {
+    label: 'Id',
+    key: 'id',
+    disableFilters: true,
+  },
+  {
+    label: 'First Name',
+    key: 'first_name'
+  },
+  {
+    label: 'Last Name',
+    key: 'last_name'
+  },
+  {
+    label: 'Date of Birth',
+    key: 'date_of_birth',
+    Cell: ({ value }) => {
+      return  valToString(new Date(value));
+    }
+  },
+  {
+    label: 'Country',
+    key: 'country',
+    edit: true,
+    bulk: true,
+    type: "select",
+    choices: [
+      "Select",
+      "Australia",
+      "India",
+      "Indonesia",
+      "Netherlands",
+      "Chile",
+      "Portugal",
+      "UK",
+      "US"
+    ],
+    defaultChoice: "India"
+  },
+  {
+    label: 'Phone',
+    key: 'phone',
+    edit: true,
+    bulk: true,
+    type: "input",
+  },
+  {
+    label: 'Remarks',
+    key: 'remarks',
+    edit: true,
+    bulk: true,
+    type: "input"
+  }
+];
