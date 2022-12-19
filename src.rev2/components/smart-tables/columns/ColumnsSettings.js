@@ -4,6 +4,7 @@ import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
 import {useDispatch, useSelector} from "react-redux";
 import Button from "react-bootstrap/Button";
 import {setColumns} from "../../../redux/table/actions";
+import {ColumnDetails} from "./ColumnDetails";
 
 const presetItems = [
   {
@@ -30,13 +31,14 @@ const presetItems = [
 
 export const ColumnsSettings = () => {
   const [items, setItems] =useState(presetItems);
+  const [colValue, setColValue] = useState(items[0]);
   const [applyEnabled, setApplyEnabled] = useState(false);
   const columns = useSelector(state => state.columns);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(`Columns updated`);
-    console.log(JSON.stringify(columns, null, 2));
+    // console.log(`Columns updated`);
+    // console.log(JSON.stringify(columns, null, 2));
     setItems(columns);
   }, [columns]);
 
@@ -62,6 +64,15 @@ export const ColumnsSettings = () => {
     console.log(JSON.stringify(newColumns, null, 2));
     dispatch(setColumns(newColumns));
     setApplyEnabled(false);
+  }
+
+  const handleColumnChange = (id, col) => {
+
+  }
+
+  const handleItemClick = (e, index) => {
+    console.log(`Item ${index} clicked`);
+    setColValue(items[index]);
   }
 
   return (
@@ -91,7 +102,7 @@ export const ColumnsSettings = () => {
                                 <Draggable key={key} draggableId={key} index={index}>
                                   {(provided) => (
                                       <li {...provided.draggableProps} {...provided.dragHandleProps}
-                                          ref={provided.innerRef}
+                                          ref={provided.innerRef} onClick={e => handleItemClick(e, index)}
                                       >
                                         {key}
                                       </li>
@@ -120,7 +131,7 @@ export const ColumnsSettings = () => {
 
                   }}
               >
-                Column
+                <ColumnDetails value={colValue} onChange={handleColumnChange}/>
               </div>
             </div>
           </div>
