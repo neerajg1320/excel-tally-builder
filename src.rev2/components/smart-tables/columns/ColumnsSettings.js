@@ -77,7 +77,8 @@ export const ColumnsSettings = () => {
                   justifyContent:"center", alignItems:"center",
                 }}
             >
-              <div className="columns-table">
+              <div className="columns-index"
+              >
                 <DragDropContext onDragEnd={handleOnDragEnd}>
                   <Droppable droppableId="characters">
                     {(provided) => (
@@ -106,12 +107,25 @@ export const ColumnsSettings = () => {
               </div>
 
             </div>
-            <div style ={{border: "1px dashed blue", width:"80%"}}>
+            <div style ={{
+                  // border: "1px dashed blue",
+                  width:"80%",
+                  display: "flex", justifyContent:"center", alignItems:"center",
+                }}
+            >
+              <div style={{
+                    width:"90%", height:"100%",
 
+                    border:"1px solid lightgray", borderRadius: "5px",
+
+                  }}
+              >
+                Column
+              </div>
             </div>
           </div>
           <div style={{
-            border: "1px dashed red",
+            // border: "1px dashed red",
             display:"flex", flexDirection:"row", justifyContent:"center", gap:"20px",
             margin: "20px 0"
           }}

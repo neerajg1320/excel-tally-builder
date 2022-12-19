@@ -1,14 +1,19 @@
-.columns-table {
+.columns-index {
     min-height: 40vh;
+    max-height: 50vh;
     /*min-width: 400px;*/
     border: 1px solid lightsteelblue;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    justify-content: start;
     font-size: calc(2vmin);
     color: darkslateblue;
+    overflow: scroll;
+}
+
+.columns-table ul {
+    /*border: 1px dashed blue;*/
 }
 
 .characters {
