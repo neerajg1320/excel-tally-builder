@@ -41,6 +41,12 @@ const colSchema = [
   {
     name: "index",
     type: "number"
+  },
+
+  // react-table columns
+  {
+    name: "disableFilters",
+    type: "boolean"
   }
 ];
 
@@ -59,7 +65,7 @@ export const ColumnDetails = ({value: column, onChange}) => {
         );
       } else if (pObjs[0].type === 'boolean') {
         return (
-            <span><input type="checkbox" defaultValue={pVal}/></span>
+            <span><input type="checkbox" checked={pVal}/></span>
         );
       }
     }
