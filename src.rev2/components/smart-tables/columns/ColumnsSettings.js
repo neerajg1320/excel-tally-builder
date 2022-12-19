@@ -126,9 +126,7 @@ export const ColumnsSettings = () => {
             >
               <div style={{
                     width:"90%", height:"100%",
-
                     border:"1px solid lightgray", borderRadius: "5px",
-
                   }}
               >
                 <ColumnDetails value={colValue} onChange={handleColumnChange}/>
