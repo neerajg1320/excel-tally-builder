@@ -1,3 +1,6 @@
+import Select from "react-select";
+import {useEffect, useState} from "react";
+
 const colSchema = [
   {
     name: "id",
@@ -32,11 +35,16 @@ const colSchema = [
     type: "select",
     choices: [
         "input", "select"
-    ]
+    ],
+    defaultChoice: "input"
+  },
+  {
+    name: "choices",
+    type: "list", // How to specify list content types. Probably we should use schema
   },
   {
     name: "defaultChoice",
-    type: "string"
+    type: "select"
   },
   {
     name: "index",
@@ -50,26 +58,53 @@ const colSchema = [
   }
 ];
 
-export const ColumnDetails = ({value: column, onChange}) => {
+export const ColumnDetails = ({colItem: column, colChoices, onChange}) => {
+  const InputComponent = ({pName, pVal, pChoices}) => {
+    if (pVal === 'select') {
+      console.log(`Rendering <InputComponent>: pName=${pName} pVal=${pVal} pChoices=${pChoices}`);
+    }
 
-  const InputComponent = ({pName, pVal}) => {
-    console.log(`Rendering <InputComponent>: pName=${pName}`);
 
     let pObjs = colSchema.filter(cSch => cSch.name === pName)
     if (pObjs.length > 0) {
-      console.log(JSON.stringify(pObjs[0]))
+      const propObj = pObjs[0]
+      // console.log(JSON.stringify(propObj))
 
-      if (pObjs[0].type === 'string') {
+      if (propObj.type === 'string') {
         return (
-            <span><input type="text" defaultValue={String(pVal)}/></span>
+            <span><input className="form-control" type="text" defaultValue={String(pVal)}/></span>
         );
-      } else if (pObjs[0].type === 'boolean') {
+      } else if (propObj.type === 'boolean') {
         return (
-            <span><input type="checkbox" checked={pVal}/></span>
+            <span><input className="form-check" type="checkbox" defaultChecked={pVal}/></span>
+        );
+      } else if (propObj.type === 'select') {
+        console.log(`pName=${pName} pChoices=`, pChoices);
+        let options;
+        if(propObj.choices) {
+          options = propObj.choices.map(choice => {return {label:choice, value:choice}})
+        } else if (pChoices) {
+          options = pChoices.map(choice => {return {label:choice, value:choice}})
+        }
+
+        console.log(`options=`, options);
+        return (
+            <Select options={options} defaultValue={{...options[0]}}/>
+        );
+      } else if (propObj.type === 'list') {
+
+        console.log(`pVal=`, pVal);
+        return (
+            <ul>
+              {pVal.map(val => (
+                  <li style={{listStyle:"none"}}>
+                    {val}
+                  </li>
+              ))}
+            </ul>
         );
       }
     }
-
 
     return (
         <span>{String(pVal)}</span>
@@ -82,13 +117,7 @@ export const ColumnDetails = ({value: column, onChange}) => {
           padding: "20px"
         }}
       >
-        <pre>
-          {/*{JSON.stringify(Object.keys(column).map(k => ({k, val:column[k]})), null, 2)}*/}
-          {/*{JSON.stringify(Object.keys(column), null, 2)}*/}
-        </pre>
-        {
-          Object.keys(column).map((k, index) => {
-
+        {Object.keys(column).map((k, index) => {
             return (
                 <div key={index} style={{
                   border: "1px dashed transparent",
@@ -99,29 +128,16 @@ export const ColumnDetails = ({value: column, onChange}) => {
                   {k}
                 </span>
                 <span style={{border: "1px dashed transparent",width:"30%"}} row={index}>
-                  <InputComponent pName={k} pVal={column[k]} />
+                  <InputComponent
+                      pName={k}
+                      pVal={column[k]}
+                      pChoices={colChoices}
+                  />
                 </span>
                 </div>
             );
           })
         }
-
-        {false && column && Object.entries(column).map(([colKey, colVal], index) => {
-          return (
-              <div key={index} style={{
-                    border: "1px dashed transparent",
-                    display: "flex", flexDirection:"row", justifyContent: "center"
-                  }}
-              >
-                <span style={{border: "1px dashed transparent",width:"30%"}} row={index}>
-                  {colKey}
-                </span>
-                <span style={{border: "1px dashed transparent",width:"30%"}} row={index}>
-                  <InputComponent pName={colKey} pVal={colVal} />
-                </span>
-              </div>
-          );
-        })}
       </div>
   );
 }

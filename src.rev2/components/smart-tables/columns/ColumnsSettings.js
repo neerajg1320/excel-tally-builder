@@ -32,6 +32,7 @@ const presetItems = [
 export const ColumnsSettings = () => {
   const [items, setItems] =useState(presetItems);
   const [colValue, setColValue] = useState(items[0]);
+  const [colChoices, setColChoices] = useState([]);
   const [applyEnabled, setApplyEnabled] = useState(false);
   const columns = useSelector(state => state.columns);
   const dispatch = useDispatch();
@@ -72,7 +73,15 @@ export const ColumnsSettings = () => {
 
   const handleItemClick = (e, index) => {
     console.log(`Item ${index} clicked`);
-    setColValue(items[index]);
+    const _colValue = items[index];
+    setColValue(_colValue);
+
+    if (_colValue.type === 'select') {
+      if (_colValue.choices) {
+        setColChoices(_colValue.choices);
+      }
+    }
+    console.log(`_colValue=${JSON.stringify(_colValue)}`);
   }
 
   return (
@@ -119,7 +128,6 @@ export const ColumnsSettings = () => {
 
             </div>
             <div style ={{
-                  // border: "1px dashed blue",
                   width:"80%",
                   display: "flex", justifyContent:"center", alignItems:"center",
                 }}
@@ -129,7 +137,11 @@ export const ColumnsSettings = () => {
                     border:"1px solid lightgray", borderRadius: "5px",
                   }}
               >
-                <ColumnDetails value={colValue} onChange={handleColumnChange}/>
+                <ColumnDetails
+                    colItem={colValue}
+                    colChoices={colChoices}
+                    onChange={handleColumnChange}
+                />
               </div>
             </div>
           </div>
