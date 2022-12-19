@@ -110,7 +110,7 @@ export const MOCK_COLUMNS = [
       "UK",
       "US"
     ],
-    defaultChoice: "India"
+    defaultChoice: "Portugal"
   },
   {
     label: 'Phone',

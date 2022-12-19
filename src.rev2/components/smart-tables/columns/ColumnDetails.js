@@ -89,7 +89,7 @@ export const ColumnDetails = ({colItem: column, colChoices, onChange}) => {
 
         console.log(`options=`, options);
         return (
-            <Select options={options} defaultValue={{...options[0]}}/>
+            <Select options={options} defaultValue={options.filter(opt => opt.value === pVal)}/>
         );
       } else if (propObj.type === 'list') {
 

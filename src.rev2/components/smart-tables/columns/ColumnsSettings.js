@@ -125,15 +125,16 @@ export const ColumnsSettings = () => {
                   </Droppable>
                 </DragDropContext>
               </div>
-
             </div>
+
+            {/* Preview Section */}
             <div style ={{
                   width:"80%",
                   display: "flex", justifyContent:"center", alignItems:"center",
                 }}
             >
               <div style={{
-                    width:"90%", height:"100%",
+                    width:"90%", height:"100%", maxHeight: "50vh", overflow: "scroll",
                     border:"1px solid lightgray", borderRadius: "5px",
                   }}
               >
