@@ -1,5 +1,3 @@
-import {valToString} from "../utils/types";
-
 export const presetColumns = [
   {
     label: "Category",

@@ -63,6 +63,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   const bulkColumns = useMemo(() => {
     console.log('Create React-Table columns');
     const reactTableColumns = columns.map(createRTCol);
+    console.log(`rtColumns=`, rtColumns);
     setRTColumns(reactTableColumns);
     return reactTableColumns?.length ? reactTableColumns.filter(col => col.bulk) : [];
   }, [columns]);
@@ -125,6 +126,17 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
   } = useTable({
     columns: rtColumns,
     data,
+    initialState: {
+      hiddenColumns: rtColumns.map(col => {
+        if (col.show === false) {
+          // console.log(`empty column = ${JSON.stringify(col, null, 2)}`);
+          console.log(`returning ${ col.id}`);
+
+          return col.id;
+        }
+
+       })
+    },
     defaultColumn,
     updateMyData
   },
@@ -263,6 +275,7 @@ export const RowModifyFilterIconTable = ({onChange, onLoaded}) => {
                 <RowCheckbox {...getToggleHideAllColumnsProps()}/> Toggle All
               </div>
               {
+                // Individual checkbox for hide/show column
                 allColumns.map(column => (
                     <div key={column.id}>
                       <div style={{display:"flex", flexDirection:"row", gap:"10px", alignItems: "center"}}>
