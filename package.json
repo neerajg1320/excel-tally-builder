@@ -37,23 +37,26 @@
   "main": "public/electron/main.js",
   "homepage": "./",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "react:start": "react-scripts start",
+    "react:build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron:start": "wait-on tcp:3000 && electron .",
-    "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
-    
-    "electron:build": "yarn build && electron-builder -c.extraMetadata.main=build/electron/main.js",
-    "electron:build:m": "yarn build && electron-builder -m -c.extraMetadata.main=build/electron/main.js",
-    "electron:build:mw": "yarn build && electron-builder -mw -c.extraMetadata.main=build/electron/main.js",
-    "electron:build:w": "yarn build && electron-builder -w -c.extraMetadata.main=build/electron/main.js",
-    "electron:build:all": "yarn build && electron-builder -mwl -c.extraMetadata.main=build/electron/main.js",
+    "electron:serve": "concurrently -k \"cross-env BROWSER=none yarn react:start\" \"yarn electron:start\"",
+
+    "electron:build": "yarn react:build && electron-builder -c.extraMetadata.main=build/electron/main.js",
+    "electron:build:m": "yarn react:build && electron-builder -m -c.extraMetadata.main=build/electron/main.js",
+    "electron:build:mw": "yarn react:build && electron-builder -mw -c.extraMetadata.main=build/electron/main.js",
+    "electron:build:w": "yarn react:build && electron-builder -w -c.extraMetadata.main=build/electron/main.js",
+    "electron:build:all": "yarn react:build && electron-builder -mwl -c.extraMetadata.main=build/electron/main.js",
     "electron:release": "electron-builder -m -p onTagOrDraft -c.extraMetadata.main=build/electron/main.js",
     "electron:release:m": "electron-builder -m -p onTagOrDraft -c.extraMetadata.main=build/electron/main.js",
     "electron:release:w": "electron-builder -w -p onTagOrDraft -c.extraMetadata.main=build/electron/main.js",
     "electron:release:mw": "electron-builder -mw -p onTagOrDraft -c.extraMetadata.main=build/electron/main.js",
-    "electron:release:all": "electron-builder -mwl -p onTagOrDraft -c.extraMetadata.main=build/electron/main.js"
+    "electron:release:all": "electron-builder -mwl -p onTagOrDraft -c.extraMetadata.main=build/electron/main.js",
+
+    "start": "npm run electron:serve",
+    "build": "npm run electron:build"
   },
   "eslintConfig": {
     "extends": [
