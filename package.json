@@ -85,11 +85,12 @@
     "electron-notarize": "^1.2.2",
     "wait-on": "^6.0.1"
   },
+  "afterSignIncludeInBuild": "build/electron/notarize.js",
   "build": {
     "appId": "com.glassball.tallykit",
     "productName": "TallyKit",
     "copyright": "Neeraj Gupta",
-    "afterSign": "build/electron/notarize.js",
+
     "publish": {
       "provider": "github",
       "owner": "neeraj76",
